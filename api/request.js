@@ -1,5 +1,4 @@
 import axios from 'axios'
-import querystring from 'querystring'
 import config from './../utils/config'
 
 function checkStatus(response) {
