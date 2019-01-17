@@ -42,6 +42,7 @@ module.exports = {
             // 写成数组，可以同时部署到多台服务器
             host : '119.27.163.168',
             ref  : 'origin/master',
+            "ssh_options": "StrictHostKeyChecking=no",
             repo : 'https://gitee.com/zhongqiang1839/nuxt-blog.git',
             path : '/usr/fengzhongqiang/nuxt-blog',
             "post-deploy" : 'git pull && npm install &&  npm run build  && pm2 startOrRestart ecosystem.config.js --env production'
