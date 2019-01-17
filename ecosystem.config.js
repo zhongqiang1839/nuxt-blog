@@ -41,7 +41,6 @@ module.exports = {
             user : 'root',
             key: ' /root/.ssh/id_rsa.pub',
             // 写成数组，可以同时部署到多台服务器
-
             host : '119.27.163.168',
             ref  : 'origin/master',
             "ssh_options": "StrictHostKeyChecking=no",
