@@ -47,7 +47,7 @@ module.exports = {
             "ssh_options": "StrictHostKeyChecking=no",
             repo : 'git@gitee.com:zhongqiang1839/nuxt-blog.git',
             path : '/usr/fengzhongqiang/nuxt-blog',
-            'pre-deploy': 'git fetch -all',
+            'pre-deploy': 'git pull',
             "post-deploy" : 'npm install &&  npm run build  && pm2 startOrRestart ecosystem.config.js --env production'
         }
     }
