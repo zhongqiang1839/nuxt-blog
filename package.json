@@ -1,0 +1,39 @@
+{
+  "name": "nuxt-blog",
+  "version": "1.0.0",
+  "description": "My first-rate Nuxt.js project",
+  "author": "zhongqiang.feng",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "bezier-easing": "^2.1.0",
+    "clipboard": "^2.0.4",
+    "cross-env": "^5.2.0",
+    "gravatar": "^1.8.0",
+    "highlight.js": "^9.13.1",
+    "kewler": "^1.0.8",
+    "koa": "^2.5.2",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "marked": "^0.6.0",
+    "node-sass": "^4.11.0",
+    "nuxt": "^2.0.0",
+    "particles.js": "^2.0.0",
+    "querystring": "^0.2.0",
+    "sass-loader": "^7.1.0",
+    "simplemde": "^1.11.2",
+    "vue-simplemde": "^0.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "prettier": "1.14.3"
+  }
+}

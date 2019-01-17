@@ -1,0 +1,49 @@
+@import "./mixins.less";
+@import "./variables.less";
+
+@import "./markdown.less";
+@import "./theme.less";
+@import "./../font-awesome-4.7.0/less/font-awesome";
+
+@font-face {
+  font-family: Neue; /*这里是说明调用来的字体名字*/
+  src: url('./../font/Neue.woff2'); /*这里是字体文件路径*/
+}
+
+html {
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+
+}
+
+body {
+  background-color: #f4f5f5;
+}
+aside {
+  //background-color: #fff;
+}
