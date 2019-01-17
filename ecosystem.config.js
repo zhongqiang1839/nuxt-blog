@@ -35,7 +35,7 @@ module.exports = {
      * http://pm2.keymetrics.io/docs/usage/deployment/
      */
     deploy : {
-        // 项目信息111
+        // 项目信息111111
         // 下面的配置是我用什么用户登录哪个服务器，从哪拉代码，项目存到什么位置。拉完执行的脚本是啥
         production : {
             user : 'root',
