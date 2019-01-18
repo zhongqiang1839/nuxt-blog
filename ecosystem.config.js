@@ -41,6 +41,7 @@ module.exports = {
             user : 'root',
             // 写成数组，可以同时部署到多台服务器
             host : '119.27.163.168',
+            port:"22",//ssh 端口
             ref  : 'origin/master',
             "ssh_options": "StrictHostKeyChecking=no",
             repo : 'https://gitee.com/zhongqiang1839/nuxt-blog.git',
