@@ -12,7 +12,7 @@
                 {{item.description}}
               </div>
               <div class="meta-row">
-                <span>{{item.likes}} 人喜欢</span>
+                <span>{{item.likes}} 人喜欢1111</span>
                 <span class="hr"></span>
                 <span>{{item.views}} 次阅读</span>
                 <span class="hr"></span>
