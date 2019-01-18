@@ -4,7 +4,17 @@
  */
 export const state = () => {
   return {
-    adminInfo: '',
+    // ua
+    userAgent: '',
+
+    // 是否为移动端
+    mobileLayout: false,
+
+    // 博主信息
+    adminInfo: {},
+
+    // 网站信息
+    option: {},
   }
 }
 
