@@ -9,6 +9,7 @@
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/index.js",
     "generate": "nuxt generate",
+    "update": "pm2 deploy ecosystem.config.js production update",
     "deploy": "pm2 deploy ecosystem.config.js production"
   },
   "dependencies": {
