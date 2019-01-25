@@ -37,7 +37,7 @@ module.exports = {
   */
   css: [
     { src: '~/assets/less/common.less', lang: 'less' },
-    'highlight.js/styles/github.css'
+    'highlight.js/styles/github.css',
   ],
 
   /*

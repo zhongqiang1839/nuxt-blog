@@ -30,6 +30,24 @@ export const mutations = {
       pagination: paginate
     }
   },
+  SET_COMMENTS_LIST (state, data) {
+      state.comments = {
+        list: [data.body, ...state.comments.list],
+        pagination: state.comments.pagination
+      }
+  },
+  LIKE_COMMENT (state, data) {
+      state.comments = {
+        list: state.comments.list.map(item => {
+            if(item._id === data.body._id) {
+                item = data.body;
+                item.likes += 1;
+            }
+            return item;
+        }),
+        pagination: state.comments.pagination
+      }
+  },
   SET_COMMENTS_SUCCESS (state, data) {
     let {docs, ...paginate} = data.body;
     state.comments = {
@@ -47,11 +65,8 @@ export const mutations = {
     state.tags = data
   },
   SET_DETAILS (state, data) {
-    state.details = data.body[0]
+    state.details = data.body
   },
 
-  ADD_COMMENT (state) {
-    state.details.comments += 1
-  }
 
 }

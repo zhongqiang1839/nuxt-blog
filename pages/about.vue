@@ -1,28 +1,6 @@
 <template>
   <section class="container">
-    <ul class="feedContainer">
-      <li class="item" v-for="item in artlist" :key="item._id">
-        <a :href="`/article/${item._id}`">
-          <div class="content">
-            <div class="info-box">
-              <div class="title-row">
-                {{item.title}}<i class="icon-cloud-download"></i>
-              </div>
-              <div class="content-row">
-                {{ item.content | text(200)}}
-              </div>
-              <div class="meta-row">
-                <span><i class="iconfont icon-time-circle"></i>{{ item.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
-                <span><i class="iconfont icon-like"></i><i>{{item.likes}}</i></span>
-                <span><i class="iconfont icon-eye"></i>{{item.views}}</span>
-                <span><i class="iconfont icon-comment"></i>{{item.comments}}</span>
-              </div>
-            </div>
-          </div>
-        </a>
-      </li>
-    </ul>
-    <div v-if="pagination.pagination === current_page" @click="loadMore">加载更多</div>
+
   </section>
 </template>
 
@@ -30,8 +8,9 @@
 
 export default {
 
+  layout: 'index',
+
   fetch ({ store }) {
-    return store.dispatch('getArticleList')
   },
 
   data () {
@@ -41,12 +20,6 @@ export default {
   },
 
   computed: {
-    artlist () {
-      return this.$store.state.article.art.list
-    },
-    pagination () {
-      return this.$store.state.article.art.pagination
-    },
   },
   methods: {
     loadMore() {

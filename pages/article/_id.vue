@@ -5,6 +5,7 @@
         <div class="card article-detail">
           <h2 class="title">{{artItem.title}}</h2>
           <div class="meta">
+            <p>{{ artItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}&nbsp;</p>
             <div class="meta-item">{{artItem.likes}} 人喜欢</div>
             <div class="meta-item">{{artItem.views}} 次阅读</div>
             <div class="meta-item">{{artItem.comments}} 条评论</div>
@@ -42,6 +43,8 @@ export default {
   transition: 'fade',
 
   scrollToTop: true,
+
+  layout: 'index',
 
   fetch ({ store, params }) {
     return store.dispatch('getArtDetail', params)
@@ -81,7 +84,7 @@ export default {
 }
 </script>
 
-<style lang="less" >
+<style lang="less" scoped>
 
 .article-page {
   position: relative;
@@ -124,12 +127,11 @@ export default {
       align-items: center;
       flex-wrap: nowrap;
       position: relative;
-      margin-right: 12px;
       &:before {
         content: "";
         width: 2px;
         height: 2px;
-        margin-right: 4px;
+        margin: 0 10px;
         border: 1px solid  rgba(0,0,0,0.43);
         border-radius: 1px;
       }

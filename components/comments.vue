@@ -3,7 +3,6 @@
     <div class="tools">
       <div class="total">
         <strong class="count">{{ comment.pagination.total || 0 }}</strong>
-        <span>&nbsp;</span>
         <span>条评论</span>
       </div>
       <span class="line"></span>
@@ -21,17 +20,14 @@
             <div class="will-reply" v-if="!!pid" key="1">
               <div class="reply-user">
                 <span>
-                  <span>回复 </span>
-                  <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${replyCommentSlef.id}`)">
-                    <strong> {{ replyCommentSlef.name }} </strong>
-                  </a>
+                  <span>回复: {{ replyCommentSelf.name }}</span>
                 </span>
-                <a href="" class="cancel iconfont icon-cancel" @click.stop.prevent="cancelCommentReply"></a>
+                <a href="" class="cancel iconfont icon-undo" @click.stop.prevent="cancelCommentReply">取消</a>
               </div>
               <div class="reply-preview"
-                   v-html="marked(replyCommentSlef.content).length > 100
-                    ? marked(replyCommentSlef.content).slice(0, 100) + '...'
-                    : marked(replyCommentSlef.content)"></div>
+                   v-html="marked(replyCommentSelf.content).length > 100
+                    ? marked(replyCommentSelf.content).slice(0, 100) + '...'
+                    : marked(replyCommentSelf.content)"></div>
             </div>
             <div class="markdown" key="2">
               <div class="markdown-editor"
@@ -42,8 +38,14 @@
               </div>
             </div>
             <div class="editor-tools" key="3">
+              <a href="" class="image" title="bold" @click.stop.prevent="insertContent('bold')">
+                <i class="iconfont icon-bold"></i>
+              </a>
+              <a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">
+                <i class="iconfont icon-italic"></i>
+              </a>
               <a href="" class="emoji" title="emoji" @click.stop.prevent>
-                <i class="iconfont icon-emoji">表情</i>
+                <i class="iconfont icon-smile"></i>
                 <transition name="fade">
                   <div class="emoji-box">
                     <ul class="emoji-list">
@@ -73,13 +75,13 @@
                 </transition>
               </a>
               <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
-                <i class="iconfont icon-image">图片</i>
+                <i class="iconfont icon-image"></i>
               </a>
               <a href="" class="link" title="link" @click.stop.prevent="insertContent('link')">
-                <i class="iconfont icon-link">链接</i>
+                <i class="iconfont icon-link"></i>
               </a>
               <a href="" class="code" title="code" @click.stop.prevent="insertContent('code')">
-                <i class="iconfont icon-code">代码</i>
+                <i class="iconfont icon-code"></i>
               </a>
               <button type="submit"
                       class="submit"
@@ -94,7 +96,7 @@
       </div>
       <!-- 用户编辑部分 -->
       <transition name="module" mode="out-in">
-        <div class="user" v-if="!userCacheMode || userCacheEditing">
+        <div class="user">
           <div class="name">
             <input required
                    type="text"
@@ -109,7 +111,7 @@
                    name="email"
                    placeholder="邮箱（必填，不会公开）"
                    v-model="user.email"
-                   @blur="upadteUserGravatar"
+                   @blur="updateUserGravatar"
                    maxlength="40">
           </div>
           <div class="site">
@@ -120,26 +122,26 @@
               v-model="user.site"
               maxlength="40">
           </div>
-          <div class="save" v-if="userCacheEditing">
-            <button type="submit" @click="updateUserCache($event)">
-              <i class="iconfont icon-success"></i>
-            </button>
-          </div>
+          <!--<div class="save" v-if="userCacheEditing">-->
+            <!--<button type="submit" @click="updateUserCache($event)">-->
+              <!--<i class="iconfont icon-success"></i>-->
+            <!--</button>-->
+          <!--</div>-->
         </div>
         <!-- 用户设置部分 -->
-        <div class="user" v-else-if="userCacheMode && !userCacheEditing">
-          <div class="edit">
-            <strong class="name">{{ user.name }}</strong>
-            <a href="" class="setting" @click.stop.prevent>
-              <i class="iconfont icon-setting"></i>
-              <span>账户设置</span>
-              <ul class="user-tool">
-                <li @click.stop.prevent="userCacheEditing = true">编辑信息</li>
-                <li @click.stop.prevent="claerUserCache">清空信息</li>
-              </ul>
-            </a>
-          </div>
-        </div>
+        <!--<div class="user" v-else-if="userCacheMode && !userCacheEditing">-->
+          <!--<div class="edit">-->
+            <!--<strong class="name">{{ user.name }}</strong>-->
+            <!--<a href="" class="setting" @click.stop.prevent>-->
+              <!--<i class="iconfont icon-setting"></i>-->
+              <!--<span>账户设置</span>-->
+              <!--<ul class="user-tool">-->
+                <!--<li @click.stop.prevent="userCacheEditing = true">编辑信息</li>-->
+                <!--<li @click.stop.prevent="clearUserCache">清空信息</li>-->
+              <!--</ul>-->
+            <!--</a>-->
+          <!--</div>-->
+        <!--</div>-->
       </transition>
     </form>
 
@@ -148,16 +150,16 @@
       <div class="list-box" v-if="comment.list.length && comment.list.length !== 0" key="1">
         <transition-group name="list" tag="ul" class="comment-list">
           <li class="comment-item"
-              v-for="comment in comment.list"
-              :id="`comment-item-${comment.id}`"
-              :key="comment.id">
+              v-for="commentItem in comment.list"
+              :id="`comment-item-${commentItem.id}`"
+              :key="commentItem.id">
             <div class="cm-avatar">
               <a target="_blank"
                  rel="external nofollow"
-                 :href="comment.site"
-                 @click.stop="clickUser($event, comment.author)">
-                <img :alt="comment.name || '匿名用户'"
-                     :src="gravatar(comment.email) || '/images/anonymous.jpg'">
+                 :href="commentItem.site"
+                 @click.stop="clickUser($event, commentItem.site)">
+                <img :alt="commentItem.name || '匿名用户'"
+                     :src="gravatar(commentItem.email) || '/images/anonymous.jpg'">
               </a>
             </div>
             <div class="cm-body">
@@ -165,41 +167,41 @@
                 <a class="user-name"
                    target="_blank"
                    rel="external nofollow"
-                   :href="comment.site"
-                   @click.stop="clickUser($event, comment.author)">
+                   :href="commentItem.site"
+                   @click.stop="($event, commentItem.site)">
                   <!--<img :alt="comment.name || '匿名用户'"-->
                        <!--:src="gravatar(comment.email) || '/images/anonymous.jpg'"-->
                        <!--width="24px"-->
                        <!--style="margin-right: 10px;">-->
-                  <span>{{ comment.name }}</span>
+                  <span>{{ commentItem.name }}</span>
                 </a>
 
-                <span class="flool">{{ comment.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
+                <span class="flool">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
               </div>
               <div class="cm-content">
-                <div class="reply-box" v-if="!!comment.pid">
+                <div class="reply-box" v-if="!!commentItem.pid">
                   <p class="reply-name">
-                    <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${comment.pid}`)">
+                    <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${commentItem.pid}`)">
                       <span></span>
-                      <strong v-if="fondReplyParent(comment.pid)">{{ fondReplyParent(comment.pid) }}</strong>
+                      <strong v-if="fondReplyParent(commentItem.pid)">{{ fondReplyParent(commentItem.pid) }}</strong>
                     </a>
                   </p>
                   <div
                     class="reply-content"
-                    v-html="fondReplyParentContent(comment.pid).length > 150
-                  ? fondReplyParentContent(comment.pid).slice(0, 150) + '...'
-                  : fondReplyParentContent(comment.pid)" ></div>
+                    v-html="fondReplyParentContent(commentItem.pid).length > 150
+                  ? fondReplyParentContent(commentItem.pid).slice(0, 150) + '...'
+                  : fondReplyParentContent(commentItem.pid)" ></div>
                 </div>
-                <div v-html="marked(comment.content)"></div>
+                <div v-html="marked(commentItem.content)"></div>
               </div>
               <div class="cm-footer">
                 <a href=""
                    class="like"
-                   :class="{ liked: commentLiked(comment._id), actived: !!comment.likes }"
-                   @click.stop.prevent="likeComment(comment)">
-                  <i class="iconfont icon-zan"></i>
-                  <span>顶&nbsp;({{ comment.likes }})</span></a>
-                <a href="" class="reply" @click.stop.prevent="replyComment(comment)">
+                   :class="{ liked: commentLiked(commentItem._id), actived: !!commentItem.likes }"
+                   @click.stop.prevent="likeComment(commentItem)">
+                  <i class="iconfont icon-like"></i>
+                  <span>顶&nbsp;({{ commentItem.likes }})</span></a>
+                <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
                   <i class="iconfont icon-reply"></i>
                   <span>回复</span>
                 </a>
@@ -231,7 +233,7 @@
         // 评论排序
         sortMode: 1,
         // 编辑器相关
-        comemntContentHtml: '',
+        commentContentHtml: '',
         comemntContentText: '',
         previewContent: '',
         previewMode: false,
@@ -271,10 +273,7 @@
         return this.$store.state.article.comments
       },
 
-      replyCommentSlef() {
-
-        console.log(this.comment);
-
+      replyCommentSelf() {
         return this.comment.list.find(comment => Object.is(comment.id, this.pid))
       },
 
@@ -338,7 +337,7 @@
           if (likeComments) this.likeComments = JSON.parse(likeComments)
           if (user) {
             this.user = JSON.parse(user)
-            this.upadteUserGravatar()
+            this.updateUserGravatar()
             this.userCacheMode = true
           }
         }
@@ -354,7 +353,7 @@
         this.userCacheEditing = false
       },
       // 清空用户数据
-      claerUserCache() {
+      clearUserCache() {
         this.userCacheMode = false
         this.userCacheEditing = false
         localStorage.removeItem('user')
@@ -363,7 +362,7 @@
         })
       },
       // 更新当前用户头像
-      upadteUserGravatar() {
+      updateUserGravatar() {
         const emailIsVerified = this.regexs.email.test(this.user.email)
         this.user.gravatar = emailIsVerified ? this.gravatar(this.user.email) : null
       },
@@ -371,8 +370,8 @@
       commentContentChange() {
         const html = this.$refs.markdown.innerHTML
         const text = this.$refs.markdown.innerText
-        if (!Object.is(html, this.comemntContentHtml)) {
-          this.comemntContentHtml = html
+        if (!Object.is(html, this.commentContentHtml)) {
+          this.commentContentHtml = html
         }
         if (!Object.is(text, this.comemntContentText)) {
           this.comemntContentText = text
@@ -393,12 +392,20 @@
         this.commentContentChange()
       },
       clearCommentContent(content) {
-        this.comemntContentHtml = ''
-        this.$refs.markdown.innerHTML = this.comemntContentHtml
+        this.commentContentHtml = ''
+        this.$refs.markdown.innerHTML = this.commentContentHtml
         this.commentContentChange()
       },
       insertContent(type) {
         const contents = {
+          bold: {
+            start: `**`,
+            end: `**`
+          },
+          italicage: {
+            start: `*`,
+            end: `*`
+          },
           image: {
             start: `![`,
             end: `]()`
@@ -419,11 +426,11 @@
         this.updateCommentContent({ end: emoji })
       },
 
-      // // 切换预览模式
-      // togglePreviewMode() {
-      //   this.previewContent = this.marked(this.comemntContentText)
-      //   this.previewMode = !this.previewMode
-      // },
+      // 切换预览模式
+      togglePreviewMode() {
+        this.previewContent = this.marked(this.comemntContentText)
+        this.previewMode = !this.previewMode
+      },
 
       // 评论排序
       async sortComemnts (sort) {
@@ -437,8 +444,8 @@
       },
 
       // 点击用户
-      clickUser(event, user) {
-        if (!user.site) event.preventDefault()
+      clickUser(event, site) {
+        if (!site) event.preventDefault()
       },
 
       // 跳转到某条指定的id位置
@@ -486,7 +493,7 @@
       // 点赞某条评论
       likeComment(comment) {
         if (this.commentLiked(comment._id)) return false
-        this.$store.dispatch('likeComment', { type: 1, _id: comment._id })
+        this.$store.dispatch('likeComment', { _id: comment._id })
           .then(data => {
             this.likeComments.push(comment._id)
             localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
@@ -502,9 +509,6 @@
 
       // 获取评论列表
       async loadCommentList(params = {}) {
-
-        console.log(this.postId);
-
         params.sort = this.sortMode
         const res = await this.$store.dispatch('loadCommentsByPostId', {
           ...params,
@@ -611,91 +615,7 @@
     position: relative;
     padding: 1rem 0;
     margin-top: 1rem;
-
-    &.mobile {
-
-      .list-box {
-
-        > .comment-list {
-
-          > .comment-item {
-            padding: .4rem 0;
-
-            > .cm-body {
-              padding: .6em 0;
-
-              >.cm-content {
-
-                .reply-name {
-                  margin-bottom: .3rem !important;
-                }
-              }
-
-              >.cm-footer {
-                >.reply {
-                  display: block !important;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      .loading {
-        height: 5rem;
-        line-height: 5rem;
-      }
-
-      > .post-box {
-
-        > .user {
-          padding: 0;
-          height: auto;
-          flex-direction: column;
-          position: relative;
-
-          > .name,
-          > .email,
-          > .site,
-          > .save {
-            width: 80%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 1rem;
-          }
-
-          > .save {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 10%;
-            height: 2rem;
-            border: 1px solid #eee;
-          }
-        }
-
-        > .editor-box {
-
-          .editor {
-            max-width: 100%;
-          }
-
-          .user {
-            margin: 0;
-          }
-          .emoji-box {
-            width: 200px !important;
-          }
-        }
-        .user-tool {
-          background: transparent !important;
-          li {
-            padding: 0 !important;
-          }
-        }
-      }
-    }
-
+    font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
     > .tools {
       position: relative;
       display: flex;
@@ -744,7 +664,10 @@
 
     .list-box {
       margin-top: 1rem;
-
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 14px 2px #ebebeb;
+      border-radius: 2px;
       > .comment-list {
         padding: 0;
         margin: 0;
@@ -753,7 +676,7 @@
         > .comment-item {
           position: relative;
           padding: .6em 0 .6em 3.6em;
-
+          border-bottom: 1px dashed var(--border-color);
           &:last-child {
             border: 0;
           }
@@ -828,8 +751,7 @@
               > .reply-box {
                 padding: .8rem;
                 margin-bottom: .8rem;
-                border: 1px solid #eee;
-                border-radius: 4px;
+                border-left: 3px solid #eee;
 
                 >.reply-name {
                   color: #666;
@@ -875,7 +797,6 @@
 
                 > .iconfont {
                   opacity: .8;
-                  margin-right: .2em;
                 }
               }
 
@@ -936,11 +857,13 @@
 
     > .post-box {
       display: block;
-      padding-top: 1rem;
-
+      padding: 1rem;
+      background-color: hsla(0, 0%, 100%, 0.8);
+      box-shadow: 0 0 14px 2px #ebebeb;
+      border-radius: 2px;
       > .user {
         display: flex;
-        padding-left: 4rem;
+        padding-left: 3rem;
         margin-top: .3rem;
         width: 100%;
         height: 2em;
@@ -1109,13 +1032,6 @@
               line-height: 1.8em;
               border: 1px solid rgba(36,41,46,.12);
               border-radius: 4px;
-              &:hover {
-                border-color: rgba(36,41,46,.66);
-
-              }
-              &:focus {
-                border-color: #000;
-              }
               &:empty:before{
                 content: attr(placeholder);
                 color: grey;
@@ -1185,9 +1101,22 @@
 
             > .submit {
               float: right;
-              border: 0;
-              padding: 0 .5rem;
-              background: none;
+              color: #fff;
+              background-color: #7b72e9;
+              border-radius: 4px;
+              position: relative;
+              display: inline-block;
+              padding: 7px 13px;
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 20px;
+              white-space: nowrap;
+              vertical-align: middle;
+              cursor: pointer;
+              user-select: none;
+              background-size: 110% 110%;
+              border: none;
+              appearance: none;
               span {
                 margin-right: .5rem;
               }

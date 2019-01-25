@@ -24,8 +24,14 @@
       </div>
     </header>
     <div class="editor-tools">
+      <a href="" class="image" title="bold" @click.stop.prevent="insertContent('bold')">
+        <i class="iconfont icon-bold"></i>
+      </a>
+      <a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">
+        <i class="iconfont icon-italic"></i>
+      </a>
       <a href="" class="emoji" title="emoji" @click.stop.prevent>
-        <i class="iconfont icon-emoji">表情</i>
+        <i class="iconfont icon-smile"></i>
         <div class="emoji-box">
           <ul class="emoji-list">
             <li class="item" @click="insertEmoji('😃')">😃</li>
@@ -53,13 +59,13 @@
         </div>
       </a>
       <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
-        <i class="iconfont icon-image">图片</i>
+        <i class="iconfont icon-image"></i>
       </a>
       <a href="" class="link" title="link" @click.stop.prevent="insertContent('link')">
-        <i class="iconfont icon-link">链接</i>
+        <i class="iconfont icon-link"></i>
       </a>
       <a href="" class="code" title="code" @click.stop.prevent="insertContent('code')">
-        <i class="iconfont icon-code">代码</i>
+        <i class="iconfont icon-code"></i>
       </a>
     </div>
     <section class="container">
@@ -171,6 +177,14 @@ export default {
     },
     insertContent(type) {
       const contents = {
+        bold: {
+            start: `**`,
+            end: `**`
+        },
+        italicage: {
+            start: `*`,
+            end: `*`
+        },
         image: {
           start: `![`,
           end: `]()`
@@ -371,7 +385,6 @@ export default {
   left: 1.5rem;
   z-index: 100;
   > .emoji {
-
     > .emoji-box {
       display: none;
       position: relative;
@@ -426,12 +439,10 @@ export default {
   > .submit {
     float: right;
     border: 0;
-    padding: 0 .5rem;
     background: none;
     span {
       margin-right: .5rem;
     }
-
     &:hover {
       background: rgba(0, 0, 0, 0.12);
     }

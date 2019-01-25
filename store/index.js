@@ -50,18 +50,14 @@ export const actions = {
   // 发表评论
   async postComment ({ commit, state }, comment) {
     const res = await service.postComment(comment).catch(err => console.error(err))
-    // commit('article/SET_COMMENTS_SUCCESS', res || {})
+    commit('article/SET_COMMENTS_LIST', res)
     return res;
   },
   // 顶顶顶
   async likeComment ({ commit, state }, comment) {
     const res = await service.likeComment(comment).catch(err => console.error(err))
-    // commit('article/SET_COMMENTS_SUCCESS', res || {})
+    commit('article/LIKE_COMMENT', res)
     return res;
   },
-
-
-
-
 
 }
