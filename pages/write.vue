@@ -4,23 +4,40 @@
       <input type="text" class="title-input" v-model="articleTitle" placeholder="请输入标题...">
       <div class="right-box">
         <span class="tag" >
-          <span @click="isSubmitshow = !isSubmitshow">发布</span>
+          <span @click="isSubmitshow = !isSubmitshow">发布 <i class="iconfont" :class="isSubmitshow ? 'icon-up' : 'icon-down'"></i></span>
           <div class="tag-box" v-if="isSubmitshow">
-            <i>标签</i>
+            <i>文章来源</i>
+            <div class="tag-item"
+                 v-for="(item, index) in source"
+                 :class="{'active': item.isActive}"
+                 @click="toggleTypes(item)"
+                 :key="item.value"
+            >
+              {{item.label}}
+            </div>
+            <i>文章分类</i>
             <div class="tag-list">
               <div class="tag-item"
-                 :class="{'active': item.isActive}"
-                 v-for="(item, index) in tagslist"
-                 @click="toggleTags(item)"
-                 :key="item._id"
+                   :class="{'active': item.isActive}"
+                   v-for="(item, index) in tagslist"
+                   @click="toggleTags(item)"
+                   :key="item._id"
               >
                 {{item.name}}
               </div>
+            </div>
+            <div class="panel">
+              <input type="text" v-model="tagName" placeholder="添加 1 个新标签">
+            </div>
+            <div class="btn-wrapper">
+              <div class="sub-btn cancel" @click="isSubmitshow = false">取消</div>
               <div class="sub-btn" @click="submitComment($event)">确定并发布</div>
             </div>
           </div>
         </span>
-        <img src="images/user.jpeg" alt="">
+        <nuxt-link to="/">
+          <img src="images/user.jpeg" alt="">
+        </nuxt-link>
       </div>
     </header>
     <div class="editor-tools">
@@ -89,6 +106,7 @@
 <script>
 
 import markdown from '~/plugins/marked'
+import { ARTICLE_SOURCE } from '~/utils/constant'
 
 export default {
 
@@ -99,7 +117,10 @@ export default {
       articleTitle: '',
       commentContentHtml: '',
       isSubmitshow: false,
-      tags: []
+      tags: [],
+      tagName: '',
+      keywords: '',
+      source: ARTICLE_SOURCE
     }
 
   },
@@ -107,19 +128,24 @@ export default {
   computed: {
     tagslist () {
       let tags = this.$store.state.article.tags;
-      tags.map((item, index) => {
-        item.isActive = index === 0;
-      })
-      return tags;
+      if(tags.length) {
+        tags.map((item, index) => {
+          item.isActive = index === 0;
+        })
+      }
+      console.log(tags);
+      return tags
     },
   },
 
   methods: {
     //切换标签
     toggleTags(item) {
-      this.tagslist.map((temp) => {
-        temp.isActive = item.id === temp.id;
-      })
+      this.tagslist.map(temp => temp.isActive = item.id === temp.id)
+      this.$forceUpdate();
+    },
+    toggleTypes(item) {
+      this.source.map(temp => temp.isActive = item.value === temp.value)
       this.$forceUpdate();
     },
     async submitComment(event) {
@@ -127,16 +153,19 @@ export default {
       if(!this.articleTitle || !this.articleTitle.replace(/\s/g, '')) return alert('标题呢？');
       if(!this.commentContentHtml || !this.commentContentHtml.replace(/\s/g, '')) return alert('内容呢？');
       let tagitem = this.tagslist.filter((item) => item.isActive)[0];
+      let sourceItem = this.source.filter(item => item.isActive)[0];
       let res = await this.$store.dispatch('postArticle', {
         title: this.articleTitle,
         content: this.commentContentHtml,
         description: '描述',
-        keyword: '关键词',
-        tag: tagitem._id,
+        keyword: this.tagName,
+        tagName: this.tagName,
+        tag: this.tagName ? this.tagName : tagitem._id,
+        source: sourceItem.value
       })
-      console.log(res);
-      if(res.code === 0) {
+      if(res.code === 200) {
         alert('文章写入成功');
+        this.clearCommentContent();
       } else {
         alert('文章写入失败')
       }
@@ -178,12 +207,12 @@ export default {
     insertContent(type) {
       const contents = {
         bold: {
-            start: `**`,
-            end: `**`
+          start: `**`,
+          end: `**`
         },
         italicage: {
-            start: `*`,
-            end: `*`
+          start: `*`,
+          end: `*`
         },
         image: {
           start: `![`,
@@ -202,13 +231,12 @@ export default {
     },
 
     insertEmoji(emoji) {
-      this.updateCommentContent({ end: emoji })
+      this.updateCommentContent({ start: '', end: emoji })
     },
   },
   mounted() {
 
   },
-
   components: {
   }
 }
@@ -263,6 +291,33 @@ export default {
     }
     > .tag {
       position: relative;
+
+      .iconfont {
+        font-weight: bolder;
+      }
+
+      .panel {
+        padding: .2rem;
+        width: 100%;
+        font-size: 1.2rem;
+        white-space: nowrap;
+        color: #909090;
+        background-color: #fff;
+        border-radius: 2px;
+        cursor: default;
+        user-select: none;
+        z-index: 100;
+        input {
+          padding: .2em 0;
+          width: 100%;
+          font-size: .6em;
+          border: none;
+          border-bottom: 1px solid #f1f1f1;
+          border-radius: 0;
+          outline: none;
+        }
+      }
+
     }
     .tag-box {
       position: absolute;
@@ -278,6 +333,14 @@ export default {
       cursor: default;
       user-select: none;
       z-index: 100;
+      i {
+        display: block;
+        font-style: normal;
+        font-size: 18px;
+        border-left: 2px solid #999;
+        padding-left: 8px;
+        margin: 10px 0;
+      }
     }
   }
 
@@ -289,20 +352,31 @@ export default {
 
 .tag-list {
   overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.sub-btn {
-  display: block;
-  margin: 0 auto;
-  padding: .2rem 0.8rem;
-  text-align: center;
-  color: #007fff;
-  background: #fff;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  outline: none;
-  cursor: pointer;
-  transition: all .2s;
+
+.btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  .sub-btn {
+    display: block;
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: center;
+    padding: 4px 8px;
+    color: #007fff;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    margin-top: 6px;
+    &.cancel {
+      color: #999;
+    }
+  }
 }
 
 

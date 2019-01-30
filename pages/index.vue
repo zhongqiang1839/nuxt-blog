@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <ul class="feedContainer">
-      <li class="item" v-for="item in artlist" :key="item._id">
+      <li class="item" v-for="(item, index) in artlist" :key="index">
         <a :href="`/article/${item._id}`">
           <div class="content">
             <div class="info-box">
@@ -11,18 +11,21 @@
               <div class="content-row">
                 {{ item.content | text(200)}}
               </div>
-              <div class="meta-row">
-                <span><i class="iconfont icon-time-circle"></i>{{ item.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
-                <span><i class="iconfont icon-like"></i><i>{{item.likes}}</i></span>
-                <span><i class="iconfont icon-eye"></i>{{item.views}}</span>
-                <span><i class="iconfont icon-comment"></i>{{item.comments}}</span>
-              </div>
+                <div class="meta">
+                    <p>{{ item.create_at | dateFormat('yyyy.MM.dd')}}&nbsp;</p>
+                    <div class="meta-item">{{item.likes}} 人喜欢</div>
+                    <div class="meta-item">{{item.views}} 次阅读</div>
+                    <div class="meta-item">{{item.comments}} 条评论</div>
+                </div>
             </div>
           </div>
         </a>
       </li>
     </ul>
-    <div v-if="pagination.pagination === current_page" @click="loadMore">加载更多</div>
+    <div class="pagination">
+      <button v-if="pagination.pages !== current_page" class="loadmore" @click="loadmore">Continue</button>
+      <div v-else>No More!</div>
+    </div>
   </section>
 </template>
 
@@ -49,8 +52,11 @@ export default {
     },
   },
   methods: {
-    loadMore() {
-
+    async loadmore() {
+      if(this.current_page === this.pagination.pages) return;
+      await this.$store.dispatch('getArticleList', {
+          page: this.current_page +=1
+      })
     }
   },
 
@@ -98,6 +104,7 @@ export default {
   margin-bottom: .5rem;
   font-size: 1.2rem;
   font-weight: 700;
+  color: #666;
 }
 .content-row {
   line-height: 1.8rem;
@@ -108,24 +115,48 @@ export default {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-.meta-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: .8rem;
-  height: 1rem;
-  line-height: 1rem;
-  font-size: .85rem;
-  color: #666;
-  span {
-    margin-right: 1rem;
-    &:first-child {
-      margin-right: 2rem!important;
+.meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin: 24px 0 0 0;
+    color: rgba(0,0,0,0.43);
+    font-size: 12px;
+    .meta-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+        position: relative;
+        &:before {
+            content: "";
+            width: 2px;
+            height: 2px;
+            margin: 0 10px;
+            border: 1px solid  rgba(0,0,0,0.43);
+            border-radius: 1px;
+        }
     }
-    .iconfont {
-      margin-right: .5rem;
-    }
+}
+
+.pagination {
+  background-color: #fff;
+  padding: 6px 32px;
+  text-align: center;
+  .loadmore {
+    padding: 6px 32px;
+    background: var(--button-color);
+    border-radius: 2px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all .3s ease;
+  }
+  div {
+    color: #666;
+    font-size: 12px;
   }
 }
 

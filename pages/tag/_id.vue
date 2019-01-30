@@ -6,30 +6,32 @@
           <div class="content">
             <div class="info-box">
               <div class="title-row">
-                {{item.title}}
+                {{item.title}}<i class="icon-cloud-download"></i>
               </div>
               <div class="content-row">
-                {{item.description}}
+                {{ item.content | text(200)}}
               </div>
-              <div class="meta-row">
-                <span>{{item.likes}} 人喜欢</span>
-                <span class="hr"></span>
-                <span>{{item.views}} 次阅读</span>
-                <span class="hr"></span>
-                <span>{{item.comments}} 条评论</span>
+              <div class="meta">
+                <p>{{ item.create_at | dateFormat('yyyy.MM.dd hh:mm')}}&nbsp;</p>
+                <div class="meta-item">{{item.likes}} 人喜欢</div>
+                <div class="meta-item">{{item.views}} 次阅读</div>
+                <div class="meta-item">{{item.comments}} 条评论</div>
               </div>
             </div>
           </div>
         </a>
       </li>
     </ul>
-    <div v-if="pagination.pagination === current_page" @click="loadMore">加载更多</div>
+    <div class="pagination">
+      <button v-if="pagination.pages !== current_page" class="loadmore">Continue</button>
+      <div v-else>No More!</div>
+    </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'article',
+  name: 'my-articlelist',
 
   fetch ({ store, params }) {
     return store.dispatch('getArticleList', params)
@@ -65,7 +67,7 @@ export default {
 }
 </script>
 
-<style lang="less" >
+<style lang="less" scoped>
   .container {
     min-height: 100vh;
   }
@@ -100,6 +102,7 @@ export default {
     margin-bottom: .5rem;
     font-size: 1.2rem;
     font-weight: 700;
+    color: #666;
   }
   .content-row {
     line-height: 1.8rem;
@@ -110,22 +113,51 @@ export default {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
-  .meta-row {
+  .meta {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
-    margin-top: .5rem;
-    height: 1rem;
-    line-height: 1rem;
-    font-size: .85rem;
-    color: #666;
-    .hr {
-      display: inline-block;
-      width: 2px;
-      height: 2px;
-      background: #aab2bd;
-      margin: 4px .6rem;
+    flex-wrap: nowrap;
+    margin: 24px 0 0 0;
+    color: rgba(0,0,0,0.43);
+    font-size: 12px;
+    .meta-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex-wrap: nowrap;
+      position: relative;
+      &:before {
+        content: "";
+        width: 2px;
+        height: 2px;
+        margin: 0 10px;
+        border: 1px solid  rgba(0,0,0,0.43);
+        border-radius: 1px;
+      }
     }
   }
+
+  .pagination {
+    background-color: #fff;
+    padding: 6px 32px;
+    text-align: center;
+    .loadmore {
+      padding: 6px 32px;
+      background: var(--button-color);
+      border-radius: 2px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all .3s ease;
+    }
+    div {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+
+
 
 </style>

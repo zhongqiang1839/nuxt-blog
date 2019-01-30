@@ -1,6 +1,6 @@
 <template>
   <section class="cards-view">
-    <div class="card-header">热门标签</div>
+    <div class="card-header"><i class="iconfont icon-tag"></i>热门标签</div>
     <div class="card-body">
       <div class="tag-list">
         <a class="tag-item"  v-for="item in tagslist" :key="item._id" :href="`/tag/${item._id}`">{{item.name}}</a>
@@ -44,8 +44,13 @@
     border-radius: 2px;
     .card-header {
       padding: 12px 0 6px;
-      border-bottom: 1px solid #666;
+      border-bottom: 1px solid #eee;
       font-weight: 700;
+      .iconfont {
+        color: rgba(0,0,0,0.25);
+        margin-right: 4px;
+      }
+      color: #666;
     }
   }
 
@@ -65,5 +70,6 @@
     font-size: 12px;
     border-radius: 4px;
     transition: all .3s ease;
+    color: #333;
   }
 </style>

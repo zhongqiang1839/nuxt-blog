@@ -22,6 +22,13 @@ export const actions = {
     return res;
   },
 
+  // 点赞文章
+  async postLikeArticle ({ commit, state }, article) {
+    const res = await service.getLikeArticle(article).catch(err => console.error(err))
+    commit('article/SET_ARTICLE_LIKE', res || {})
+    return res;
+  },
+
   // 获取文章
   async getArticleList ({ commit, state }, data) {
     const res = await service.getArticle(data).catch(err => console.error(err))

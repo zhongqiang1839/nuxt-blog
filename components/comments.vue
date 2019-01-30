@@ -44,36 +44,6 @@
               <a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">
                 <i class="iconfont icon-italic"></i>
               </a>
-              <a href="" class="emoji" title="emoji" @click.stop.prevent>
-                <i class="iconfont icon-smile"></i>
-                <transition name="fade">
-                  <div class="emoji-box">
-                    <ul class="emoji-list">
-                      <li class="item" @click="insertEmoji('😃')">😃</li>
-                      <li class="item" @click="insertEmoji('😂')">😂</li>
-                      <li class="item" @click="insertEmoji('😅')">😅</li>
-                      <li class="item" @click="insertEmoji('😉')">😉</li>
-                      <li class="item" @click="insertEmoji('😌')">😌</li>
-                      <li class="item" @click="insertEmoji('😔')">😔</li>
-                      <li class="item" @click="insertEmoji('😓')">😓</li>
-                      <li class="item" @click="insertEmoji('😘')">😘</li>
-                      <li class="item" @click="insertEmoji('😡')">😡</li>
-                      <li class="item" @click="insertEmoji('😭')">😭</li>
-                      <li class="item" @click="insertEmoji('😱')">😱</li>
-                      <li class="item" @click="insertEmoji('😳')">😳</li>
-                      <li class="item" @click="insertEmoji('😵')">😵</li>
-                      <li class="item" @click="insertEmoji('🌚')">🌚</li>
-                      <li class="item" @click="insertEmoji('👍')">👍</li>
-                      <li class="item" @click="insertEmoji('👎')">👎</li>
-                      <li class="item" @click="insertEmoji('💪')">💪</li>
-                      <li class="item" @click="insertEmoji('🌹')">🌹</li>
-                      <li class="item" @click="insertEmoji('💊')">💊</li>
-                      <li class="item" @click="insertEmoji('🇨🇳')">🇨🇳</li>
-                      <li class="item" @click="insertEmoji('🇺🇸')">🇺🇸</li>
-                    </ul>
-                  </div>
-                </transition>
-              </a>
               <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
                 <i class="iconfont icon-image"></i>
               </a>
@@ -83,6 +53,34 @@
               <a href="" class="code" title="code" @click.stop.prevent="insertContent('code')">
                 <i class="iconfont icon-code"></i>
               </a>
+              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojinShow = !emojinShow">
+                <i class="iconfont icon-smile"></i>
+              </a>
+              <div class="emoji-box" v-show="emojinShow">
+                <ul class="emoji-list">
+                  <li class="item" @click="insertEmoji('😃')">😃</li>
+                  <li class="item" @click="insertEmoji('😂')">😂</li>
+                  <li class="item" @click="insertEmoji('😅')">😅</li>
+                  <li class="item" @click="insertEmoji('😉')">😉</li>
+                  <li class="item" @click="insertEmoji('😌')">😌</li>
+                  <li class="item" @click="insertEmoji('😔')">😔</li>
+                  <li class="item" @click="insertEmoji('😓')">😓</li>
+                  <li class="item" @click="insertEmoji('😘')">😘</li>
+                  <li class="item" @click="insertEmoji('😡')">😡</li>
+                  <li class="item" @click="insertEmoji('😭')">😭</li>
+                  <li class="item" @click="insertEmoji('😱')">😱</li>
+                  <li class="item" @click="insertEmoji('😳')">😳</li>
+                  <li class="item" @click="insertEmoji('😵')">😵</li>
+                  <li class="item" @click="insertEmoji('🌚')">🌚</li>
+                  <li class="item" @click="insertEmoji('👍')">👍</li>
+                  <li class="item" @click="insertEmoji('👎')">👎</li>
+                  <li class="item" @click="insertEmoji('💪')">💪</li>
+                  <li class="item" @click="insertEmoji('🌹')">🌹</li>
+                  <li class="item" @click="insertEmoji('💊')">💊</li>
+                  <li class="item" @click="insertEmoji('🇨🇳')">🇨🇳</li>
+                  <li class="item" @click="insertEmoji('🇺🇸')">🇺🇸</li>
+                </ul>
+              </div>
               <button type="submit"
                       class="submit"
                       :disabled="comment.posting"
@@ -221,6 +219,7 @@
   import markdown from '~/plugins/marked'
   import gravatar from '~/plugins/gravatar'
   // import { scrollTo } from '~/utils/scroll'
+  import { UAParse, OSParse } from '~/utils/meta-parse'
   import loadingCom from '~/components/pageLoading/pageLoading'
   import _ from '~/utils/underscore'
   export default {
@@ -232,6 +231,7 @@
         pid: 0,
         // 评论排序
         sortMode: 1,
+        emojinShow: false,
         // 编辑器相关
         commentContentHtml: '',
         comemntContentText: '',
@@ -277,9 +277,6 @@
         return this.comment.list.find(comment => Object.is(comment.id, this.pid))
       },
 
-      haveMore () {
-        return this.$store.state.comment.pagination.current_page !== this.$store.state.comment.pagination.total_page
-      }
     },
 
     mounted () {
@@ -311,9 +308,13 @@
     },
     destroyed() {
       window.onscroll = null
-      this.$store.commit('comment/CLEAR_LIST')
+      // this.$store.commit('comment/CLEAR_LIST')
     },
     methods: {
+
+      openEmoji() {
+
+      },
       // markdown解析服务
       marked(content) {
         return markdown(content, null, false).html
@@ -322,9 +323,6 @@
       gravatar(email) {
         if (!this.regexs.email.test(email)) return null
         let gravatar_url = gravatar.url(email, {
-          // size: '96',
-          // rating: 'pg',
-          // default: 'https://gravatar.surmon.me/anonymous.jpg',
           protocol: 'https'
         });
         return gravatar_url
@@ -341,25 +339,6 @@
             this.userCacheMode = true
           }
         }
-      },
-      // 更新用户数据
-      updateUserCache(event) {
-        event.preventDefault()
-        if (!this.user.name) return alert('名字？')
-        if (!this.user.email) return alert('邮箱？')
-        if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法')
-        if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法')
-        localStorage.setItem('user', JSON.stringify(this.user))
-        this.userCacheEditing = false
-      },
-      // 清空用户数据
-      clearUserCache() {
-        this.userCacheMode = false
-        this.userCacheEditing = false
-        localStorage.removeItem('user')
-        Object.keys(this.user).forEach(key => {
-          this.user[key] = ''
-        })
       },
       // 更新当前用户头像
       updateUserGravatar() {
@@ -545,7 +524,7 @@
           email: this.user.email,
           site: this.user.site
         })
-        if (res.errCode === 0) {
+        if (res.code === 200) {
           this.previewMode = false
           this.userCacheMode = true
           this.cancelCommentReply()
@@ -696,7 +675,7 @@
                 width: 100%;
                 height: 100%;
                 transition: transform .5s ease-out;
-                border-radius: 4px;
+                border-radius: 50%;
               }
             }
           }
@@ -984,7 +963,7 @@
               width: 100%;
               height: 100%;
               transition: transform .5s ease-out;
-              border-radius: 4px;
+              border-radius: 50%;
             }
           }
         }
@@ -1046,42 +1025,37 @@
             line-height: 2rem;
             margin-top: .4rem;
 
+            > .emoji-box {
+              width: 250px;
+              padding: .5rem;
+              background-color: #fff;
+              z-index: 999;
+
+              > .emoji-list {
+                list-style: none;
+                font-size: 1.0em;
+                display: flex;
+                flex-wrap: nowrap;
+                > .item {
+                  padding: 0 .2em;
+                  cursor: pointer;
+
+                  /*&:hover {*/
+                  /*background: rgba(0, 0, 0, 0.12);*/
+                  /*}*/
+                }
+              }
+            }
+
             > .emoji {
 
-              > .emoji-box {
-                display: none;
-                position: absolute;
-                bottom: -7em;
-                left: 0;
-                width: 250px;
-                padding: .5rem;
-                background-color: #fff;
-                z-index: 999;
 
-                > .emoji-list {
-                  list-style: none;
-                  padding: 0;
-                  margin: 0;
-                  font-size: 1.3em;
-                  display: flex;
-                  flex-wrap: wrap;
 
-                  > .item {
-                    padding: 0 .4em;
-                    cursor: pointer;
-
-                    &:hover {
-                      background: rgba(0, 0, 0, 0.12);
-                    }
-                  }
-                }
-              }
-
-              &:hover {
-                > .emoji-box {
-                  display: block;
-                }
-              }
+              /*&:hover {*/
+                /*> .emoji-box {*/
+                  /*display: block;*/
+                /*}*/
+              /*}*/
             }
 
             > .emoji,

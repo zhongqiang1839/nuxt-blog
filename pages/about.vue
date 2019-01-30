@@ -1,6 +1,37 @@
 <template>
   <section class="container">
+    <div class="avator-box">
+      <img src="/images/user.jpeg" alt="">
+      <p>Jason</p>
+      <!--<h2 class="slogan">愿你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东。</h2>-->
+    </div>
+    <ul class="introduce">
+      <li>
+        <i class="iconfont icon-user"></i>
+        <p>
+          Jason,目前工作在上海,就职于 康成投资(中国), 专注web开发领域
+        </p>
+      </li>
+      <li>
+        <i class="iconfont icon-skill"></i>
+        <p>
+          javascript, Vue, CSS, nodejs...
+        </p>
+      </li>
+      <li>
+        <i class="iconfont icon-tag"></i>
+        <p>
+          你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东
+        </p>
+      </li>
+      <li>
+        <i class="iconfont icon-mail"></i>
+        <p>
+          zhongqiang1839@163.com
+        </p>
+      </li>
 
+    </ul>
   </section>
 </template>
 
@@ -41,65 +72,61 @@ export default {
   min-height: 100vh;
 }
 
-.feedContainer {
+.avator-box {
   width: 100%;
-  background-color: #fff;
-  li {
-    border-bottom: 1px solid rgba(178,186,194,.15);
-    background-color: #fff;
-  }
-}
-
-.content {
   display: flex;
   align-items: center;
-  padding: 1.5rem 2rem;
-}
-
-.info-box {
-  flex: 1 1 auto;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-width: 0;
+  img {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--border-color);
+  }
+  p {
+    font-family: Damion,Neue;
+    font-size: 32px;
+    color: #666;
+  }
+  h2 {
+    font-size: 18px;
+    color: #666;
+    font-weight: normal;
+    margin-top: 10px;
+  }
 }
 
-.title-row {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  margin-bottom: .5rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-.content-row {
-  line-height: 1.8rem;
-  color: #999;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-.meta-row {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: .8rem;
-  height: 1rem;
-  line-height: 1rem;
-  font-size: .85rem;
-  color: #666;
-  span {
-    margin-right: 1rem;
-    &:first-child {
-      margin-right: 2rem!important;
+.introduce {
+  position: relative;
+  margin-top: 30px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  box-shadow: 0 0 14px 2px #ebebeb;
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    margin: 24px 0;
+    i {
+      color: #1E9FFF;
+      font-size: 20px;
+      &.icon-skill {
+        color: #f46e65;
+      }
     }
-    .iconfont {
-      margin-right: .5rem;
+    p {
+      padding-left: 20px;
+      float: left;
+      font-size: 14px;
+      color: #777;
     }
   }
 }
+
 
 </style>

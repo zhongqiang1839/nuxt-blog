@@ -1,9 +1,8 @@
 <template>
   <header class="app-header">
     <div class="inner">
-      <div class="avator"><img src="/images/logo_1538904715568.png"> <a href="/">&nbsp;Jason.me</a></div>
+      <div class="avator"><img src="/images/logo_1538904715568.png"> <nuxt-link to="/">&nbsp;Jason.me</nuxt-link></div>
       <div class="meun-view">
-        <div class="tab-item"><a href="/">首页</a></div>
         <!--<div class="tab-item"><nuxt-link to="/archive">归档</nuxt-link></div>-->
         <div class="tab-item"><nuxt-link to="/about">关于</nuxt-link></div>
         <!--<div class="tab-item"><nuxt-link to="/guest">留言墙</nuxt-link></div>-->

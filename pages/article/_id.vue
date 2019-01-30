@@ -1,8 +1,23 @@
 <template>
   <div class="article-page" >
     <section class="container">
+      <div class="action-widget">
+        <div class="affix is-fixed" style="">
+          <div class="read-tool">
+            <div class="tool-meta">
+              <a title="点赞" @click="postLikeArticle" class="tool-item like liked" :badge="artItem.likes">
+                <i class="iconfont icon-like"></i>
+              </a>
+              <a title="文章评论" class="tool-item comment" :comment="artItem.comments">
+                <i class="iconfont icon-comment"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="article-widget">
         <div class="card article-detail">
+          <span class="source article-source">{{source[artItem.source].label}}</span>
           <h2 class="title">{{artItem.title}}</h2>
           <div class="meta">
             <p>{{ artItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}&nbsp;</p>
@@ -10,6 +25,8 @@
             <div class="meta-item">{{artItem.views}} 次阅读</div>
             <div class="meta-item">{{artItem.comments}} 条评论</div>
           </div>
+
+
           <div class="content markdown-body" v-html="articleContent"></div>
 
           <div class="copyright">
@@ -36,6 +53,7 @@
 
 import markdown from '~/plugins/marked'
 import myComments from '~/components/comments'
+import { ARTICLE_SOURCE } from '~/utils/constant'
 
 export default {
   name: 'fn-article',
@@ -56,6 +74,7 @@ export default {
 
   data () {
     return {
+        source: ARTICLE_SOURCE
     }
   },
 
@@ -72,6 +91,14 @@ export default {
     hide () {
       this.showDialog = false
     },
+    async postLikeArticle() {
+        let res = await this.$store.dispatch('postLikeArticle', this.artItem)
+        if(res.code === 200) {
+            // alert('文章写入成功');
+        } else {
+            // alert('文章写入失败')
+        }
+    }
 
   },
 
@@ -92,7 +119,27 @@ export default {
 }
 .article-widget {
   width: 100%;
+  .source {
+    position: absolute;
+    top: -8px;
+    left: -28px;
+    display: block;
+    width: 80px;
+    height: 42px;
+    line-height: 58px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    text-align: center;
+    font-size: 12px;
+  }
+  .article-source {
+    color: #302e31;
+    background-color: rgba(48,46,49,0.2);
+  }
 }
+
+
+
 .card {
   position: relative;
   margin-bottom: 16px;
@@ -100,6 +147,7 @@ export default {
   background-color: hsla(0,0%,100%,0.8);;
   box-shadow: 0 0 14px 2px #ebebeb;
   border-radius: 2px;
+  min-height: 500px;
 }
 
 .article-detail {
@@ -166,6 +214,99 @@ export default {
   }
 }
 
+
+.action-widget {
+  position: absolute;
+  top: 0;
+  left: -52px;
+  width: 36px;
+  margin-right: 16px;
+  z-index: 999;
+}
+
+.affix.is-fixed{
+  position: fixed;
+  margin-left: -2rem;
+  top: 10rem;
+  width: 36px;
+  z-index: 100;
+}
+
+.read-tool {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  .tool-meta {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    .tool-item {
+      background-color: #fff;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      box-shadow: 0 2px 4px 0 rgba(0,0,0,.04);
+      cursor: pointer;
+      display: block;
+      line-height: 3rem;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      .iconfont {
+        font-size: 22px;
+        font-weight: 300;
+      }
+      &.like {
+        &.liked {
+          .iconfont {
+            color: #74ca46;
+          }
+          &:after {
+            color: #fff;
+            background-color: #74ca46;
+          }
+        }
+        &:after {
+          content: attr(badge);
+          position: absolute;
+          top: 0;
+          left: 75%;
+          padding: .1rem .4rem;
+          font-size: 1rem;
+          text-align: center;
+          line-height: 1;
+          white-space: nowrap;
+          color: #fff;
+          background-color: #b2bac2;
+          border-radius: .7rem;
+          transform-origin: left top;
+          transform: scale(.75);
+        }
+      }
+      &.comment {
+        &:after {
+          content: attr(comment);
+          position: absolute;
+          top: 0;
+          left: 75%;
+          padding: .1rem .4rem;
+          font-size: 1rem;
+          text-align: center;
+          line-height: 1;
+          white-space: nowrap;
+          color: #fff;
+          background-color: #b2bac2;
+          border-radius: .7rem;
+          transform-origin: left top;
+          transform: scale(.75);
+        }
+      }
+
+    }
+
+  }
+}
 
 
 </style>

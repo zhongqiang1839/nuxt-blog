@@ -1,5 +1,3 @@
-'use strict'
-
 let BezierEasing = require('bezier-easing')
 
 let _ = {

@@ -25,22 +25,29 @@ export const mutations = {
   },
   SET_ART_SUCCESS (state, data) {
     let {docs, ...paginate} = data;
-    state.art = {
-      list: docs,
-      pagination: paginate
+    if(paginate.page == 1) {
+        state.art = {
+            list: docs,
+            pagination: paginate
+        }
+    } else {
+        state.art = {
+            list: [...state.art.list, ...docs],
+            pagination: paginate
+        }
     }
   },
-  SET_COMMENTS_LIST (state, data) {
+  SET_COMMENTS_LIST (state, { data }) {
       state.comments = {
-        list: [data.body, ...state.comments.list],
+        list: [data, ...state.comments.list],
         pagination: state.comments.pagination
       }
   },
-  LIKE_COMMENT (state, data) {
+  LIKE_COMMENT (state, { data }) {
       state.comments = {
         list: state.comments.list.map(item => {
-            if(item._id === data.body._id) {
-                item = data.body;
+            if(item._id === data._id) {
+                item = data;
                 item.likes += 1;
             }
             return item;
@@ -48,8 +55,8 @@ export const mutations = {
         pagination: state.comments.pagination
       }
   },
-  SET_COMMENTS_SUCCESS (state, data) {
-    let {docs, ...paginate} = data.body;
+  SET_COMMENTS_SUCCESS (state, { data }) {
+    let {docs, ...paginate} = data;
     state.comments = {
       list: docs,
       pagination: paginate
@@ -64,9 +71,12 @@ export const mutations = {
   TOOGLE_TAGS (state, data) {
     state.tags = data
   },
-  SET_DETAILS (state, data) {
-    state.details = data.body
+  SET_DETAILS (state, { data }) {
+    data.views +=1;
+    state.details = data
   },
-
-
+  SET_ARTICLE_LIKE(state, { data }) {
+    data.likes +=1;
+    state.details = data
+  }
 }
