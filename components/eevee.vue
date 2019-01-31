@@ -116,6 +116,13 @@ export default {
         String.prototype.renderTip = (context) => {
             return this.renderTip(this, context);
         };
+        $.each(FN_MESSAGE.mouseover, (index, tips) => {
+            $(tips.selector).mouseover(() => {
+                var text = tips.text;
+                if (Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1) - 1];
+                this.showMessage(text, 3000);
+            });
+        });
         $.each(FN_MESSAGE.click, (index, tips) => {
             $(tips.selector).click(() => {
                 var text = tips.text;
