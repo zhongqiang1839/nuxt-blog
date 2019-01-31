@@ -62,7 +62,7 @@ export default {
 
   scrollToTop: true,
 
-  layout: 'index',
+  // layout: 'index',
 
   fetch ({ store, params }) {
     return store.dispatch('getArtDetail', params)

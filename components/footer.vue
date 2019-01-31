@@ -1,5 +1,6 @@
 <template>
   <footer>
+    <eevee></eevee>
     <div class="container-wrapper">
       <div class="friends">
         <a href="">小星星</a>
@@ -21,6 +22,7 @@
 
 <script>
 
+import eevee from '~/components/eevee';
 
 export default {
   name: 'fn-header',
@@ -29,20 +31,14 @@ export default {
     }
   },
 
-  computed: {
-  },
-
-  watch: {
-  },
-
   methods: {
-  },
-
-  directives: {
   },
 
   mounted () {
 
+  },
+  components: {
+      eevee
   }
 }
 </script>

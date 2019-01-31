@@ -29,9 +29,9 @@ const paragraphParse = text => {
 
 // 对图片进行弹窗处理, 及懒加载处理
 const imageParse = (src, title, alt) => {
-  const index = src.indexOf('/', 8)
+    const index = src.indexOf('/', 8)
   const url = src.slice(index)
-  const link = 'http://static.Jason.me' + url
+  const link = src
   return `<img
             src="${link}?imageMogr2/auto-orient/interlace/1/blur/1x0/quality/75|watermark/2/text/amtjaGFvLmNu/font/5qW35L2T/fontsize/720/fill/I0ZERkRGRA==/dissolve/100/gravity/SouthEast/dx/10/dy/10|imageslim"
             title="${title || alt || 'Jason.cn'}"

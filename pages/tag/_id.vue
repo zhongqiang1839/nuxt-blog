@@ -22,9 +22,15 @@
         </a>
       </li>
     </ul>
-    <div class="pagination">
+    <div class="pagination" v-if="artlist.length">
       <button v-if="pagination.pages !== current_page" class="loadmore">Continue</button>
       <div v-else>No More!</div>
+    </div>
+    <div class="pagination" v-else>
+      <div class="page-not-null">
+        <img src="/images/undraw_empty_xct9.png" />
+      </div>
+      <div>is empty!</div>
     </div>
   </section>
 </template>
@@ -154,7 +160,13 @@ export default {
     }
     div {
       color: #666;
-      font-size: 12px;
+      font-size: 14px;
+    }
+  }
+
+  .page-not-null {
+    img {
+      width: 100%;
     }
   }
 

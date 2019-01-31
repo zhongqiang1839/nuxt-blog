@@ -1,4 +1,5 @@
 const pkg = require('./package')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'universal',
@@ -82,6 +83,12 @@ module.exports = {
       'gravatar',
       'highlight.js'
     ],
+    plugins: [
+        new webpack.ProvidePlugin({
+            '$': 'jquery'
+        })
+    ],
+
     /*
     ** You can extend webpack config here
     */

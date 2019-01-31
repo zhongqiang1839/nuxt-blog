@@ -22,7 +22,7 @@
         </a>
       </li>
     </ul>
-    <div class="pagination">
+    <div class="pagination" v-if="artlist.length">
       <button v-if="pagination.pages !== current_page" class="loadmore" @click="loadmore">Continue</button>
       <div v-else>No More!</div>
     </div>
