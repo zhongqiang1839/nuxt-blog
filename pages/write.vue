@@ -225,6 +225,7 @@ export default {
       this.commentContentChange()
     },
 
+
     insertContent(type) {
       const contents = {
         bold: {
