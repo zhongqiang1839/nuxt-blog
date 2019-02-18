@@ -4,7 +4,6 @@ module.exports = {
      * http://pm2.keymetrics.io/docs/usage/application-declaration/
      */
     apps: [
-
         // First application
         {
             name: 'server',
@@ -50,5 +49,4 @@ module.exports = {
             "post-deploy" : 'npm install &&  npm run build  && pm2 startOrRestart ecosystem.config.js --env production'
         }
     }
-
 };

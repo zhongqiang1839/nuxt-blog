@@ -26,6 +26,35 @@ export const ARTICLE_SOURCE = [
 ]
 
 
+export const FN_CATEGORYS = [
+    {
+        label: '前端技术',
+        value: 0,
+        code: 'skills',
+        isActive: true
+    },
+    {
+        label: '后端技术',
+        value: 1,
+        code: 'skills',
+        isActive: false
+    },
+    {
+        label: '生活点滴',
+        value: 2,
+        code: 'life',
+        isActive: false
+    },
+    {
+        label: '人在路上',
+        value: 3,
+        code: 'tour',
+        isActive: false
+    },
+]
+
+
+
 export const FN_MESSAGE = {
     "mouseover": [{
         "selector": ".posts-expand .post-title a, #menu li a",

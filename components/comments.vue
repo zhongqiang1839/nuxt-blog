@@ -1,26 +1,40 @@
 <template>
   <div class="comment-box" id="comment-box" >
-    <div class="tools">
-      <div class="total">
-        <strong class="count">{{ comment.pagination.total || 0 }}</strong>
-        <span>条评论</span>
-      </div>
-      <span class="line"></span>
-    </div>
     <form class="post-box" name="comment" id="post-box">
       <div class="editor-box">
+        <!--<div class="user">-->
+          <!--<div class="gravatar" >-->
+            <!--<img :alt="user.name || '匿名用户'"-->
+                 <!--:src="user.gravatar || '/images/user.jpeg'">-->
+          <!--</div>-->
+        <!--</div>-->
         <div class="user">
-          <div class="gravatar" >
-            <img :alt="user.name || '匿名用户'"
-                 :src="user.gravatar || '/images/user.jpeg'">
+          <div class="name">
+            <input required
+                   type="text"
+                   name="name"
+                   placeholder="称呼（必填）"
+                   v-model="user.name"
+                   maxlength="10">
+          </div>
+          <div class="email">
+            <input required
+                   type="email"
+                   name="email"
+                   placeholder="邮箱（必填，不会公开）"
+                   v-model="user.email"
+                   @blur="updateUserGravatar"
+                   maxlength="40">
+          </div>
+          <div class="site">
+            <input type="url" name="url" placeholder="网站（http, https:// 开头，非必填）" v-model="user.site" maxlength="40">
           </div>
         </div>
         <div class="editor">
-          <transition-group tag="div" name="list">
             <div class="will-reply" v-if="!!pid" key="1">
               <div class="reply-user">
                 <span>
-                  <span>回复: {{ replyCommentSelf.name }}</span>
+                  <span>回复: @{{ replyCommentSelf.name }}</span>
                 </span>
                 <a href="" class="cancel iconfont icon-undo" @click.stop.prevent="cancelCommentReply">取消</a>
               </div>
@@ -33,16 +47,19 @@
               <div class="markdown-editor"
                    ref="markdown"
                    contenteditable="true"
-                   placeholder="写下你的评论..."
+                   placeholder="你就不想说点什么，占个板凳..."
                    @keyup="commentContentChange($event)">
               </div>
             </div>
             <div class="editor-tools" key="3">
-              <a href="" class="image" title="bold" @click.stop.prevent="insertContent('bold')">
-                <i class="iconfont icon-bold"></i>
-              </a>
-              <a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">
-                <i class="iconfont icon-italic"></i>
+              <!--<a href="" class="image" title="bold" @click.stop.prevent="insertContent('bold')">-->
+                <!--<i class="iconfont icon-bold"></i>-->
+              <!--</a>-->
+              <!--<a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">-->
+                <!--<i class="iconfont icon-italic"></i>-->
+              <!--</a>-->
+              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojinShow = !emojinShow">
+                <i class="iconfont icon-smile"></i>
               </a>
               <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
                 <i class="iconfont icon-image"></i>
@@ -50,11 +67,11 @@
               <a href="" class="link" title="link" @click.stop.prevent="insertContent('link')">
                 <i class="iconfont icon-link"></i>
               </a>
-              <a href="" class="code" title="code" @click.stop.prevent="insertContent('code')">
+              <a href="" alt="Markdown is support" class="code" title="code" @click.stop.prevent="insertContent('code')">
                 <i class="iconfont icon-code"></i>
               </a>
-              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojinShow = !emojinShow">
-                <i class="iconfont icon-smile"></i>
+              <a href="https://segmentfault.com/markdown" target="_blank" class="emoji" title="emoji">
+                <i class="iconfont icon-markdown"></i>
               </a>
               <div class="emoji-box" v-show="emojinShow">
                 <ul class="emoji-list">
@@ -83,64 +100,13 @@
               </div>
               <button type="submit"
                       class="submit"
-                      :disabled="comment.posting"
                       @click="submitComment($event)">
-                <span>{{ comment.posting ? '发布中...' : '发布' }}</span>
+                <span>回复</span>
                 <i class="iconfont icon-release"></i>
               </button>
             </div>
-          </transition-group>
         </div>
       </div>
-      <!-- 用户编辑部分 -->
-      <transition name="module" mode="out-in">
-        <div class="user">
-          <div class="name">
-            <input required
-                   type="text"
-                   name="name"
-                   placeholder="称呼（必填）"
-                   v-model="user.name"
-                   maxlength="10">
-          </div>
-          <div class="email">
-            <input required
-                   type="email"
-                   name="email"
-                   placeholder="邮箱（必填，不会公开）"
-                   v-model="user.email"
-                   @blur="updateUserGravatar"
-                   maxlength="40">
-          </div>
-          <div class="site">
-            <input
-              type="url"
-              name="url"
-              placeholder="网站（http, https:// 开头，非必填）"
-              v-model="user.site"
-              maxlength="40">
-          </div>
-          <!--<div class="save" v-if="userCacheEditing">-->
-            <!--<button type="submit" @click="updateUserCache($event)">-->
-              <!--<i class="iconfont icon-success"></i>-->
-            <!--</button>-->
-          <!--</div>-->
-        </div>
-        <!-- 用户设置部分 -->
-        <!--<div class="user" v-else-if="userCacheMode && !userCacheEditing">-->
-          <!--<div class="edit">-->
-            <!--<strong class="name">{{ user.name }}</strong>-->
-            <!--<a href="" class="setting" @click.stop.prevent>-->
-              <!--<i class="iconfont icon-setting"></i>-->
-              <!--<span>账户设置</span>-->
-              <!--<ul class="user-tool">-->
-                <!--<li @click.stop.prevent="userCacheEditing = true">编辑信息</li>-->
-                <!--<li @click.stop.prevent="clearUserCache">清空信息</li>-->
-              <!--</ul>-->
-            <!--</a>-->
-          <!--</div>-->
-        <!--</div>-->
-      </transition>
     </form>
 
     <transition-group name="list" tag="span">
@@ -544,7 +510,6 @@
   .reply-preview {
     font-size: 1em;
     line-height: 2em;
-    margin: .8em 0;
     word-wrap: break-word;
 
     a {
@@ -595,45 +560,7 @@
     padding: 1rem 0;
     margin-top: 1rem;
     font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-    > .tools {
-      position: relative;
-      display: flex;
-      padding: 1em 0;
-      padding-top: 0;
-      align-items: center;
-      justify-content: space-between;
 
-      >.total {
-        position: relative;
-        padding-right: 1.5rem;
-        color: #24292e;
-        font-weight: 500;
-        z-index: 99;
-      }
-      >.line {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        height: 1px;
-        color: #eee;
-        background: currentColor;
-      }
-
-      > .sort {
-
-        > .sort-btn {
-          margin-left: 1em;
-
-          &.actived {
-            color: #000;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-
-    // > .empty-box,
     .loading {
       font-weight: bold;
       text-align: center;
@@ -708,13 +635,6 @@
                 }
               }
 
-              // >.reply {
-              //   a {
-              //     font-weight: bold;
-              //     margin-left: .3rem;
-              //   }
-              // }
-
               > .flool {
                 color: #a6a6a6;
                 font-size: .85rem;
@@ -729,8 +649,8 @@
 
               > .reply-box {
                 padding: .8rem;
-                margin-bottom: .8rem;
-                border-left: 3px solid #eee;
+                margin: .8rem 0;
+                border-left: 3px dashed #eee;
 
                 >.reply-name {
                   color: #666;
@@ -797,239 +717,106 @@
       }
     }
 
-    > .pagination-box {
-      margin: .5rem;
-
-      > .pagination-list {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        list-style-type: none;
-
-        > .item {
-          margin: 0 0.5em;
-
-          > .pagination-btn {
-            display: inline-block;
-            width: 2rem;
-            height: 2rem;
-            display: inline-block;
-            line-height: 2rem;
-            text-align: center;
-
-            &.prev,
-            &.next {
-              width: 5em;
-              font-size: .9em;
-            }
-
-            &.disabled {
-              cursor: no-drop;
-              opacity: .5;
-            }
-
-          }
-        }
-      }
-    }
-
     > .post-box {
       display: block;
       padding: 1rem;
       background-color: hsla(0, 0%, 100%, 0.8);
       box-shadow: 0 0 14px 2px #ebebeb;
       border-radius: 2px;
-      > .user {
-        display: flex;
-        padding-left: 3rem;
-        margin-top: .3rem;
-        width: 100%;
-        height: 2em;
-        line-height: 2em;
-
-        > .edit {
-          flex-grow: 1;
-          text-align: right;
-          line-height: 2em;
-          position: relative;
-
-          > .name {
-            font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-          }
-
-          > .setting {
-            margin-left: 1rem;
-            font-size: 1rem;
-            display: inline-block;
-
-            &:hover {
-
-              > .user-tool {
-                display: block;
-              }
-            }
-
-
-            > .iconfont {
-              margin-right: .5rem;
-            }
-
-            > .user-tool {
-              display: none;
-              position: absolute;
-              right: 0;
-              top: 2em;
-              margin: 0;
-              padding: 0;
-              padding-top: .5rem;
-              list-style-type: square;
-              background: #fff;
-              z-index: 99;
-
-              li {
-                padding: 0 1rem;
-
-                &:hover {
-                  background: rgba(0, 0, 0, 0.12);
-                }
-              }
-            }
-          }
-        }
-
-        > .save {
-          width: 10%;
-          margin-left: 1em;
-          flex-grow: 1;
-          line-height: 2em;
-          text-align: center;
-          font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-
-          > button {
-            display: block;
-            width: 100%;
-            padding: 0;
-            border: 0;
-            color: #5ab95c;
-          }
-        }
-
-        > .name,
-        > .email,
-        > .site {
-          font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-          flex-grow: 1;
-
-          > input {
-            width: 100%;
-            height: 2em;
-            padding: .5rem;
-            background: transparent;
-            border: 1px solid #eee;
-            border-radius: 4px;
-
-
-            &:hover {
-              border-color: #8391a5;
-            }
-
-            &:focus {
-              border-color: #000;
-            }
-          }
-        }
-
-        > .name,
-        > .email {
-          margin-right: 1em;
-        }
-      }
 
       > .editor-box {
         width: 100%;
-        display: flex;
-
+        border-radius: 4px;
+        border: 1px solid rgba(36, 41, 46, 0.12);
         > .user {
-          margin-right: 1em;
+          display: flex;
+          width: 100%;
+          height: 2em;
+          line-height: 2em;
 
-          > .gravatar {
-            display: block;
-            margin-bottom: .5em;
-            width: 36px;
-            height: 36px;
-
-            > img {
+          > .name,
+          > .email,
+          > .site {
+            flex-grow: 1;
+            > input {
               width: 100%;
-              height: 100%;
-              transition: transform .5s ease-out;
-              border-radius: 50%;
+              padding: 10px .5rem;
+              background: transparent;
+              border: none;
+              resize: none;
+              outline: none;
+              max-width: 100%;
+              font-size: .775rem;
+              border-bottom: 1px dashed #dedede;
+
+              &:hover {
+                border-color: #999;
+              }
+
+              &:focus {
+                border-color: #999;
+              }
             }
           }
         }
         > .editor {
           flex-grow: 1;
           position: relative;
-          max-width: calc(100% - 56px);
           .will-reply {
             font-size: .95em;
-            margin-bottom: 1em;
+            color: #999;
             > .reply-user {
               display: flex;
               justify-content: space-between;
-              margin-bottom: 1rem;
-              padding: 0 1rem;
+              padding: .4rem 1rem;
               height: 2.6em;
               line-height: 2.6em;
-              border: 1px solid #eee;
-              border-radius: 4px;
               .cancel {
                 &:hover {
-                  color: red;
+                  color: #db384c;
                 }
               }
             }
             > .reply-preview {
               max-height: 10em;
               overflow: auto;
-              padding: 1rem;
-              border: 1px solid #eee;
-              border-radius: 4px;
+              padding: .5rem 1rem;
+              border-bottom: 1px solid #eee;
             }
           }
           .markdown {
             position: relative;
             overflow: hidden;
             > .markdown-editor {
-              min-height: 6em;
+              min-height: 8em;
               max-height: 30em;
               overflow: auto;
               outline: none;
               padding: .5em;
               cursor: auto;
-              font-size: .95em;
+              font-size: .85em;
               line-height: 1.8em;
-              border: 1px solid rgba(36,41,46,.12);
-              border-radius: 4px;
+              border-bottom: 1px dashed rgba(36,41,46,.12);
               &:empty:before{
                 content: attr(placeholder);
                 color: grey;
               }
               &:focus{
-                content:none;
+                content: none;
               }
             }
           }
           .editor-tools {
             height: 2rem;
             line-height: 2rem;
-            margin-top: .4rem;
+            position: relative;
 
             > .emoji-box {
-              width: 250px;
               padding: .5rem;
-              background-color: #fff;
               z-index: 999;
+              border: 1px solid #eee;
+              background-color: #fff;
+              position: absolute;
 
               > .emoji-list {
                 list-style: none;
@@ -1039,23 +826,8 @@
                 > .item {
                   padding: 0 .2em;
                   cursor: pointer;
-
-                  /*&:hover {*/
-                  /*background: rgba(0, 0, 0, 0.12);*/
-                  /*}*/
                 }
               }
-            }
-
-            > .emoji {
-
-
-
-              /*&:hover {*/
-                /*> .emoji-box {*/
-                  /*display: block;*/
-                /*}*/
-              /*}*/
             }
 
             > .emoji,
@@ -1075,26 +847,21 @@
 
             > .submit {
               float: right;
-              color: #fff;
-              background-color: #7b72e9;
-              border-radius: 4px;
+              color: #999;
+              height: 100%;
               position: relative;
               display: inline-block;
-              padding: 7px 13px;
               font-size: 14px;
               font-weight: 500;
               line-height: 20px;
-              white-space: nowrap;
-              vertical-align: middle;
               cursor: pointer;
               user-select: none;
-              background-size: 110% 110%;
               border: none;
               appearance: none;
+              background: transparent;
               span {
-                margin-right: .5rem;
+                margin-right: .1rem;
               }
-
               &:hover {
                 background: rgba(0, 0, 0, 0.12);
               }

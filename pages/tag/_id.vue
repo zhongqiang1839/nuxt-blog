@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: 'my-articlelist',
+  name: 'my-articles',
 
   fetch ({ store, params }) {
     return store.dispatch('getArticleList', params)
@@ -51,23 +51,19 @@ export default {
       current_page: 1,
     }
   },
-
   computed: {
     artlist () {
-      return this.$store.state.article.art.list
+      return this.$store.state.article.art.list;
     },
     pagination () {
-      return this.$store.state.article.art.pagination
+      return this.$store.state.article.art.pagination;
     },
   },
-
   methods: {
     hide () {
       this.showDialog = false
     },
-
   },
-
   mounted () {
   }
 }

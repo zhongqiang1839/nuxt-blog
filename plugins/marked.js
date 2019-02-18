@@ -13,9 +13,9 @@ marked.setOptions({
   smartLists: true,
   smartypants: false,
   highlight (code, lang) {
-    if (!~languages.indexOf(lang)) {
-      return Hljs.highlightAuto(code).value
-    }
+    // if (!~languages.indexOf(lang)) {
+    //   return Hljs.highlightAuto(code).value
+    // }
     return Hljs.highlight(lang, code).value
   }
 })
@@ -29,7 +29,7 @@ const paragraphParse = text => {
 
 // 对图片进行弹窗处理, 及懒加载处理
 const imageParse = (src, title, alt) => {
-    const index = src.indexOf('/', 8)
+  const index = src.indexOf('/', 8)
   const url = src.slice(index)
   const link = src
   return `<img

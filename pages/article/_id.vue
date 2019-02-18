@@ -83,7 +83,7 @@ export default {
       return this.$store.state.article.details
     },
     articleContent () {
-      return markdown(this.artItem.content, false, true).html
+      return markdown(this.artItem.content, true, true).html
     },
   },
 
@@ -138,8 +138,6 @@ export default {
   }
 }
 
-
-
 .card {
   position: relative;
   margin-bottom: 16px;
@@ -149,7 +147,6 @@ export default {
   border-radius: 2px;
   min-height: 500px;
 }
-
 .article-detail {
   padding: 16px;
   overflow: hidden;
@@ -302,11 +299,7 @@ export default {
           transform: scale(.75);
         }
       }
-
     }
-
   }
 }
-
-
 </style>

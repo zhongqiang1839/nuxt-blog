@@ -41,8 +41,7 @@ export default {
 
   layout: 'index',
 
-  fetch ({ store }) {
-  },
+  fetch ({ store }) {},
 
   data () {
     return {
@@ -50,17 +49,13 @@ export default {
     }
   },
 
-  computed: {
-  },
+  computed: {},
   methods: {
     loadMore() {
-
     }
   },
-
   mounted() {
   },
-
   components: {
   }
 }
@@ -127,6 +122,4 @@ export default {
     }
   }
 }
-
-
 </style>

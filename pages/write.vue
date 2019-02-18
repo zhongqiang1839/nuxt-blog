@@ -18,6 +18,17 @@
             <i>文章分类</i>
             <div class="tag-list">
               <div class="tag-item"
+                   v-for="(item, index) in categorys"
+                   :class="{'active': item.isActive}"
+                   @click="toggleCategory(item)"
+                   :key="item.value"
+              >
+                {{item.label}}
+              </div>
+            </div>
+            <i>文章标签</i>
+            <div class="tag-list">
+              <div class="tag-item"
                    :class="{'active': item.isActive}"
                    v-for="(item, index) in tagslist"
                    @click="toggleTags(item)"
@@ -106,7 +117,7 @@
 <script>
 
 import markdown from '~/plugins/marked'
-import { ARTICLE_SOURCE } from '~/utils/constant'
+import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
 
 export default {
 
@@ -117,10 +128,12 @@ export default {
       articleTitle: '',
       commentContentHtml: '',
       isSubmitshow: false,
+      type: '',
       tags: [],
       tagName: '',
       keywords: '',
-      source: ARTICLE_SOURCE
+      source: ARTICLE_SOURCE,
+      categorys: FN_CATEGORYS
     }
 
   },
@@ -133,7 +146,6 @@ export default {
           item.isActive = index === 0;
         })
       }
-      console.log(tags);
       return tags
     },
   },
@@ -141,28 +153,36 @@ export default {
   methods: {
     //切换标签
     toggleTags(item) {
-      this.tagslist.map(temp => temp.isActive = item.id === temp.id)
+      item.isActive = !item.isActive;
       this.$forceUpdate();
     },
     toggleTypes(item) {
-      this.source.map(temp => temp.isActive = item.value === temp.value)
+      this.source.map(temp => temp.isActive = item.value === temp.value);
+      this.$forceUpdate();
+    },
+    toggleCategory(item) {
+      this.categorys.map(temp => temp.isActive = item.value === temp.value);
       this.$forceUpdate();
     },
     async submitComment(event) {
-      event.preventDefault()
+      event.preventDefault();
       if(!this.articleTitle || !this.articleTitle.replace(/\s/g, '')) return alert('标题呢？');
       if(!this.commentContentHtml || !this.commentContentHtml.replace(/\s/g, '')) return alert('内容呢？');
-      let tagitem = this.tagslist.filter((item) => item.isActive)[0];
+      let tagArr = this.tagslist.map((item) => {
+          if(item.isActive) return item._id;
+      }).filter(item => item !== undefined);
       let sourceItem = this.source.filter(item => item.isActive)[0];
+      let categoryItem = this.categorys.filter(item => item.isActive)[0];
       let res = await this.$store.dispatch('postArticle', {
         title: this.articleTitle,
         content: this.commentContentHtml,
-        description: '描述',
-        keyword: this.tagName,
+        description: tagArr.join(','),
+        keyword: tagArr.join(','),
         tagName: this.tagName,
-        tag: this.tagName ? this.tagName : tagitem._id,
-        source: sourceItem.value
-      })
+        tag: tagArr,
+        source: sourceItem.value,
+        type: categoryItem.value,
+      });
       if(res.code === 200) {
         alert('文章写入成功');
         this.clearCommentContent();
@@ -176,8 +196,8 @@ export default {
     },
     // 编辑器相关
     commentContentChange() {
-      const html = this.$refs.markdown.innerHTML
-      const text = this.$refs.markdown.innerText
+      const html = this.$refs.markdown.innerHTML;
+      const text = this.$refs.markdown.innerText;
       if (!Object.is(html, this.commentContentHtml)) {
         this.commentContentHtml = html
       }
@@ -186,24 +206,25 @@ export default {
       }
     },
     updateCommentContent({ start = '', end = '' }) {
-      if (!start && !end) return false
+      if (!start && !end) return false;
       // 如果选中了内容，则把选中的内容替换，否则在光标位置插入新内容
-      const selectedText = (window.getSelection || document.getSelection)().toString()
-      const currentText = this.$refs.markdown.innerText
+      const selectedText = (window.getSelection || document.getSelection)().toString();
+      const currentText = this.$refs.markdown.innerText;
       if (!!selectedText) {
-        const newText = currentText.replace(selectedText, start + selectedText + end)
+        const newText = currentText.replace(selectedText, start + selectedText + end);
         this.$refs.markdown.innerText = newText
       } else {
-        this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end)
+        this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end);
         this.$refs.markdown.scrollTop = this.$refs.markdown.scrollHeight
       }
       this.commentContentChange()
     },
     clearCommentContent(content) {
-      this.commentContentHtml = ''
-      this.$refs.markdown.innerHTML = this.commentContentHtml
+      this.commentContentHtml = '';
+      this.$refs.markdown.innerHTML = this.commentContentHtml;
       this.commentContentChange()
     },
+
     insertContent(type) {
       const contents = {
         bold: {
@@ -226,10 +247,9 @@ export default {
           start: '\n```javascript\n',
           end: '\n```'
         }
-      }
+      };
       this.updateCommentContent(contents[type])
     },
-
     insertEmoji(emoji) {
       this.updateCommentContent({ start: '', end: emoji })
     },

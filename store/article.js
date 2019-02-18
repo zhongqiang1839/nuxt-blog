@@ -18,14 +18,14 @@ export const state = () => {
     // 文章详情
     details: {}
   }
-}
+};
 
 export const mutations = {
   FETCH_ART (state) {
   },
-  SET_ART_SUCCESS (state, data) {
+  SET_ART_SUCCESS (state, { data }) {
     let {docs, ...paginate} = data;
-    if(paginate.page == 1) {
+    if(paginate.page === 1) {
         state.art = {
             list: docs,
             pagination: paginate
@@ -65,8 +65,8 @@ export const mutations = {
   SET_ART_FAIL (state) {
     state.art = { pagination: {}, list: [] }
   },
-  SET_TAG_SUCCESS (state, data) {
-    state.tags = data.body;
+  SET_TAG_SUCCESS (state, { data }) {
+    state.tags = data;
   },
   TOOGLE_TAGS (state, data) {
     state.tags = data
@@ -79,4 +79,4 @@ export const mutations = {
     data.likes +=1;
     state.details = data
   }
-}
+};

@@ -178,7 +178,7 @@ export default {
   mounted () {
       this.initTips();
       this.init();
-      window.setInterval(this.showHitokoto, 5000);
+      window.setInterval(this.showHitokoto, 20000);
   }
 
 }
