@@ -16,7 +16,7 @@
 <script>
   import myHeader from '~/components/header'
   import myFooter from '~/components/footer'
-  import myTags from '~/components/tags'
+  import myAside from '~/components/myAside'
   import userInfo from '~/components/user'
   import myBackground from '~/components/backgrond'
 
@@ -28,7 +28,7 @@
     components: {
       myHeader,
       myFooter,
-      myTags,
+      myAside,
       myBackground,
       userInfo
     },
@@ -52,7 +52,7 @@
 }
 
 .welcome-view>.view {
-  margin-top: 1.767rem;
+  margin-top: .8rem;
 }
 
 .welcome-view {

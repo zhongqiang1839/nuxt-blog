@@ -19,4 +19,12 @@ export const mutations = {
   SET_ADMIN_INFO (state, action) {
     state.adminInfo = action
   },
+  // 设置是否移动端状态
+  SET_MOBILE_LAYOUT (state, action) {
+    state.mobileLayout = action
+  },
+  // 设置UA
+  SET_USER_AGENT (state, action) {
+    state.userAgent = action
+  },
 };

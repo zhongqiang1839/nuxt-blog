@@ -2,12 +2,6 @@
   <div class="comment-box" id="comment-box" >
     <form class="post-box" name="comment" id="post-box">
       <div class="editor-box">
-        <!--<div class="user">-->
-          <!--<div class="gravatar" >-->
-            <!--<img :alt="user.name || '匿名用户'"-->
-                 <!--:src="user.gravatar || '/images/user.jpeg'">-->
-          <!--</div>-->
-        <!--</div>-->
         <div class="user">
           <div class="name">
             <input required
@@ -47,7 +41,7 @@
               <div class="markdown-editor"
                    ref="markdown"
                    contenteditable="true"
-                   placeholder="你就不想说点什么，占个板凳..."
+                   placeholder="你就不想说点什么,或者占个板凳..."
                    @keyup="commentContentChange($event)">
               </div>
             </div>
@@ -58,7 +52,7 @@
               <!--<a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">-->
                 <!--<i class="iconfont icon-italic"></i>-->
               <!--</a>-->
-              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojinShow = !emojinShow">
+              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojiShow = !emojiShow">
                 <i class="iconfont icon-smile"></i>
               </a>
               <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
@@ -73,7 +67,7 @@
               <a href="https://segmentfault.com/markdown" target="_blank" class="emoji" title="emoji">
                 <i class="iconfont icon-markdown"></i>
               </a>
-              <div class="emoji-box" v-show="emojinShow">
+              <div class="emoji-box" v-show="emojiShow">
                 <ul class="emoji-list">
                   <li class="item" @click="insertEmoji('😃')">😃</li>
                   <li class="item" @click="insertEmoji('😂')">😂</li>
@@ -108,9 +102,7 @@
         </div>
       </div>
     </form>
-
     <transition-group name="list" tag="span">
-      <!-- <div class="empty-box" v-if="!comment.data.data.length && !comment.fetching">暂无评论</div> -->
       <div class="list-box" v-if="comment.list.length && comment.list.length !== 0" key="1">
         <transition-group name="list" tag="ul" class="comment-list">
           <li class="comment-item"
@@ -133,14 +125,12 @@
                    rel="external nofollow"
                    :href="commentItem.site"
                    @click.stop="($event, commentItem.site)">
-                  <!--<img :alt="comment.name || '匿名用户'"-->
-                       <!--:src="gravatar(comment.email) || '/images/anonymous.jpg'"-->
-                       <!--width="24px"-->
-                       <!--style="margin-right: 10px;">-->
                   <span>{{ commentItem.name }}</span>
                 </a>
-
-                <span class="flool">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
+                <div class="meta">
+                  <span class="os" v-html="OSParse(commentItem.agent)"></span>
+                  <span class="ua" v-html="UAParse(commentItem.agent)"></span>
+                </div>
               </div>
               <div class="cm-content">
                 <div class="reply-box" v-if="!!commentItem.pid">
@@ -159,16 +149,19 @@
                 <div v-html="marked(commentItem.content)"></div>
               </div>
               <div class="cm-footer">
-                <a href=""
-                   class="like"
-                   :class="{ liked: commentLiked(commentItem._id), actived: !!commentItem.likes }"
-                   @click.stop.prevent="likeComment(commentItem)">
-                  <i class="iconfont icon-like"></i>
-                  <span>顶&nbsp;({{ commentItem.likes }})</span></a>
-                <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
-                  <i class="iconfont icon-reply"></i>
-                  <span>回复</span>
-                </a>
+                <div class="operate-box">
+                  <a href="" class="like"
+                     :class="{ liked: commentLiked(commentItem._id), actived: !!commentItem.likes }"
+                     @click.stop.prevent="likeComment(commentItem)">
+                    <i class="iconfont icon-like"></i>
+                    <span>顶&nbsp;({{ commentItem.likes }})</span>
+                  </a>
+                  <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
+                    <i class="iconfont icon-reply"></i>
+                    <span>回复</span>
+                  </a>
+                </div>
+                <span class="floor">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
               </div>
             </div>
           </li>
@@ -185,22 +178,22 @@
   import markdown from '~/plugins/marked'
   import gravatar from '~/plugins/gravatar'
   // import { scrollTo } from '~/utils/scroll'
-  import { UAParse, OSParse } from '~/utils/meta-parse'
   import loadingCom from '~/components/pageLoading/pageLoading'
   import _ from '~/utils/underscore'
+  import { UAParse, OSParse } from '~/utils/meta-parse'
+
   export default {
     name: 'fn-comment',
-
     data () {
       return {
         // 父级评论
         pid: 0,
         // 评论排序
         sortMode: 1,
-        emojinShow: false,
+        emojiShow: false,
         // 编辑器相关
         commentContentHtml: '',
-        comemntContentText: '',
+        commentContentText: '',
         previewContent: '',
         previewMode: false,
         // 用户相关
@@ -228,13 +221,15 @@
     },
 
     fetch() {
-
     },
 
     components: { loadingCom },
 
     computed: {
 
+      userAgent() {
+        return this.$store.state.options.userAgent
+      },
       comment() {
         return this.$store.state.article.comments
       },
@@ -246,7 +241,8 @@
     },
 
     mounted () {
-      this.initUser()
+
+      this.initUser();
 
       this.loadCommentList()
 
@@ -274,20 +270,16 @@
     },
     destroyed() {
       window.onscroll = null
-      // this.$store.commit('comment/CLEAR_LIST')
     },
     methods: {
-
-      openEmoji() {
-
-      },
+      UAParse, OSParse,
       // markdown解析服务
       marked(content) {
         return markdown(content, null, false).html
       },
       // 头像服务
       gravatar(email) {
-        if (!this.regexs.email.test(email)) return null
+        if (!this.regexs.email.test(email)) return null;
         let gravatar_url = gravatar.url(email, {
           protocol: 'https'
         });
@@ -296,61 +288,61 @@
       // 初始化本地用户即本地用户的点赞历史
       initUser() {
         if (localStorage) {
-          const user = localStorage.getItem('BLOG_USER')
-          const likeComments = localStorage.getItem('LIKE_COMMENTS')
-          if (likeComments) this.likeComments = JSON.parse(likeComments)
+          const user = localStorage.getItem('BLOG_USER');
+          const likeComments = localStorage.getItem('LIKE_COMMENTS');
+          if (likeComments) this.likeComments = JSON.parse(likeComments);
           if (user) {
-            this.user = JSON.parse(user)
-            this.updateUserGravatar()
+            this.user = JSON.parse(user);
+            this.updateUserGravatar();
             this.userCacheMode = true
           }
         }
       },
       // 更新当前用户头像
       updateUserGravatar() {
-        const emailIsVerified = this.regexs.email.test(this.user.email)
+        const emailIsVerified = this.regexs.email.test(this.user.email);
         this.user.gravatar = emailIsVerified ? this.gravatar(this.user.email) : null
       },
       // 编辑器相关
       commentContentChange() {
-        const html = this.$refs.markdown.innerHTML
-        const text = this.$refs.markdown.innerText
+        const html = this.$refs.markdown.innerHTML;
+        const text = this.$refs.markdown.innerText;
         if (!Object.is(html, this.commentContentHtml)) {
           this.commentContentHtml = html
         }
-        if (!Object.is(text, this.comemntContentText)) {
-          this.comemntContentText = text
+        if (!Object.is(text, this.commentContentText)) {
+          this.commentContentText = text
         }
       },
       updateCommentContent({ start = '', end = '' }) {
-        if (!start && !end) return false
+        if (!start && !end) return false;
         // 如果选中了内容，则把选中的内容替换，否则在光标位置插入新内容
-        const selectedText = (window.getSelection || document.getSelection)().toString()
-        const currentText = this.$refs.markdown.innerText
+        const selectedText = (window.getSelection || document.getSelection)().toString();
+        const currentText = this.$refs.markdown.innerText;
         if (!!selectedText) {
-          const newText = currentText.replace(selectedText, start + selectedText + end)
+          const newText = currentText.replace(selectedText, start + selectedText + end);
           this.$refs.markdown.innerText = newText
         } else {
-          this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end)
+          this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end);
           this.$refs.markdown.scrollTop = this.$refs.markdown.scrollHeight
         }
         this.commentContentChange()
       },
       clearCommentContent(content) {
-        this.commentContentHtml = ''
-        this.$refs.markdown.innerHTML = this.commentContentHtml
+        this.commentContentHtml = '';
+        this.$refs.markdown.innerHTML = this.commentContentHtml;
         this.commentContentChange()
       },
       insertContent(type) {
         const contents = {
-          bold: {
-            start: `**`,
-            end: `**`
-          },
-          italicage: {
-            start: `*`,
-            end: `*`
-          },
+          // bold: {
+          //   start: `**`,
+          //   end: `**`
+          // },
+          // italicage: {
+          //   start: `*`,
+          //   end: `*`
+          // },
           image: {
             start: `![`,
             end: `]()`
@@ -363,7 +355,7 @@
             start: '\n```javascript\n',
             end: '\n```'
           }
-        }
+        };
         this.updateCommentContent(contents[type])
       },
 
@@ -373,15 +365,15 @@
 
       // 切换预览模式
       togglePreviewMode() {
-        this.previewContent = this.marked(this.comemntContentText)
+        this.previewContent = this.marked(this.commentContentText);
         this.previewMode = !this.previewMode
       },
 
       // 评论排序
       async sortComemnts (sort) {
         if (!Object.is(this.sortMode, sort)) {
-          this.sortMode = sort
-          await this.loadCommentList()
+          this.sortMode = sort;
+          await this.loadCommentList();
           setTimeout(() => {
             this.toSomeAnchorById('comment-box')
           }, 300)
@@ -395,19 +387,19 @@
 
       // 跳转到某条指定的id位置
       toSomeAnchorById(id) {
-        const targetDom = document.getElementById(id)
+        const targetDom = document.getElementById(id);
         if (targetDom) {
-          let isToEditor = Object.is(id, 'post-box')
-          let isCommentBox = Object.is(id, 'comment-box')
-          scrollTo(targetDom, 500, { offset: isToEditor ? -110 : isCommentBox ? -70 : -300 })
+          let isToEditor = Object.is(id, 'post-box');
+          let isCommentBox = Object.is(id, 'comment-box');
+          scrollTo(targetDom, 500, { offset: isToEditor ? -110 : isCommentBox ? -70 : -300 });
           // 如果是进入编辑模式，则需要激活光标
           if (isToEditor) {
-            let p = this.$refs.markdown
-            let s = window.getSelection()
-            let r = document.createRange()
-            r.setStart(p, p.childElementCount)
-            r.setEnd(p, p.childElementCount)
-            s.removeAllRanges()
+            let p = this.$refs.markdown;
+            let s = window.getSelection();
+            let r = document.createRange();
+            r.setStart(p, p.childElementCount);
+            r.setEnd(p, p.childElementCount);
+            s.removeAllRanges();
             s.addRange(r)
           }
         }
@@ -415,32 +407,32 @@
 
       // 回复评论
       replyComment(comment) {
-        this.pid = comment.id
-        this.toSomeAnchorById('post-box')
+        this.pid = comment.id;
+        this.toSomeAnchorById('post-box');
       },
       // 取消回复
       cancelCommentReply() {
-        this.pid = 0
+        this.pid = 0;
       },
       // 找到回复来源
       fondReplyParent(pid) {
-        const parent = this.comment.list.find(comment => Object.is(comment.id, pid))
-        return parent ? parent.name : null
+        const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
+        return parent ? parent.name : null;
       },
 
       // 回复来源内容
       fondReplyParentContent (pid) {
-        const parent = this.comment.list.find(comment => Object.is(comment.id, pid))
-        const content = parent ? parent.content : null
-        return this.marked(content)
+        const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
+        const content = parent ? parent.content : null;
+        return this.marked(content);
       },
 
       // 点赞某条评论
       likeComment(comment) {
-        if (this.commentLiked(comment._id)) return false
+        if (this.commentLiked(comment._id)) return false;
         this.$store.dispatch('likeComment', { _id: comment._id })
           .then(data => {
-            this.likeComments.push(comment._id)
+            this.likeComments.push(comment._id);
             localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
           })
           .catch(err => {
@@ -449,12 +441,12 @@
       },
       // 获取某条评论是否被点赞
       commentLiked(comment_id) {
-        return this.likeComments.includes(comment_id)
+        return this.likeComments.includes(comment_id);
       },
 
       // 获取评论列表
       async loadCommentList(params = {}) {
-        params.sort = this.sortMode
+        params.sort = this.sortMode;
         const res = await this.$store.dispatch('loadCommentsByPostId', {
           ...params,
           post_id: this.postId
@@ -471,33 +463,35 @@
       // 提交评论
       async submitComment(event) {
         // 为了使用原生表单拦截，不使用事件修饰符
-        event.preventDefault()
-        if (!this.user.name) return alert('名字？')
-        if (!this.user.email) return alert('邮箱？')
-        if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法')
-        if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法')
-        if(!this.comemntContentText || !this.comemntContentText.replace(/\s/g, '')) return alert('内容？')
-        const lineOverflow = this.comemntContentText.split('\n').length > 36
-        const lengthOverflow = this.comemntContentText.length > 1000
-        if(lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内')
+        event.preventDefault();
 
-        if (!this.user.site) delete this.user.site
+        if (!this.user.name) return alert('名字？');
+        if (!this.user.email) return alert('邮箱？');
+        if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法');
+        if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法');
+        if(!this.commentContentText || !this.commentContentText.replace(/\s/g, '')) return alert('内容？');
+        const lineOverflow = this.commentContentText.split('\n').length > 36;
+        const lengthOverflow = this.commentContentText.length > 1000;
+        if(lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内');
+        if (!this.user.site) delete this.user.site;
+
         const res = await this.$store.dispatch('postComment', {
           pid: this.pid,
           post_id: this.postId,
-          content: this.comemntContentText,
+          content: this.commentContentText,
           name: this.user.name,
           email: this.user.email,
-          site: this.user.site
-        })
+          site: this.user.site,
+          agent: this.userAgent
+        });
         if (res.code === 200) {
-          this.previewMode = false
-          this.userCacheMode = true
-          this.cancelCommentReply()
-          this.clearCommentContent()
+          this.previewMode = false;
+          this.userCacheMode = true;
+          this.cancelCommentReply();
+          this.clearCommentContent();
           this.$nextTick(() => {
             // scrollTo(document.querySelector(`#comment-item-${res.result.id}`), 200, { offset: 0 })
-          })
+          });
           localStorage.setItem('BLOG_USER', JSON.stringify(this.user))
         } else alert('操作失败')
       }
@@ -558,16 +552,13 @@
   #comment-box {
     position: relative;
     padding: 1rem 0;
-    margin-top: 1rem;
     font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-
     .loading {
       font-weight: bold;
       text-align: center;
       height: 7rem;
       line-height: 7rem;
     }
-
     .list-box {
       margin-top: 1rem;
       padding: 1rem;
@@ -618,47 +609,46 @@
               justify-content: space-between;
               position: relative;
 
+              > .meta {
+                color: #a6a6a6;
+                font-size: 12px;
+                display: inline-block;
+                .iconfont {
+                  margin-right: 2px;
+                  &.icon-chrome-fill {
+                    /*font-size: 12px;*/
+                  }
+                }
+                span {
+                  margin-left: 4px;
+                }
+              }
+
               > .user-name {
                 color: #666;
                 font-weight: bold;
                 font-size: .85rem;
                 margin-right: .3rem;
-                font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
-
                 img {
                   border-radius: 4px;
                   margin-right: .2rem;
                 }
-
                 &:hover {
                   text-decoration: underline;
                 }
               }
-
-              > .flool {
-                color: #a6a6a6;
-                font-size: .85rem;
-                font-family: Arial;
-                display: inline-block;
-              }
             }
 
             > .cm-content {
-              font-size: 1rem;
-              color: #000;
-
+              font-size: 12px;
+              color: #666;
               > .reply-box {
                 padding: .8rem;
-                margin: .8rem 0;
                 border-left: 3px dashed #eee;
-
                 >.reply-name {
                   color: #666;
                   font-weight: bold;
                   font-size: .85rem;
-                  margin-bottom: .5rem;
-                  font-family: Microsoft YaHei,Arial,Helvetica,sans-seri;
-
                   a {
                     text-decoration: none;
 
@@ -674,43 +664,48 @@
               display: flex;
               align-items: center;
               position: relative;
-
-              > .reply,
-              > .like {
-                font-size: .8em;
-                margin-right: 1em;
+              justify-content: space-between;
+              > .floor {
+                color: #a6a6a6;
+                font-size: .85rem;
+                font-family: Arial;
+                display: inline-block;
               }
-
-              > .reply,
-              > .like {
-                opacity: .8;
-
-                &:hover {
-                  color: red;
+              .operate-box {
+                flex: 1;
+                > .reply,
+                > .like {
+                  font-size: .8em;
+                  margin-right: 1em;
                 }
-
-                &.liked {
-                  color: red;
-                  font-weight: bold;
-                }
-
-                > .iconfont {
+                > .reply,
+                > .like {
                   opacity: .8;
+
+                  &:hover {
+                    color: red;
+                  }
+
+                  &.liked {
+                    color: red;
+                    font-weight: bold;
+                  }
+
                 }
-              }
 
-              >.reply {
-                display: none;
+                >.reply {
+                  display: none;
 
-                &:hover {
-                  color: #5ab95c;
+                  &:hover {
+                    color: #5ab95c;
+                  }
                 }
               }
             }
           }
           &:hover {
-            .cm-body > .cm-footer > .reply {
-              display: block;
+            .cm-body > .cm-footer > .operate-box > .reply {
+              display: inline-block;
             }
           }
         }
@@ -792,7 +787,7 @@
               max-height: 30em;
               overflow: auto;
               outline: none;
-              padding: .5em;
+              padding: .8em .5em;
               cursor: auto;
               font-size: .85em;
               line-height: 1.8em;
@@ -810,7 +805,7 @@
             height: 2rem;
             line-height: 2rem;
             position: relative;
-
+            color: #666;
             > .emoji-box {
               padding: .5rem;
               z-index: 999;
@@ -836,7 +831,7 @@
             > .code,
             > .preview {
               width: 2em;
-              height: 2em;
+              height: auto;
               text-align: center;
               display: inline-block;
 

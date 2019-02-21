@@ -1,8 +1,12 @@
-const pkg = require('./package')
-const webpack = require('webpack')
+const pkg = require('./package');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'universal',
+  cache: {
+    max: 1000,
+    maxAge: 900000
+  },
   vendor: [
     'axios',
     'howler',
@@ -24,7 +28,6 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   /*
   ** Customize the progress-bar color
   */
@@ -38,6 +41,8 @@ module.exports = {
   */
   css: [
     { src: '~/assets/less/common.less', lang: 'less' },
+    'viewerjs/dist/viewer.css',
+    { src: "mavon-editor/dist/css/index.css" },
     'highlight.js/styles/github.css',
   ],
 
@@ -48,6 +53,11 @@ module.exports = {
     { src: '~/plugins/marked.js', ssr: false },
     { src: '~/plugins/highlight.js', ssr: false},
     { src: '~/plugins/particle.js', ssr: false  },
+    { src: "~plugins/vue-markdown.js", ssr: false },
+    { src: "~plugins/tab-active.js", ssr: false },
+    { src: "~plugins/viewer.js", ssr: false },
+    { src: '~/plugins/copy.js', ssr: false },
+    { src: '~/utils/meta-parse.js', ssr: false },
     { src: '~/plugins/gravatar.js', ssr: false },
     { src: '~/plugins/filter.js', ssr: false },
   ],
@@ -88,7 +98,6 @@ module.exports = {
             '$': 'jquery'
         })
     ],
-
     /*
     ** You can extend webpack config here
     */
@@ -96,4 +105,4 @@ module.exports = {
 
     }
   }
-}
+};

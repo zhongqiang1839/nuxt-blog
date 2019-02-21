@@ -1,6 +1,7 @@
 /**
  * 文章
  * 标签
+ * 评论
  */
 export const state = () => {
   return {
@@ -14,15 +15,13 @@ export const state = () => {
       list: []
     },
     tags: [],
-    fetch: false,
     // 文章详情
-    details: {}
+    details: {},
+    fetch: false,
   }
 };
 
 export const mutations = {
-  FETCH_ART (state) {
-  },
   SET_ART_SUCCESS (state, { data }) {
     let {docs, ...paginate} = data;
     if(paginate.page === 1) {
@@ -38,10 +37,10 @@ export const mutations = {
     }
   },
   SET_COMMENTS_LIST (state, { data }) {
-      state.comments = {
-        list: [data, ...state.comments.list],
-        pagination: state.comments.pagination
-      }
+    state.comments = {
+      list: [data, ...state.comments.list],
+      pagination: state.comments.pagination
+    };
   },
   LIKE_COMMENT (state, { data }) {
       state.comments = {
@@ -71,12 +70,19 @@ export const mutations = {
   TOOGLE_TAGS (state, data) {
     state.tags = data
   },
-  SET_DETAILS (state, { data }) {
-    data.views +=1;
-    state.details = data
+  SET_DETAILS (state, data) {
+    state.details = data;
   },
   SET_ARTICLE_LIKE(state, { data }) {
-    data.likes +=1;
-    state.details = data
-  }
+    state.details = data;
+  },
+  SET_LIKES(state) {
+    state.details.likes +=1;
+  },
+  SET_VIEWS(state) {
+    state.details.views +=1;
+  },
+  SET_COMMENTS(state) {
+    state.details.comments +=1;
+  },
 };

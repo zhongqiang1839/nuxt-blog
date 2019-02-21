@@ -1,12 +1,29 @@
 <template>
-  <section class="cards-view">
-    <div class="card-header"><i class="iconfont icon-tag"></i>热门标签</div>
-    <div class="card-body">
-      <div class="tag-list">
-        <a class="tag-item"  v-for="item in tagslist" :key="item._id" :href="`/tag/${item._id}`">{{item.name}}</a>
+  <div class="aside">
+    <section class="cards-view">
+      <div class="card-header">
+        热门标签
       </div>
-    </div>
-  </section>
+      <div class="card-body">
+        <div class="tag-list">
+          <a class="tag-item"  v-for="item in tagslist" :key="item._id" :href="`/tag/${item._id}`">{{item.name}}</a>
+        </div>
+      </div>
+    </section>
+    <section class="cards-view">
+      <div class="card-header">
+        文章分类
+      </div>
+      <div class="card-body">
+        <div class="tag-list">
+          <a class="tag-item">前端技术</a>
+          <a class="tag-item">后端技术</a>
+          <a class="tag-item">生活情感</a>
+          <a class="tag-item">人在路上</a>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -34,6 +51,10 @@
 </script>
 
 <style lang="less" scoped>
+
+  .aside {
+    position: relative;
+  }
 
   .cards-view {
     position: relative;

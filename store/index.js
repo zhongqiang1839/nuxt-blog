@@ -3,9 +3,17 @@ import service from '../api/service';
 export const actions = {
 
   nuxtServerInit (store, { params, route, isServer, req }) {
+    console.log(process.server);
+    // 设备检查类型
+    const userAgent = process.server ? req.headers['user-agent'] : navigator.userAgent;
+    const isMobile = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/ig.test(userAgent);
+    store.commit('options/SET_MOBILE_LAYOUT', isMobile);
+    store.commit('options/SET_USER_AGENT', userAgent);
+
 		const initAppData = [
       store.dispatch('getTagsList'),
     ];
+
     return Promise.all(initAppData)
   },
 
@@ -17,7 +25,7 @@ export const actions = {
   // 点赞文章
   async postLikeArticle ({ commit, state }, article) {
     const res = await service.getLikeArticle(article).catch(err => console.error(err));
-    commit('article/SET_ARTICLE_LIKE', res || {});
+    commit('article/SET_LIKES');
     return res;
   },
 
@@ -28,10 +36,10 @@ export const actions = {
       commit('article/SET_ART_SUCCESS', res || {})
     }
   },
-  // 文章详情
+  // 文章详情, 更新浏览量
   async getArtDetail ({ commit }, data) {
     const res = await service.getArt(data).catch(err => console.error(err));
-    commit('article/SET_DETAILS', res || {});
+    commit('article/SET_DETAILS', res.data);
   },
   // 获取标签
   async getTagsList ({ commit, state }) {
@@ -50,6 +58,7 @@ export const actions = {
   async postComment ({ commit, state }, comment) {
     const res = await service.postComment(comment).catch(err => console.error(err));
     commit('article/SET_COMMENTS_LIST', res);
+    commit('article/SET_COMMENTS');
     return res;
   },
   // 顶顶顶

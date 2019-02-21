@@ -1,20 +1,6 @@
 <template>
   <div class="article-page" >
     <section class="container">
-      <div class="action-widget">
-        <div class="affix is-fixed" style="">
-          <div class="read-tool">
-            <div class="tool-meta">
-              <a title="点赞" @click="postLikeArticle" class="tool-item like liked" :badge="artItem.likes">
-                <i class="iconfont icon-like"></i>
-              </a>
-              <a title="文章评论" class="tool-item comment" :comment="artItem.comments">
-                <i class="iconfont icon-comment"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="article-widget">
         <div class="card article-detail">
           <span class="source article-source">{{source[artItem.source].label}}</span>
@@ -25,21 +11,46 @@
             <div class="meta-item">{{artItem.views}} 次阅读</div>
             <div class="meta-item">{{artItem.comments}} 条评论</div>
           </div>
-
-
-          <div class="content markdown-body" v-html="articleContent"></div>
-
-          <div class="copyright">
-            <p>
-              <span>文本标题:</span>
-              <a href="">{{artItem.title}}</a>
-            </p>
-            <p>
-              <span>版权信息:</span>
-              <a href=""> "署名-非商用-自由转载" 转载请保留原文链接。</a>
-            </p>
+          <div class="content markdown-body"
+               v-copyright
+               v-viewer.static="{
+                movable: false,
+                toolbar: {
+                    zoomIn: true,
+                    zoomOut: true,
+                    rotateLeft: false,
+                    rotateRight: false,
+                    flipHorizontal: false,
+                    flipVertical: false,
+                    prev: true,
+                    play: true,
+                    next: true,
+                    oneToOne: true,
+                    reset: true,
+                }
+              }"
+               v-html="marked(artItem.content)">
           </div>
-
+        </div>
+      </div>
+      <div class="reference">
+        <div class="like" @click="postLikeArticle" :badge="artItem.likes">
+          <p>
+            <i class="iconfont icon-heart"></i>喜欢
+          </p>
+          <p>{{artItem.likes}}</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <div class="wrapper">
+          <p>
+            <span>文本标题:</span>
+            <a href="">{{artItem.title}}</a>
+          </p>
+          <p>
+            <span>版权信息:</span>
+            <a href="">"署名-非商用-自由转载" 转载请保留原文链接。</a>
+          </p>
         </div>
       </div>
       <div class="comment">
@@ -90,6 +101,10 @@ export default {
   methods: {
     hide () {
       this.showDialog = false
+    },
+    // markdown解析服务
+    marked(content) {
+      return markdown(content, null, false).html
     },
     async postLikeArticle() {
         let res = await this.$store.dispatch('postLikeArticle', this.artItem)
@@ -182,31 +197,60 @@ export default {
       }
     }
   }
+}
 
-  .copyright {
-    width: 85%;
+.reference {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 14px 2px #ebebeb;
+  border-radius: 2px;
+  margin-bottom: 20px;
+  padding: 8px 10px;
+  color: #666;
+  .like {
+    height: 3rem;
+    width: 9rem;
+    border: 1px solid #e6e6e6;
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    p {
+      &:first-child {
+        border-right: 1px solid #e6e6e6;
+        flex: 3;
+        .iconfont {
+          font-size: 18px;
+          margin-right: 4px;
+        }
+      }
+      &:last-child {
+        flex: 2;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.copyright {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 14px 2px #ebebeb;
+  border-radius: 2px;
+  .wrapper {
+    width: 90%;
     max-width: 45em;
     margin: 0 auto;
     padding: 0.5em 1.8em;
-    margin-top: 60px;
     font-size: 0.93em;
     line-height: 1.6em;
     word-break: break-word;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 2px rgba(0,0,0,0.05), 0 15px 100px 0 rgba(0,0,75,0.125);
-    -webkit-transition-delay: 0.2s;
-    -moz-transition-delay: 0.2s;
-    transition-delay: 0.2s;
-    border-radius: 6px;
     span {
       margin-right: 1em;
       color: #5d686f;
     }
     a {
       text-decoration: none;
-      outline-width: 0;
       color: #4094c7;
-      outline: none;
     }
   }
 }

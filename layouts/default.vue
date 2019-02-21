@@ -8,7 +8,7 @@
           <nuxt/>
         </div>
         <aside class="welcome__side view">
-          <my-tags></my-tags>
+          <my-aside></my-aside>
         </aside>
       </div>
     </div>
@@ -19,7 +19,7 @@
 <script>
   import myHeader from '~/components/header'
   import myFooter from '~/components/footer'
-  import myTags from '~/components/tags'
+  import myAside from '~/components/myAside'
   import userInfo from '~/components/user'
   import myBackground from '~/components/backgrond'
 
@@ -27,21 +27,17 @@
     data() {
       return {}
     },
+    computed: {
+      mobileLayout () {
+        return this.$store.state.options.mobileLayout
+      },
+    },
     mounted() {
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) {
-                $('[rel="icon"]').attr('href', "/images/fail.ico");
-                document.title = '╭(°A°`)╮ 页面崩溃啦 ~ 快回来看看~！';
-            } else {
-                $('[rel="icon"]').attr('href', "/favicon.ico");
-                document.title = '噫..又好了~';
-            }
-        });
     },
     components: {
       myHeader,
       myFooter,
-      myTags,
+      myAside,
       myBackground,
       userInfo
     },

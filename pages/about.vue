@@ -9,19 +9,25 @@
       <li>
         <i class="iconfont icon-user"></i>
         <p>
-          Jason,目前工作在上海,就职于 康成投资(中国), 专注web开发领域
+          Jason, 原名: 冯忠强，目前工作在上海,就职于 康成投资(中国), 专注web开发领域...
         </p>
       </li>
       <li>
         <i class="iconfont icon-skill"></i>
         <p>
-          javascript, Vue, CSS, nodejs...
+          javascript, Vue, CSS, nodejs, 小程序，轻应用...
         </p>
       </li>
+	    <li>
+		    <i class="iconfont icon-link"></i>
+		    <p>
+			    业余LOL 5000场大乱斗玩家， 业余吃鸡...魂斗罗一命通关, 超级玛丽无限生命。
+		    </p>
+	    </li>
       <li>
         <i class="iconfont icon-tag"></i>
         <p>
-          你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东
+          愿你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东。
         </p>
       </li>
       <li>
@@ -104,7 +110,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: nowrap;
     margin: 24px 0;
     i {
@@ -113,6 +119,15 @@ export default {
       &.icon-skill {
         color: #f46e65;
       }
+	    &.icon-link {
+		    color: #F49CE5;
+	    }
+	    &.icon-tag {
+		    color: chartreuse;
+	    }
+	    &.icon-mail {
+		    color: #a626a4;
+	    }
     }
     p {
       padding-left: 20px;
