@@ -1,5 +1,6 @@
 <template>
   <section class="container">
+    <i></i>
     <ul class="feedContainer">
       <li class="item" v-for="item in artlist" :key="item._id">
         <a :href="`/article/${item._id}`">
