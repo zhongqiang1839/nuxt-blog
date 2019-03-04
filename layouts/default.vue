@@ -61,7 +61,7 @@
 }
 
 .welcome-view>.view {
-  margin-top: 1.767rem;
+  margin-top: .5rem;
 }
 
 .welcome-view {
@@ -73,13 +73,13 @@
 .welcome-view .welcome__feed{
   overflow: hidden;
   flex-grow: 1;
-  min-width: 700px;
+  min-width: 640px;
 }
 
 .welcome-view .welcome__side {
-  width: 240px;
-  min-width: 240px;
-  margin-left: 20px;
+  width: 280px;
+  min-width: 280px;
+  margin-left: .5rem;
 }
 
 </style>

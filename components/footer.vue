@@ -1,20 +1,20 @@
 <template>
   <footer>
     <eevee></eevee>
-    <div class="container-wrapper">
-      <div class="friends">
-        <a href="">小星星</a>
-        <span class="hr"></span>
-        <a href="">小星星</a>
-        <span class="hr"></span>
-        <a href="">小星星</a>
-        <span class="hr"></span>
-        <a href="">小星星</a>
-      </div>
-    </div>
+    <!--<div class="container-wrapper">-->
+      <!--<div class="friends">-->
+        <!--<a href="">小星星</a>-->
+        <!--<span class="hr"></span>-->
+        <!--<a href="">小星星</a>-->
+        <!--<span class="hr"></span>-->
+        <!--<a href="">小星星</a>-->
+        <!--<span class="hr"></span>-->
+        <!--<a href="">小星星</a>-->
+      <!--</div>-->
+    <!--</div>-->
     <div class="container-wrapper">
       <div class="mune">
-        &copy 2018 - JASON'S BLOG, POWER BY NUXT & KOA
+        &copy 2018 - JASON'S BLOG, POWER BY NUXT & KOA2
       </div>
     </div>
   </footer>

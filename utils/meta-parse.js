@@ -51,7 +51,6 @@ export const UAParse = e => {
 // os解析
 export const OSParse = e => {
   let os = '';
-  console.log(e);
   if (e.match(/win/ig)) {
     if (e.match(/nt 5.1/ig)) {
       os = '<span class="os_xp"><i class="iconfont icon-windows"></i>Windows XP'

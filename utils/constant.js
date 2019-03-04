@@ -30,25 +30,25 @@ export const FN_CATEGORYS = [
     {
         label: '前端技术',
         value: 0,
-        code: 'skills',
+        code: 'icon-qianduan',
         isActive: true
     },
     {
         label: '后端技术',
         value: 1,
-        code: 'skills',
+        code: 'icon-fuwuqi',
         isActive: false
     },
     {
-        label: '生活情感',
+        label: '情感文字',
         value: 2,
-        code: 'life',
+        code: 'icon-shenghuo',
         isActive: false
     },
     {
         label: '人在路上',
         value: 3,
-        code: 'tour',
+        code: 'icon-travel',
         isActive: false
     },
 ]

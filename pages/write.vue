@@ -51,12 +51,17 @@
         </nuxt-link>
       </div>
     </header>
-    <no-ssr><mavon-editor :toolbars="markdownOption" v-model="handbook"/></no-ssr>
+    <div class="own-container">
+      <no-ssr><mavon-editor :toolbars="markdownOption" :ishljs="true" v-model="handbook"/></no-ssr>
+    </div>
   </div>
 </template>
 
 <script>
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
+
+import { text } from "~/filters";
+
 export default {
   layout: 'write',
   components: {
@@ -142,7 +147,7 @@ export default {
       let res = await this.$store.dispatch('postArticle', {
         title: this.articleTitle,
         content: this.handbook,
-        description: tagArr.join(','),
+        description: text(this.handbook, 200),
         keyword: tagArr.join(','),
         tagName: this.tagName,
         tag: tagArr,
@@ -165,13 +170,17 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  
+  .own-container {
+    .v-note-wrapper {
+      min-height: 100vh!important;
+      margin-top: 0!important;
+    }
+  }
+  
   .editor-header {
     display: flex;
     align-items: center;
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*right: 0;*/
     padding: 0 1.4rem;
     height: 5.334rem;
     background-color: #fff;

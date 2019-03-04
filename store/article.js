@@ -22,7 +22,7 @@ export const state = () => {
 };
 
 export const mutations = {
-  SET_ART_SUCCESS (state, { data }) {
+  SET_ART_SUCCESS (state, data) {
     let {docs, ...paginate} = data;
     if(paginate.page === 1) {
         state.art = {

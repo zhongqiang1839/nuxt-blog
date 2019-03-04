@@ -7,7 +7,7 @@
         <!--<div class="tab-item"><nuxt-link to="/about">关于</nuxt-link></div>-->
         <!--<div class="tab-item"><nuxt-link to="/guest">留言墙</nuxt-link></div>-->
         <!--<div class="tab-item"><nuxt-link to="/write">写文章</nuxt-link></div>-->
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." v-model="keyword" v-on:keyup.enter="searchByKeyword">
         <div class="search"></div>
       </div>
     </div>
@@ -22,6 +22,7 @@ export default {
   name: 'fn-header',
   data () {
     return {
+      keyword: ''
     }
   },
 
@@ -31,9 +32,19 @@ export default {
   watch: {
   },
 
+  // methods: {
+  //   searchByKeyword() {
+  //     this.router.push(`/tag/${this.keyword}\`);
+  //   }
+  // },
+  
   methods: {
+    searchByKeyword() {
+      this.$router.push(`/keyword/${this.keyword}`);
+    }
   },
-
+  
+  
   directives: {
     fix: {
       inserted (el) {
@@ -65,6 +76,7 @@ export default {
   mounted () {
 
   }
+  
 }
 </script>
 

@@ -1,9 +1,17 @@
 import service from '../api/service';
+import {
+  text,
+  typeStyle,
+  typeFormat,
+  sourceFormat,
+  sourceStyle,
+  dateFormat
+} from "../filters";
+
 
 export const actions = {
 
   nuxtServerInit (store, { params, route, isServer, req }) {
-    console.log(process.server);
     // 设备检查类型
     const userAgent = process.server ? req.headers['user-agent'] : navigator.userAgent;
     const isMobile = /(iPhone|iPod|Opera Mini|Android.*Mobile|NetFront|PSP|BlackBerry|Windows Phone)/ig.test(userAgent);
@@ -30,10 +38,17 @@ export const actions = {
   },
 
   // 获取文章
-  async getArticleList ({ commit, state }, data) {
-    const res = await service.getArticle(data).catch(err => console.error(err));
-    if(res.success) {
-      commit('article/SET_ART_SUCCESS', res || {})
+  async getArticleList ({ commit, state }, res) {
+    const { data, success } = await service.getArticle(res).catch(err => console.error(err));
+    if(success) {
+      data.docs.map(item => {
+        item.sourceName = sourceFormat(item.source);
+        item.sourceClass = sourceStyle(item.source);
+        item.create_at = dateFormat(item.create_at, 'yyyy.MM.dd');
+        item.typeName = typeFormat(item.type);
+        item.typeClass = typeStyle(item.type)
+      });
+      commit('article/SET_ART_SUCCESS', data || {})
     }
   },
   // 文章详情, 更新浏览量

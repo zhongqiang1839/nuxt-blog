@@ -1,9 +1,8 @@
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
 /**
- *
  * @export
- * @param {any} time 输入需要转化的时间参数
- * @param {any} format 需要转化的格式
+ * @param times 输入需要转化的时间参数
+ * @param format 需要转化的格式
  * @returns 返回处理后的时间格式
  */
 export function dateFormat (times, format) {
@@ -39,21 +38,19 @@ export function dateFormat (times, format) {
 }
 
 export function sourceFormat(value) {
-  return ARTICLE_SOURCE.filter(item => {
-    return value === item.value
-  })[0].label;
+  return ARTICLE_SOURCE[value].label;
 }
 
 export function sourceStyle(value) {
-  return ARTICLE_SOURCE.filter(item => {
-    return value === item.value
-  })[0].code;
+  return ARTICLE_SOURCE[value].code;
 }
 
 export function typeFormat(type) {
-  return FN_CATEGORYS.filter(item => {
-    return type === item.value
-  })[0].label;
+  return FN_CATEGORYS[type].label;
+}
+
+export function typeStyle(type) {
+  return FN_CATEGORYS[type].code;
 }
 
 function pluralize (time, label) {

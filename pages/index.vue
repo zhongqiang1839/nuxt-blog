@@ -1,19 +1,30 @@
 <template>
   <section class="container">
+    <!--<no-ssr>-->
+      <!--<div v-swiper:mySwiper="swiperOption" class="my-swiper">-->
+        <!--<div class="swiper-wrapper">-->
+          <!--<div class="swiper-slide" v-for="(banner,index) in banners" :key="index">-->
+            <!--<img :src="banner">-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<ol class="swiper-pagination">-->
+        <!--</ol>-->
+      <!--</div>-->
+    <!--</no-ssr>-->
     <ul class="feedContainer">
       <li class="item" v-for="(item, index) in artlist" :key="index">
         <a :href="`/article/${item._id}`">
           <div class="content">
             <div class="info-box">
               <h3 class="title-row">
-                <span :class="source[item.source].code" class="article-source">
-                  {{item.source | sourceFormat}}</span>{{item.title}}
+                <span :class="item.sourceClass" class="article-source">
+                  {{item.sourceName}}</span>{{item.title}}
               </h3>
               <div class="content-row">
-                {{ item.content | text(200)}}
+                {{ item.description}}
               </div>
               <div class="art-opt">
-                <p>{{item.type | typeFormat}} &nbsp;<span class="iconfont icon-time-circle"></span>{{ item.create_at | dateFormat('yyyy.MM.dd')}}&nbsp;</p>
+                <p><span :class="['iconfont', item.typeClass]"></span>{{item.typeName}} &nbsp;<span class="iconfont icon-calendar"></span>{{ item.create_at }}&nbsp;</p>
                 <div class="meta">
                   <div class="meta-item">{{item.likes}} 人喜欢</div>
                   <div class="meta-item">{{item.views}} 次阅读</div>
@@ -42,8 +53,26 @@ export default {
 
   data () {
     return {
+      banners: ['/images/banner/1.png', '/images/banner/2.png'],
       current_page: 1,
-      source: ARTICLE_SOURCE
+      source: ARTICLE_SOURCE,
+      swiperOption: {
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,//默认true
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        effect: 'fade',
+        paginationClickable: true,
+        speed: 1000,
+        loop: true,
+        observer: true,
+        observeParents: true,
+        autoplayDisableOnInteraction: false
+      }
     }
   },
 
@@ -158,6 +187,9 @@ export default {
   color: rgba(0,0,0,0.43);
   justify-content: space-between;
   .iconfont {
+    &:first-child {
+      font-size: 12px;
+    }
     font-size: 14px;
     margin-right: 2px;
   }
@@ -211,4 +243,26 @@ export default {
   }
 }
 
+.my-swiper {
+  height: 240px;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  .swiper-slide {
+    text-align: center;
+    font-size: 38px;
+    font-weight: 700;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .swiper-pagination {
+    bottom: 4px;
+    right: 10px;
+    > .swiper-pagination-bullet {
+      background-color: red;
+    }
+  }
+}
 </style>

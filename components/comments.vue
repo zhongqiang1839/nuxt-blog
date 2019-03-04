@@ -683,11 +683,11 @@
                   opacity: .8;
 
                   &:hover {
-                    color: red;
+                    color: #EA6F5A;
                   }
 
                   &.liked {
-                    color: red;
+                    color: #EA6F5A;
                     font-weight: bold;
                   }
 
