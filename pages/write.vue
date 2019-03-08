@@ -134,6 +134,7 @@ export default {
         data: formdata,
         headers: { 'Content-Type': 'multipart/form-data' },
       }).then(({data}) => {
+        console.log(data.filename);
         this.$refs.md.$img2Url(pos, `${config.serverIp}/uploads/${data.filename}`);
       })
     },
