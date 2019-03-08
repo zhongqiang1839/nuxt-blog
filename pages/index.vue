@@ -24,7 +24,10 @@
                 {{ item.description}}
               </div>
               <div class="art-opt">
-                <p><span :class="['iconfont', item.typeClass]"></span>{{item.typeName}} &nbsp;<span class="iconfont icon-calendar"></span>{{ item.create_at }}&nbsp;</p>
+                <p>
+                  <span :class="['iconfont', item.typeClass]"></span>&nbsp;{{item.typeName}} &nbsp;
+                  <span class="iconfont icon-calendar"></span>{{ item.create_at }}
+                </p>
                 <div class="meta">
                   <div class="meta-item">{{item.likes}} 人喜欢</div>
                   <div class="meta-item">{{item.views}} 次阅读</div>
@@ -188,7 +191,8 @@ export default {
   justify-content: space-between;
   .iconfont {
     &:first-child {
-      font-size: 12px;
+      font-size: 14px;
+      color: #EA6F5A;
     }
     font-size: 14px;
     margin-right: 2px;

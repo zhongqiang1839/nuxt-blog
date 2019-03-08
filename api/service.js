@@ -2,8 +2,7 @@ import api from './request';
 import config from './../utils/config';
 
 class service {
-
-  getArticle(data) {
+  getArticle (data) {
     return api.get(`${config.serverIp}/api/article`, data).then(res => res.data);
   }
   //发布文章

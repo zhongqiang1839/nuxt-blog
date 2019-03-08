@@ -52,14 +52,15 @@
       </div>
     </header>
     <div class="own-container">
-      <no-ssr><mavon-editor :toolbars="markdownOption" :ishljs="true" v-model="handbook"/></no-ssr>
+      <no-ssr><mavon-editor :toolbars="markdownOption" :ishljs="true" ref=md @imgAdd="$imgAdd" v-model="handbook"/></no-ssr>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
-
+import config from './../utils/config';
 import { text } from "~/filters";
 
 export default {
@@ -122,6 +123,20 @@ export default {
     }
   },
   methods: {
+    // 绑定@imgAdd event
+    $imgAdd(pos, $file){
+      // 第一步.将图片上传到服务器.
+      let formdata = new FormData();
+      formdata.append('image', $file);
+      axios({
+        url: config.serverIp + '/api/upload',
+        method: 'post',
+        data: formdata,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }).then(({data}) => {
+        this.$refs.md.$img2Url(pos, `${config.serverIp}/uploads/${data.filename}`);
+      })
+    },
     //切换标签
     toggleTags(item) {
       item.isActive = !item.isActive;
