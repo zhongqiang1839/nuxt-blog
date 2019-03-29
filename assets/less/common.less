@@ -45,10 +45,11 @@ ul {
 }
 
 body {
-  overflow: hidden;
   margin: 0;
   height: 100%;
   background-color: #f3f6f7;
+  over-flow: auto;     /* winphone8和android4+ */
+  -webkit-overflow-scrolling: touch;    /* ios5+ */
   color: #48505b;
   font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;
   text-rendering: geometricPrecision;
