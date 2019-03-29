@@ -162,6 +162,7 @@
     }
     .fe-container__feed {
       border-radius: .85rem!important;
+      overflow-x: hidden;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
