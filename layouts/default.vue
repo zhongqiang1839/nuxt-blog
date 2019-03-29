@@ -176,7 +176,7 @@
   }
   &__feed {
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
   
@@ -191,7 +191,9 @@
   &__article-list {
     position: relative;
     display: block;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     margin: 2rem auto;
     max-width: 660px;
     border-radius: 6px;

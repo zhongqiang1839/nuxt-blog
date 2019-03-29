@@ -27,8 +27,6 @@ module.exports = {
       { 'http-equiv': 'cleartype', content: 'on' },
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0' },
-      { name: 'MobileOptimized', content: '320' },
-      { name: 'HandheldFriendly', content: 'True' },
       { name: 'renderer', content: 'webkit' },
       { name: 'X-UA-Compatible', content: 'IE=edge, chrome=1' },
       { name: 'screen-orientation', content: 'portrait' },
