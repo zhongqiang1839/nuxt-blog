@@ -10,7 +10,7 @@
     name: 'fn-user',
     computed: {
       tagslist () {
-        // return this.$store.state.article.tags
+        // return this.$store.state.article.tag
       },
     },
   }

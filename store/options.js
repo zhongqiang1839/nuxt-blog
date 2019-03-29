@@ -8,6 +8,9 @@ export const state = () => {
     userAgent: '',
     // 是否为移动端
     mobileLayout: false,
+
+    showSidebar: false,
+
     // 博主信息
     adminInfo: {},
     // 网站信息
@@ -27,4 +30,12 @@ export const mutations = {
   SET_USER_AGENT (state, action) {
     state.userAgent = action
   },
+  // 设置sidebar 是否显示
+  SET_SIDE_BAR(state, action = true) {
+    if(action === false) {
+      state.showSidebar = false;
+      return;
+    }
+    state.showSidebar = !state.showSidebar
+  }
 };

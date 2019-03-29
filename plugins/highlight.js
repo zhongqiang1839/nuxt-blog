@@ -1,4 +1,3 @@
-
 const Hljs = require('highlight.js/lib/highlight')
 
 Hljs.registerLanguage('cpp', require('highlight.js/lib/languages/cpp'))

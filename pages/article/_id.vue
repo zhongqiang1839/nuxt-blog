@@ -34,8 +34,7 @@
 					<div class="reference">
 						<div :class="['like', isActive ? 'active' : '']" @click="postLikeArticle">
 							<section>
-								<div :class="['fave', isActive ? 'active' : '']"></div>
-								喜欢
+								<div :class="['fave', isActive ? 'active' : '']"></div><span>like</span>
 							</section>
 							<section>{{artItem.likes}}</section>
 						</div>
@@ -162,7 +161,8 @@
 		
 		.article-source {
 			color: #FFF;
-			background-color: #EA6F5A;
+			background: var(--theme-color);
+			transition: .4s ease-in background-color;
 		}
 	}
 	
@@ -232,21 +232,20 @@
 			background-color: #fff;
 			color: #666;
 			&.active {
-				background-color: #EA6F5A;
-				border: 1px solid #EA6F5A;
+				background-color: var(--theme-color);
+				border: 1px solid var(--theme-color);
 				color: #fff;
 			}
 			.fave {
-				width: 2.8rem;
-				height: 2.8rem;
+				width: 2.5rem;
+				height: 2.5rem;
 				display: inline;
 				border-radius: 50%;
 				background: url(/images/zan.png) no-repeat;
 				background-position: left;
 				background-size: auto 100%;
-				
 				&.active {
-					background-color: #EA6F5A;
+					background-color: var(--theme-color);
 					background-position: right;
 					transition: background .6s steps(19);
 				}
@@ -257,7 +256,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					flex: 3;
+					flex: 2;
 				}
 				
 				&:last-child {
@@ -275,16 +274,16 @@
 			font-size: 0.93em;
 			display: block;
 			margin: 2rem 0 1rem 0;
-			border-left: 3px solid #EA6F5A;
+			border-left: 3px solid var(--theme-color);
 			border-radius: 3px;
 			word-break: break-word;
 			line-height: 1.8;
-			background-color: rgba(96,125,139,.05);
+			background-color: var(--copyright-color);
+			transition: border-left-color,background-color .4s ease-in;
 			span {
 				margin-right: 1em;
 				color: #5d686f;
 			}
-			
 			a {
 				text-decoration: none;
 				color: #4094c7;

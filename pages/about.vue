@@ -1,10 +1,10 @@
 <template>
   <section class="container">
-    <div class="avator-box">
-      <img src="/images/user.jpeg" alt="">
-      <p>Jason</p>
-      <!--<h2 class="slogan">愿你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东。</h2>-->
-    </div>
+    <!--<div class="avator-box">-->
+      <!--<img src="/images/user.jpeg" alt="">-->
+      <!--<p>Jason</p>-->
+      <!--&lt;!&ndash;<h2 class="slogan">愿你在迷茫时，坚信你的珍贵；爱你所爱，行你所行。听从你心，无问西东。</h2>&ndash;&gt;-->
+    <!--</div>-->
     <ul class="introduce">
       <li>
         <i class="iconfont icon-user"></i>
@@ -44,8 +44,6 @@
 <script>
 
 export default {
-
-  layout: 'index',
 
   fetch ({ store }) {},
 
@@ -100,9 +98,9 @@ export default {
 
 .introduce {
   position: relative;
-  margin-top: 30px;
   border-radius: 3px;
   margin-bottom: 16px;
+  margin-top: 1.4rem;
   padding: 10px 16px;
   background-color: hsla(0, 0%, 100%, 0.8);
   box-shadow: 0 0 14px 2px #ebebeb;
@@ -114,20 +112,8 @@ export default {
     flex-wrap: nowrap;
     margin: 24px 0;
     i {
-      color: #1E9FFF;
+      color: var(--theme-color);
       font-size: 20px;
-      &.icon-skill {
-        color: #f46e65;
-      }
-	    &.icon-link {
-		    color: #F49CE5;
-	    }
-	    &.icon-tag {
-		    color: chartreuse;
-	    }
-	    &.icon-mail {
-		    color: #a626a4;
-	    }
     }
     p {
       padding-left: 20px;
@@ -137,4 +123,12 @@ export default {
     }
   }
 }
+
+@media (max-width: 656px) {
+  .introduce {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+}
+
 </style>

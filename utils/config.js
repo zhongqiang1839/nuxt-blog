@@ -1,6 +1,4 @@
-
 const IS_DEV = process.env.NODE_ENV !== 'production';
-
 module.exports = {
   environment: 'dev',
   siteName: '小强哥',

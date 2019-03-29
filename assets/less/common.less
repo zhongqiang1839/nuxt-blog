@@ -5,15 +5,17 @@
 @import "./highlight.less";
 @import "./theme.less";
 @import "./iconfont.less";
+@import "./font.less";
 
-@font-face {
-  font-family: Neue; /*这里是说明调用来的字体名字*/
-  src: url('./../font/Neue.woff2'); /*这里是字体文件路径*/
+@media screen and (max-width: 359px) {
+  html {
+    font-size: 12px!important;
+  }
 }
 
 html {
-  font-family: "PingFang SC", "Microsoft Yahei", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;;
-  word-spacing: 1px;
+  font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;
+  font-size: 14px;
   overflow-y: scroll;
   cursor: default;
   -ms-text-size-adjust: 100%;
@@ -43,17 +45,57 @@ ul {
 }
 
 body {
-  font-size: 14px;
-  line-height: 1.4;
-  background-color: #f4f5f5;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  text-rendering: optimizeLegibility;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  overflow: hidden;
+  margin: 0;
+  height: 100%;
+  background-color: #f3f6f7;
+  color: #48505b;
+  font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
+
+
+.plugin {
+  position: relative;
+}
+
+.zoomable {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  height: 100%;
+  transition: background-color .3s;
+  &--active {
+    background-color: #fff;
+    cursor: zoom-out;
+  }
+  img {
+    position: absolute;
+    transition: transform .3s cubic-bezier(.2,0,.2,1);
+    transform-origin: 0 0;
+  }
+
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 4px
+}
+
+@media (max-width: 656px) {
+  ::-webkit-scrollbar {
+    width:0;
+    height: 0;
+    background: none
+  }
+}
+
 aside {
   //background-color: #fff;
 }

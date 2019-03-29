@@ -1,7 +1,12 @@
 <template>
   <section class="container">
     <div class="fe-tags">
-      <h1 class="fe-tags__title">关键词: vue</h1>
+      <h1 class="fe-tags__title">4 Categories in total</h1>
+      <div class="fe-tags__container" style="font-size: 1.2rem;">
+        <a class="fe-tags__item" v-for="(item, index) in categorys" :href="'/category/' + item.value" :key="item.value">
+          #{{item.label}}
+        </a>
+      </div>
     </div>
     <ul class="fe-article__container">
       <li class="fe-article__item" v-for="(item, index) in artlist" :key="index">
@@ -42,42 +47,43 @@
 </template>
 
 <script>
-  import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
-  export default {
-    name: 'my-articles',
-    
-    fetch ({ store, params }) {
-      return store.dispatch('getArticleList', params)
-    },
-    
-    head () {
-      return { title: `标签 | 分类` }
-    },
-    data () {
-      return {
-        current_page: 1,
-        source: ARTICLE_SOURCE
-      }
-    },
-    computed: {
-      tagslist () {
-        return this.$store.state.article.tags;
-      },
-      artlist () {
-        return this.$store.state.article.art.list;
-      },
-      pagination () {
-        return this.$store.state.article.art.pagination;
-      },
-    },
-    methods: {
-      hide () {
-        this.showDialog = false
-      },
-    },
-    mounted () {
+import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
+export default {
+  name: 'my-articles',
+
+  fetch ({ store, params }) {
+    return store.dispatch('getArticleList', params)
+  },
+
+  head () {
+    return { title: `标签 | 分类` }
+  },
+  data () {
+    return {
+      current_page: 1,
+      source: ARTICLE_SOURCE,
+      categorys: FN_CATEGORYS
     }
+  },
+  computed: {
+    tagslist () {
+      return this.$store.state.article.tags;
+    },
+    artlist () {
+      return this.$store.state.article.art.list;
+    },
+    pagination () {
+      return this.$store.state.article.art.pagination;
+    },
+  },
+  methods: {
+    hide () {
+      this.showDialog = false
+    },
+  },
+  mounted () {
   }
+}
 </script>
 
 <style lang="less" scoped>
@@ -216,7 +222,7 @@
       font-size: 12px;
     }
   }
-  
+
   .fe-tags {
     display: block;
     border-radius: 6px;
@@ -242,5 +248,5 @@
       transition: background-color .15s;
     }
   }
-
+  
 </style>

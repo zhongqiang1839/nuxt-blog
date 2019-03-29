@@ -42,7 +42,9 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
-    script: [],
+    script: [
+
+    ],
     noscript: [
       { innerHTML: 'This website requires JavaScript.' }
     ]
@@ -53,6 +55,11 @@ module.exports = {
   loading: { color: '#EA6F5A' },
 
   dev: (process.env.NODE_ENV !== 'production'),
+
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
 
   /*
   ** Global CSS
@@ -78,6 +85,7 @@ module.exports = {
     { src: "~/plugins/vue-map.js", ssr: false },
     { src: "~/plugins/viewer.js", ssr: false },
     { src: '~/plugins/swiper.js', ssr: false },
+    { src: '~/plugins/count-to', ssr: false },
     { src: '~/plugins/copy.js', ssr: false },
     { src: '~/utils/meta-parse.js', ssr: false },
     { src: '~/plugins/gravatar.js', ssr: false },

@@ -39,6 +39,7 @@ export const actions = {
 
   // 获取文章
   async getArticleList ({ commit, state }, res) {
+    console.log(res);
     const { data, success } = await service.getArticle(res).catch(err => console.error(err));
     if(success) {
       data.docs.map(item => {

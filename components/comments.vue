@@ -573,7 +573,7 @@
         > .comment-item {
           position: relative;
           padding: .6em 0 .6em 3.6em;
-          border-bottom: 1px dashed var(--border-color);
+          border-bottom: 1px dashed #e6e6e6;
           &:last-child {
             border: 0;
           }

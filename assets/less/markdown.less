@@ -1,7 +1,7 @@
 .markdown-body {
   font-size: 14px;
   font-weight: 300;
-  color: var(--markdown-color);
+  color: rgba(0,0,0,0.85);
   user-select: text;
   margin-top: 40px;
 
@@ -19,15 +19,15 @@
   hr {
     height: 0.05em;
     border: 0;
-    color: var(--border-color);
-    background-color: var(--border-color);
+    color: #e6e6e6;
+    background-color: #e6e6e6;
   }
 
   blockquote {
     margin: 1em 0;
-    border-left: 4px solid var(--border-color);
+    border-left: 4px solid #e6e6e6;
     padding: 0 1em;
-    color: var(--text-color-secondary);
+    color:  rgba(0,0,0,0.43);
   }
 
   pre {
@@ -36,7 +36,7 @@
     padding: 16px;
     overflow: auto;
     line-height: 1.45;
-    background-color: var(--code-color-light);
+    background-color: #f2f2f2;
     border-radius: 2px;
   }
 
@@ -44,11 +44,11 @@
     padding: 0.2em 0.4em;
     margin: 0;
     font-size: 85%;
-    background-color: var(--code-color);
+    background-color: #ebebeb;
     border-radius: 3px;
     font-family: @font-family-code;
     font-weight: 400;
-    color: var(--keyword-color);
+    color: #f56a00;
 
     &.language-cpp:after,
     &.language-java:after,
@@ -76,8 +76,8 @@
       padding: 0 10px;
       height: 24px;
       line-height: 24px;
-      color: var(--text-color-secondary);
-      background-color: var(--code-color-dark);
+      color:  rgba(0,0,0,0.43);
+      background-color: #e6e6e6;
       border-bottom-left-radius: 2px;
     }
 
@@ -131,15 +131,15 @@
     border: 0;
     margin: 0;
     padding: 0;
-    background-color: var(--code-color-light);
+    background-color: #f2f2f2;
     font-size: 85%;
-    color: var(--text-color);
+    color: rgba(0,0,0,0.65);
   }
 
   a,
   a:visited {
     padding-bottom: 4px;
-    color: var(--text-color);
+    color: rgba(0,0,0,0.65);
     background-color: inherit;
     text-decoration: none;
     font-weight: 700;
@@ -154,7 +154,7 @@
     cursor: zoom-in;
 
     &.image-view {
-      border: 6px solid var(--border-color);
+      border: 6px solid #e6e6e6;
     }
   }
 
@@ -164,7 +164,7 @@
 
   .image-alt {
     text-align: center;
-    color: var(--text-color-secondary);
+    color:  rgba(0,0,0,0.43);
     font-size: 80%;
   }
 
@@ -192,7 +192,7 @@
 
     tr {
       background-color: var(--dark);
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid #e6e6e6;
 
       &:nth-child(2n) {
         background-color: #f6f8fa;
