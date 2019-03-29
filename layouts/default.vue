@@ -162,6 +162,8 @@
     }
     .fe-container__feed {
       border-radius: .85rem!important;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
   
@@ -173,11 +175,11 @@
     -ms-transform-origin: 0 42%;
     transform-origin: 0 42%;
     transition: .4s transform;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   &__feed {
     height: 100%;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
   }
   
   &__mask {
@@ -191,9 +193,7 @@
   &__article-list {
     position: relative;
     display: block;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     margin: 2rem auto;
     max-width: 660px;
     border-radius: 6px;
@@ -219,9 +219,7 @@
   transition: .4s opacity;
   &__con {
     position: relative;
-    overflow-x: visible;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     margin-right: -1rem;
     padding-right: 1rem;
     height: 100%;
@@ -454,7 +452,8 @@
     &__feed {
       margin: 0;
       background-color: #f3f6f7;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: scroll;
       transition: border-radius .4s;
     }
     &__article-list {
