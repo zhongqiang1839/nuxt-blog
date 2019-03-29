@@ -46,7 +46,7 @@ module.exports = {
             repo : 'https://gitee.com/zhongqiang1839/nuxt-blog.git',
             path : '/usr/fengzhongqiang/nuxt-blog',
             'pre-deploy': 'git pull',
-            "post-deploy" : 'cnpm install &&  cnpm run build  && pm2 stop server && pm2 start ecosystem.config.js --env production'
+            "post-deploy" : 'cnpm install &&  npm run build  && pm2 startOrRestart ecosystem.config.js --env production'
         }
     }
 };

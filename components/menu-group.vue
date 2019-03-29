@@ -58,9 +58,9 @@ export default {
       this.scroll(2);
     },
     scroll(type = 1) {
-      let duration = 1000;
+      let duration = 500;
       let options = { offset: 0 };
-      options.easing = easings['ease-in-out'];
+      options.easing = easings['ease'];
       let page = __.$('html, body');
       let events = [
         'scroll',
@@ -78,11 +78,11 @@ export default {
       __.on(page, events, abortFn);
   
       let diff;
-      let initialY = window.pageYOffset;
+      let initialY = document.getElementsByClassName('fe-container__article-list')[0].scrollHeight;
       if(type === 1) {
         diff = -initialY;
       } else {
-        diff = document.body.scrollHeight;
+        diff = initialY;
       }
       
       let easing = BezierEasing.apply(BezierEasing, options.easing);
@@ -93,19 +93,17 @@ export default {
         if (!abort && options.onDone) options.onDone()
       };
       if (!diff) return;
-      let self = this;
       window.requestAnimationFrame(function step (timestamp) {
         if (abort) return done();
         if (!start) start = timestamp;
         let time = timestamp - start;
         let progress = Math.min(time / duration, 1);
         progress = easing(progress);
-        console.log(progress);
         if(type === 1) {
-          window.scrollTo(0, initialY + diff * progress);
+          document.getElementsByClassName('fe-container__feed')[0].scrollTo(0, initialY + diff * progress);
         } else {
           // self.progress = progress.toFixed(2) * 100;
-          window.scrollTo(0, diff * progress);
+          document.getElementsByClassName('fe-container__feed')[0].scrollTo(0, diff * progress);
         }
         if (time < duration) {
           window.requestAnimationFrame(step)
