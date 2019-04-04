@@ -51,7 +51,7 @@
     },
     
     head () {
-      return { title: `标签 | 分类` }
+      return { title: `关键词` }
     },
     data () {
       return {

@@ -20,9 +20,9 @@
         <text class="control-progress" v-if="progress" x="50%" y="0" dy="50%">{{progress || ''}}<tspan dx="1">%</tspan></text>
         <g class="control-dot" v-if="!progress">
           <!-- total: .4rem * 2rem -->
-          <circle :cx="showMenu ? '-.8rem' : 0" :cy="showMenu ? 0 : '-.8rem'" r=".2rem"></circle>
-          <circle r=".2rem"></circle>
-          <circle :cx="showMenu ? '.8rem' : 0" :cy="showMenu ? 0 : '.8rem'" r=".2rem"></circle>
+          <circle :cx="showMenu ? '-11.2px' : 0" :cy="showMenu ? 0 : '-11.2px'" r="2.8px"></circle>
+          <circle r="2.8px"></circle>
+          <circle :cx="showMenu ? '11.2px' : 0" :cy="showMenu ? 0 : '11.2px'" r="2.8px"></circle>
         </g>
       </svg>
     </div>

@@ -2,9 +2,9 @@
   <section class="fe-tags">
     <h1 class="fe-tags__title">{{categorys.length}} Categories in total</h1>
     <div class="fe-tags__container" style="font-size: 1.2rem;">
-      <a class="fe-tags__item" v-for="(item, index) in categorys" :href="'/category/' + item.value" :key="item.value">
+      <nuxt-link class="fe-tags__item" v-for="(item, index) in categorys" :to="'/category/' + item.value" :key="item.value">
         #{{item.label}}
-      </a>
+      </nuxt-link>
     </div>
   </section>
 </template>
@@ -16,7 +16,7 @@ export default {
   fetch ({ store }) {
     return store.dispatch('getArticleList')
   },
-
+  
   data () {
     return {
       categorys: FN_CATEGORYS

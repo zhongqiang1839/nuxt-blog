@@ -8,7 +8,6 @@ import {
   dateFormat
 } from "../filters";
 
-
 export const actions = {
 
   nuxtServerInit (store, { params, route, isServer, req }) {
@@ -39,7 +38,6 @@ export const actions = {
 
   // 获取文章
   async getArticleList ({ commit, state }, res) {
-    console.log(res);
     const { data, success } = await service.getArticle(res).catch(err => console.error(err));
     if(success) {
       data.docs.map(item => {
@@ -55,6 +53,7 @@ export const actions = {
   // 文章详情, 更新浏览量
   async getArtDetail ({ commit }, data) {
     const res = await service.getArt(data).catch(err => console.error(err));
+    res.data.formatTime = dateFormat(res.data.create_at, 'yyyy.MM.dd hh:mm');
     commit('article/SET_DETAILS', res.data);
   },
   // 获取标签

@@ -3,6 +3,12 @@
     <header class="editor-header">
       <input type="text" class="title-input" v-model="articleTitle" placeholder="请输入标题...">
       <div class="right-box">
+        <span class="thumbnail">
+          <div class="menu-view">
+            <input type="text" placeholder="填入封面大图链接url..." v-model="thumbnail">
+            <span :class="['iconfont', thumbnail ? 'icon-image-fill': 'icon-image']"></span>
+          </div>
+        </span>
         <span class="tag" >
           <span @click="isSubmitshow = !isSubmitshow">发布 <i class="iconfont" :class="isSubmitshow ? 'icon-up' : 'icon-down'"></i></span>
           <div class="tag-box" v-if="isSubmitshow">
@@ -80,12 +86,12 @@ export default {
   },
   data() {
     return {
+      thumbnail: '',
       articleTitle: '',
       isSubmitshow: false,
       type: '',
       tags: [],
       tagName: '',
-      keywords: '',
       source: ARTICLE_SOURCE,
       categorys: FN_CATEGORYS,
       markdownOption:{
@@ -119,7 +125,7 @@ export default {
         subfield: true, // 单双栏模式
         preview: true, // 预览
       },
-      handbook:"#### 这是手册"
+      handbook:"> 文章简介\n\n" + "————————————————\n" + "\n" + "正文"
     }
   },
   methods: {
@@ -160,15 +166,18 @@ export default {
       }).filter(item =>  item !== undefined);
       let sourceItem = this.source.filter(item => item.isActive)[0];
       let categoryItem = this.categorys.filter(item => item.isActive)[0];
+      let [description, content] = this.handbook.split('————————————————');
+  
       let res = await this.$store.dispatch('postArticle', {
         title: this.articleTitle,
-        content: this.handbook,
-        description: text(this.handbook, 200),
+        content: content.toString(),
+        description: description.toString(),
         keyword: tagArr.join(','),
         tagName: this.tagName,
         tag: tagArr,
         source: sourceItem.value,
         type: categoryItem.value,
+        thumb: this.thumbnail
       });
       if(res.code === 200) {
         alert('文章写入成功');
@@ -222,7 +231,7 @@ export default {
         color: #007fff;
         cursor: pointer;
         user-select: none;
-        padding: 0 2rem;
+        padding: 0 1rem;
       }
       img {
         width: 2.667rem;
@@ -234,6 +243,20 @@ export default {
         background-repeat: no-repeat;
         cursor: pointer;
         margin-left: 10px;
+      }
+      > .thumbnail {
+        position: relative;
+        .art_desc {
+          height: 5.334rem;
+          width: 18rem;
+          border-left: 1px solid #888;
+          border-top: none;
+          border-bottom: none;
+        }
+        .iconfont {
+          font-size: 2rem;
+          color: #2a2b33!important;
+        }
       }
       > .tag {
         position: relative;
@@ -268,8 +291,8 @@ export default {
       .tag-box {
         position: absolute;
         top: 2.3rem;
-        left: -10rem;
-        width: 250px;
+        left: -16rem;
+        width: 316px;
         padding: .5rem;
         background-color: #fff;
         color: #909090;
@@ -338,4 +361,86 @@ export default {
     }
 
   }
+
+
+  .menu-view .search {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /*left: 0;*/
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 1s;
+    z-index: 4;
+  }
+  .menu-view .search:hover {
+    cursor: pointer;
+  }
+  .menu-view .search::before {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 12px;
+    right: 0;
+    bottom: 0;
+    left: 10px;
+    width: 8px;
+    height: 2px;
+    background: #666;
+    transform: rotate(45deg);
+    transition: all .5s;
+  }
+  .menu-view .search::after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: -5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #666;
+    transition: all .5s;
+  }
+  .menu-view input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    /*left: 0;*/
+    width: 80px;
+    /*height: 50px;*/
+    outline: none;
+    border: none;
+    color: #666;
+    /*padding: 0 80px 0 20px;*/
+    transition: all 1s;
+    opacity: 0;
+    z-index: 5;
+    font-weight: bolder;
+    letter-spacing: 0.1em;
+  }
+  .menu-view input:hover {
+    cursor: pointer;
+  }
+  .menu-view input:focus {
+    width: 250px;
+    opacity: 1;
+    cursor: text;
+  }
+  .menu-view input:focus ~ .search {
+    right: 0;
+    z-index: 6;
+  }
+  .menu-view input::placeholder {
+    color: #999;
+    opacity: 0.5;
+    font-weight: bolder;
+  }
+  
 </style>

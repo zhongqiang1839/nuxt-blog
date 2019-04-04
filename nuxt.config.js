@@ -18,15 +18,18 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "小强哥",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0' },
       { name: 'renderer', content: 'webkit' },
+      { name: 'X-UA-Compatible', content: 'IE=edge, chrome=1' },
+      { name: 'screen-orientation', content: 'portrait' },
+      { name: 'x5-orientation', content: 'portrait' },
       { name: 'theme-color', content: '#607d8b' },
-      { name: 'apple-mobile-web-app-capable', content: '' },
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'translucent' },
-      { name: 'author', content: 'zhongqiang1839@163.com' },
+      { name: 'apple-mobile-web-app-title', content: '' },
+      { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      { name: 'author', content: '小强哥' },
       { hid: 'keywords', name: 'keywords', content: 'vue, nodejs, react,前端，FE, 全栈开发' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],

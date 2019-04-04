@@ -2,33 +2,40 @@
   <section class="fe-article">
     <ul class="fe-article__container">
       <li class="fe-article__item" v-for="(item, index) in artlist" :key="index">
-        <a :href="`/article/${item._id}`">
+        <nuxt-link class="fe-article__link" :to="`/article/${item._id}`">
           <div class="fe-article__item-content">
             <div class="fe-article__info">
-              <h3 class="fe-article__title">
-                {{item.title}}
-              </h3>
-              <div class="fe-article__desc">
-                {{ item.description}}
+              <div class="fe-article__thumb" v-if="item.thumb">
+                <img class="fe-article__thumb-img" :data-title="item.title" :src="item.thumb" alt="">
+                <h3 class="fe-article__thumb-title">
+                  {{item.title}}
+                </h3>
               </div>
-              <p class="fe-article__tag">
-                <span :class="['iconfont', item.typeClass]"></span>&nbsp;{{item.typeName}}
-              </p>
-              <div class="fe-article__opt">
-                <p>
-                  <span class="iconfont icon-calendar"></span>{{ item.create_at }}
+              <div class="fe-article__wrapper">
+                <h3 class="fe-article__title" v-if="!item.thumb">
+                  {{item.title}}
+                </h3>
+                <div class="fe-article__desc markdown-body" v-html="marked(item.description)"></div>
+                <p class="fe-article__tag">
+                  <!--<span :class="['iconfont', item.typeClass]"></span>&nbsp;{{item.typeName}}-->
                 </p>
-                <div class="fe-article__meta">
-                  <div class="fe-article__meta-item">{{item.likes}} 人喜欢</div>
-                  <div class="fe-article__meta-item">{{item.views}} 次阅读 &nbsp;</div>
-                  <span :class="item.sourceClass" class="article-source">
+                <div class="fe-article__opt">
+                  <p>
+                    <span class="iconfont icon-calendar"></span>{{ item.create_at }}
+                  </p>
+                  <div class="fe-article__meta">
+                    <div class="fe-article__meta-item">{{item.likes}} 人喜欢</div>
+                    <div class="fe-article__meta-item">{{item.views}} 次阅读 &nbsp;</div>
+                    <!--<div class="fe-article__meta-item">{{item.comments}} 评论 &nbsp;</div>-->
+                    <span :class="item.sourceClass" class="article-source">
                     {{item.sourceName}}
                   </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </a>
+        </nuxt-link>
       </li>
     </ul>
     <div class="fe-pagination" v-if="artlist.length">
@@ -40,12 +47,12 @@
 
 <script>
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
+import markdown from '~/plugins/marked'
 
 export default {
   fetch ({ store }) {
     return store.dispatch('getArticleList')
   },
-
   data () {
     return {
       banners: ['/images/banner/1.png', '/images/banner/2.png'],
@@ -80,6 +87,9 @@ export default {
     },
   },
   methods: {
+    marked(content) {
+      return markdown(content, null, false).html
+    },
     async loadmore() {
       if(this.current_page === this.pagination.pages) return;
       await this.$store.dispatch('getArticleList', {
@@ -101,15 +111,29 @@ export default {
 .fe-article {
   &__container {
     width: 100%;
-    background-color: #fff;
+  }
+  &__link {
+    &:hover {
+      .fe-article__title {
+        margin-left: 10px;
+      }
+      .fe-article__thumb-title{
+        margin-left: 10px;
+      }
+    }
   }
   &__item {
-    border-bottom: 1px solid rgba(178,186,194,.15);
     background-color: #fff;
+    margin-bottom: 1.2rem;
+    list-style-type: none;
+    border-radius: .5rem;
+    overflow: hidden;
+    &:last-child {
+      margin-bottom: 0;
+    }
     &-content {
       display: flex;
       align-items: center;
-      padding: 1.5rem 2rem;
     }
   }
   &__info {
@@ -118,6 +142,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     min-width: 0;
+  }
+  &__wrapper {
+    padding: 1rem 1.2rem;
   }
   &__title {
     overflow: hidden;
@@ -128,15 +155,32 @@ export default {
     margin-bottom: .5rem;
     font-weight: 700;
     color: #666;
+    transition: all .3s ease;
+  }
+  &__thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    transition: -webkit-transform .3s cubic-bezier(.215,.61,.355,1);
+    transition: transform .3s cubic-bezier(.215,.61,.355,1);
+    transition: transform .3s cubic-bezier(.215,.61,.355,1),-webkit-transform .3s cubic-bezier(.215,.61,.355,1);
+    &-img {
+      width: 100%;
+      height: 100%;
+    }
+    &-title {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.2rem;
+      transition: all .3s ease;
+    }
   }
   &__desc {
     line-height: 1.8rem;
     color: #999;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
+    margin-top: 20px!important;
   }
   &__tag {
     margin: 24px 0 10px 0;
@@ -234,9 +278,9 @@ export default {
   }
 }
 
-@media (max-width: 450px) {
-  .fe-article__meta {
-    /*display: none;*/
+@media (max-width: 656px) {
+  .fe-article__item {
+    margin: 1rem;
   }
 }
 

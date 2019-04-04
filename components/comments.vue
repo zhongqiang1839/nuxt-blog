@@ -46,12 +46,6 @@
               </div>
             </div>
             <div class="editor-tools" key="3">
-              <!--<a href="" class="image" title="bold" @click.stop.prevent="insertContent('bold')">-->
-                <!--<i class="iconfont icon-bold"></i>-->
-              <!--</a>-->
-              <!--<a href="" class="image" title="italicage" @click.stop.prevent="insertContent('italicage')">-->
-                <!--<i class="iconfont icon-italic"></i>-->
-              <!--</a>-->
               <a href="" class="emoji" title="emoji" @click.stop.prevent="emojiShow = !emojiShow">
                 <i class="iconfont icon-smile"></i>
               </a>
@@ -96,7 +90,6 @@
                       class="submit"
                       @click="submitComment($event)">
                 <span>回复</span>
-                <i class="iconfont icon-release"></i>
               </button>
             </div>
         </div>
@@ -126,6 +119,7 @@
                    :href="commentItem.site"
                    @click.stop="($event, commentItem.site)">
                   <span>{{ commentItem.name }}</span>
+                  <span class="user-label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
                 </a>
                 <div class="meta">
                   <span class="os" v-html="OSParse(commentItem.agent)"></span>
@@ -137,7 +131,7 @@
                   <p class="reply-name">
                     <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${commentItem.pid}`)">
                       <span></span>
-                      <strong v-if="fondReplyParent(commentItem.pid)">{{ fondReplyParent(commentItem.pid) }}</strong>
+                      <strong v-if="fondReplyParent(commentItem.pid)">@{{ fondReplyParent(commentItem.pid) }}</strong>
                     </a>
                   </p>
                   <div
@@ -150,12 +144,6 @@
               </div>
               <div class="cm-footer">
                 <div class="operate-box">
-                  <a href="" class="like"
-                     :class="{ liked: commentLiked(commentItem._id), actived: !!commentItem.likes }"
-                     @click.stop.prevent="likeComment(commentItem)">
-                    <i class="iconfont icon-like"></i>
-                    <span>顶&nbsp;({{ commentItem.likes }})</span>
-                  </a>
                   <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
                     <i class="iconfont icon-reply"></i>
                     <span>回复</span>
@@ -195,7 +183,6 @@
         commentContentHtml: '',
         commentContentText: '',
         previewContent: '',
-        previewMode: false,
         // 用户相关
         userCacheMode: false,
         userCacheEditing: false,
@@ -307,42 +294,37 @@
       commentContentChange() {
         const html = this.$refs.markdown.innerHTML;
         const text = this.$refs.markdown.innerText;
-        if (!Object.is(html, this.commentContentHtml)) {
-          this.commentContentHtml = html
-        }
         if (!Object.is(text, this.commentContentText)) {
           this.commentContentText = text
+        } else {
+          this.commentContentText = html
         }
       },
       updateCommentContent({ start = '', end = '' }) {
         if (!start && !end) return false;
         // 如果选中了内容，则把选中的内容替换，否则在光标位置插入新内容
         const selectedText = (window.getSelection || document.getSelection)().toString();
-        const currentText = this.$refs.markdown.innerText;
+        const currentText = this.$refs.markdown.innerText || this.$refs.markdown.textContent;
         if (!!selectedText) {
           const newText = currentText.replace(selectedText, start + selectedText + end);
-          this.$refs.markdown.innerText = newText
+          this.$refs.markdown.innerHTML = newText
         } else {
-          this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end);
+          if(this.$refs.markdown.innerText !== undefined) {
+            this.$refs.markdown.innerText = this.$refs.markdown.innerText += (start + end);
+          } else {
+            this.$refs.markdown.innerHTML = this.$refs.markdown.innerHTML += (start + end);
+          }
           this.$refs.markdown.scrollTop = this.$refs.markdown.scrollHeight
         }
         this.commentContentChange()
       },
-      clearCommentContent(content) {
+      clearCommentContent() {
         this.commentContentHtml = '';
         this.$refs.markdown.innerHTML = this.commentContentHtml;
         this.commentContentChange()
       },
       insertContent(type) {
         const contents = {
-          // bold: {
-          //   start: `**`,
-          //   end: `**`
-          // },
-          // italicage: {
-          //   start: `*`,
-          //   end: `*`
-          // },
           image: {
             start: `![`,
             end: `]()`
@@ -361,23 +343,6 @@
 
       insertEmoji(emoji) {
         this.updateCommentContent({ end: emoji })
-      },
-
-      // 切换预览模式
-      togglePreviewMode() {
-        this.previewContent = this.marked(this.commentContentText);
-        this.previewMode = !this.previewMode
-      },
-
-      // 评论排序
-      async sortComemnts (sort) {
-        if (!Object.is(this.sortMode, sort)) {
-          this.sortMode = sort;
-          await this.loadCommentList();
-          setTimeout(() => {
-            this.toSomeAnchorById('comment-box')
-          }, 300)
-        }
       },
 
       // 点击用户
@@ -453,28 +418,21 @@
         })
       },
 
-      // async pageLoad (params = {}) {
-      //   await this.loadCommentList(params)
-      //   setTimeout(() => {
-      //     this.toSomeAnchorById('comment-box')
-      //   }, 500)
-      // },
-
       // 提交评论
       async submitComment(event) {
         // 为了使用原生表单拦截，不使用事件修饰符
         event.preventDefault();
-
-        if (!this.user.name) return alert('名字？');
-        if (!this.user.email) return alert('邮箱？');
+        if (this.user.name === '') return alert('名字？');
+        if (this.user.email === '') return alert('邮箱？');
         if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法');
         if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法');
+  
         if(!this.commentContentText || !this.commentContentText.replace(/\s/g, '')) return alert('内容？');
+        
         const lineOverflow = this.commentContentText.split('\n').length > 36;
         const lengthOverflow = this.commentContentText.length > 1000;
         if(lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内');
         if (!this.user.site) delete this.user.site;
-
         const res = await this.$store.dispatch('postComment', {
           pid: this.pid,
           post_id: this.postId,
@@ -485,7 +443,6 @@
           agent: this.userAgent
         });
         if (res.code === 200) {
-          this.previewMode = false;
           this.userCacheMode = true;
           this.cancelCommentReply();
           this.clearCommentContent();
@@ -562,8 +519,8 @@
     .list-box {
       margin-top: 1rem;
       padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 0 14px 2px #ebebeb;
+      /*background-color: rgba(255, 255, 255, 0.8);*/
+      /*box-shadow: 0 0 14px 2px #ebebeb;*/
       border-radius: 2px;
       > .comment-list {
         padding: 0;
@@ -602,7 +559,7 @@
             display: block;
             width: 100%;
             height: 100%;
-            padding: .5rem;
+            padding: .5rem 0;
 
             > .cm-header {
               display: flex;
@@ -611,7 +568,7 @@
 
               > .meta {
                 color: #a6a6a6;
-                font-size: 12px;
+                font-size: 10px;
                 display: inline-block;
                 .iconfont {
                   margin-right: 2px;
@@ -627,11 +584,23 @@
               > .user-name {
                 color: #666;
                 font-weight: bold;
-                font-size: .85rem;
-                margin-right: .3rem;
+                font-size: 14px;
                 img {
                   border-radius: 4px;
                   margin-right: .2rem;
+                }
+                .user-label {
+                  color: #a6a8b1;
+                  background-color: #3a3f51;
+                  display: inline;
+                  padding: .1em .4em .1em;
+                  font-size: 75%;
+                  font-weight: 300;
+                  line-height: 1;
+                  text-align: center;
+                  white-space: nowrap;
+                  vertical-align: baseline;
+                  border-radius: .25em;
                 }
                 &:hover {
                   text-decoration: underline;
@@ -644,7 +613,6 @@
               color: #666;
               > .reply-box {
                 padding: .8rem;
-                border-left: 3px dashed #eee;
                 >.reply-name {
                   color: #666;
                   font-weight: bold;
@@ -694,8 +662,18 @@
                 }
 
                 >.reply {
-                  display: none;
-
+                  display: block;
+                  font-size: 75%;
+                  width: 36px;
+                  height: 20px;
+                  line-height: 20px;
+                  text-align: center;
+                  white-space: nowrap;
+                  vertical-align: baseline;
+                  border-radius: .25em;
+                  text-shadow: 0 1px 0 rgba(0,0,0,.2);
+                  color: #dcf2f8;
+                  background-color: #23b7e5;
                   &:hover {
                     color: #5ab95c;
                   }
@@ -790,7 +768,7 @@
               padding: .8em .5em;
               cursor: auto;
               font-size: .85em;
-              line-height: 1.8em;
+              line-height: 2em;
               border-bottom: 1px dashed rgba(36,41,46,.12);
               &:empty:before{
                 content: attr(placeholder);
@@ -836,7 +814,8 @@
               display: inline-block;
 
               &:hover {
-                background: rgba(0, 0, 0, 0.12);
+                color: #fff;
+                background: var(--theme-color);
               }
             }
 
@@ -858,7 +837,8 @@
                 margin-right: .1rem;
               }
               &:hover {
-                background: rgba(0, 0, 0, 0.12);
+                color: #fff;
+                background: var(--theme-color);
               }
             }
           }

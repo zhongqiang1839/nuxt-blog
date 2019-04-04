@@ -2,9 +2,9 @@
   <section class="fe-tags">
     <h1 class="fe-tags__title">9 tags in total</h1>
     <div class="fe-tags__container" style="font-size: 1.2rem;">
-      <a class="fe-tags__item" v-for="(item, index) in tagslist" :href="'/tag/' + item._id" :key="item._id">
+      <nuxt-link class="fe-tags__item" v-for="(item, index) in tagslist" :to="'/tag/' + item._id" :key="item._id">
         #{{item.name}}
-      </a>
+      </nuxt-link>
     </div>
   </section>
 </template>
@@ -21,7 +21,6 @@ export default {
     return {
     }
   },
-
   computed: {
     tagslist () {
       return this.$store.state.article.tags;

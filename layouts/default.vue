@@ -7,40 +7,43 @@
         <section>
           <header class="fe-sidebar__header">
             <div class="fe-sidebar__avatar">
-              <img src="https://www.gravatar.com/avatar/d2e25f51b78fbc6bed7db389f38631bc?s=160"
-                   class="fe-sidebar__avatar-img fe-sidebar__avatar-img--black"  alt="">
+              <nuxt-link to="/" class="fe-sidebar__link">
+                <img src="/images/avatar/555.jpg"
+                     class="fe-sidebar__avatar-img fe-sidebar__avatar-img--black"  alt="">
+              </nuxt-link>
             </div>
             <h1 class="fe-sidebar__name">
               <a href="" class="fe-sidebar__name-link">
-                Jason Feng
+                小强哥
               </a>
             </h1>
             <p class="fe-sidebar__comments">
-              The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.
+              原名：冯忠强 <sup><nuxt-link to="/about">[more]</nuxt-link></sup>；现居上海, 就职于康成投资(中国); 喜欢听歌，玩游戏，喜欢接触新鲜事物。
+              座右铭：活到老，学到老，生命在于运动！
             </p>
           </header>
           <div class="fe-sidebar__count">
-            <a href="/categorys" class="fe-sidebar__item">
+            <nuxt-link to="/categorys" class="fe-sidebar__item">
               <span>4</span>
-              <span>Categories</span>
-            </a>
-            <a href="/tags" class="fe-sidebar__item">
+              <span>分类</span>
+            </nuxt-link>
+            <nuxt-link to="/tags" class="fe-sidebar__item">
               <span>{{tagsLength}}</span>
-              <span>Tags</span>
-            </a>
-            <a href="" class="fe-sidebar__item">
+              <span>标签</span>
+            </nuxt-link>
+            <a href="https://github.com/zhongqiang1839" target="_blank" class="fe-sidebar__item">
               <span>27</span>
               <!--<CountTo :start-val="0" :end-val="233" :duration='2000' separator="," class="count"></CountTo>-->
               <span>Star</span>
             </a>
           </div>
           <nav class="fe-sidebar__nav">
-            <a href="/" class="fe-sidebar__nav-item">
-              Home
-            </a>
-            <a href="/about" class="fe-sidebar__nav-item">
-              About
-            </a>
+            <nuxt-link to="/" class="fe-sidebar__nav-item">
+              首页
+            </nuxt-link>
+            <nuxt-link to="/about" class="fe-sidebar__nav-item">
+              关于
+            </nuxt-link>
           </nav>
           <div class="fe-sidebar__theme">
             <div class="fe-sidebar__item-list">
@@ -238,6 +241,13 @@
       background-color: #fff;
       text-align: center;
     }
+    &__link {
+      &:hover {
+        .fe-sidebar__avatar-img {
+          animation: btnGroups 1s linear;
+        }
+      }
+    }
     &__avatar {
       overflow: hidden;
       &-img {
@@ -267,6 +277,11 @@
     &__comments {
       line-height: 1.5;
       opacity: .618;
+      text-align: justify;
+      font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;;
+      sup {
+        color: var(--theme-color)
+      }
     }
     
     &__count {
@@ -306,7 +321,8 @@
           right: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(90deg,hsla(0,0%,100%,.1),transparent)!important;
+          opacity: .3;
+          background: linear-gradient(90deg,var(--theme-color),transparent);
           content: "";
           transition: transform .4s;
           transform: scaleX(0);
@@ -429,6 +445,14 @@
           background-color: hsla(0,0%,100%,.1)!important;
         }
       }
+      &__nav {
+        &-item {
+          &:before {
+            opacity: 1;
+            background: linear-gradient(90deg, hsla(0,0%,100%,.3),transparent)!important;
+          }
+        }
+      }
       &__header {
         border: none;
         background: none;
@@ -464,4 +488,159 @@
       }
     }
   }
+
+  @keyframes btnGroups {
+    0% {
+      transform: scale(1.2, 0.8);
+    }
+    1% {
+      transform: scale(1.18, 0.82);
+    }
+    2% {
+      transform: scale(1.16, 0.84);
+    }
+    3% {
+      transform: scale(1.13, 0.87);
+    }
+    4% {
+      transform: scale(1.1, 0.9);
+    }
+    5% {
+      transform: scale(1.07, 0.93);
+    }
+    6% {
+      transform: scale(1.04, 0.96);
+    }
+    7% {
+      transform: scale(1.01, 0.99);
+    }
+    8% {
+      transform: scale(0.99, 1.01);
+    }
+    9% {
+      transform: scale(0.97, 1.03);
+    }
+    10% {
+      transform: scale(0.95, 1.05);
+    }
+    11% {
+      transform: scale(0.94, 1.06);
+    }
+    12% {
+      transform: scale(0.93, 1.07);
+    }
+    13% {
+      transform: scale(0.93, 1.07);
+    }
+    14% {
+      transform: scale(0.93, 1.07);
+    }
+    15% {
+      transform: scale(0.93, 1.07);
+    }
+    16% {
+      transform: scale(0.94, 1.06);
+    }
+    17% {
+      transform: scale(0.94, 1.06);
+    }
+    18% {
+      transform: scale(0.95, 1.05);
+    }
+    19% {
+      transform: scale(0.96, 1.04);
+    }
+    20% {
+      transform: scale(0.98, 1.02);
+    }
+    21% {
+      transform: scale(0.99, 1.01);
+    }
+    22% {
+      transform: scale(1, 1);
+    }
+    23% {
+      transform: scale(1, 1);
+    }
+    24% {
+      transform: scale(1.01, 0.99);
+    }
+    25% {
+      transform: scale(1.02, 0.98);
+    }
+    26% {
+      transform: scale(1.02, 0.98);
+    }
+    27% {
+      transform: scale(1.02, 0.98);
+    }
+    28% {
+      transform: scale(1.03, 0.97);
+    }
+    29% {
+      transform: scale(1.03, 0.97);
+    }
+    30% {
+      transform: scale(1.02, 0.98);
+    }
+    31% {
+      transform: scale(1.02, 0.98);
+    }
+    32% {
+      transform: scale(1.02, 0.98);
+    }
+    33% {
+      transform: scale(1.02, 0.98);
+    }
+    34% {
+      transform: scale(1.01, 0.99);
+    }
+    35% {
+      transform: scale(1.01, 0.99);
+    }
+    36% {
+      transform: scale(1.01, 0.99);
+    }
+    37% {
+      transform: scale(1, 1);
+    }
+    38% {
+      transform: scale(1, 1);
+    }
+    39% {
+      transform: scale(1, 1);
+    }
+    40% {
+      transform: scale(0.99, 1.01);
+    }
+    41% {
+      transform: scale(0.99, 1.01);
+    }
+    42% {
+      transform: scale(0.99, 1.01);
+    }
+    43% {
+      transform: scale(0.99, 1.01);
+    }
+    44% {
+      transform: scale(0.99, 1.01);
+    }
+    45% {
+      transform: scale(0.99, 1.01);
+    }
+    46% {
+      transform: scale(0.99, 1.01);
+    }
+    47% {
+      transform: scale(0.99, 1.01);
+    }
+    48% {
+      transform: scale(0.99, 1.01);
+    }
+    49% {
+      transform: scale(1, 1);
+    }
+  }
+  
+  
 </style>

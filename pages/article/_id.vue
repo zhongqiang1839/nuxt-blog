@@ -6,7 +6,7 @@
 					<span class="source article-source">{{source[artItem.source].label}}</span>
 					<h2 class="title">{{artItem.title}}</h2>
 					<div class="meta">
-						<p>{{ artItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}&nbsp;</p>
+						<p>{{ artItem.formatTime}}&nbsp;</p>
 						<div class="meta-item">{{artItem.likes}} 人喜欢</div>
 						<div class="meta-item">{{artItem.views}} 次阅读</div>
 						<div class="meta-item">{{artItem.comments}} 条评论</div>
@@ -100,15 +100,10 @@
 			artItem() {
 				return this.$store.state.article.details
 			},
-			articleContent() {
-				return markdown(this.artItem.content, true, true).html
-			},
 		},
 
 		methods: {
-			hide() {
-				this.showDialog = false
-			}, // markdown解析服务
+			// markdown解析服务
 			marked(content) {
 				return markdown(content, null, false).html
 			},
@@ -173,7 +168,6 @@
 		background-color: hsla(0, 0%, 100%, 0.8);;
 		box-shadow: 0 0 14px 2px #ebebeb;
 		border-radius: 2px;
-		min-height: 500px;
 	}
 	
 	.article-detail {

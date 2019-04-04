@@ -44,12 +44,19 @@
 <script>
 
 export default {
+  
+  head () {
+    return {
+      title: this.title,
+    }
+  },
 
   fetch ({ store }) {},
 
   data () {
     return {
       current_page: 1,
+      title: '关于我'
     }
   },
 
@@ -68,7 +75,7 @@ export default {
 <style lang="less" scoped>
 
 .container {
-  min-height: 100vh;
+  /*min-height: 100vh;*/
 }
 
 .avator-box {

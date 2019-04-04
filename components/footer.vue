@@ -3,11 +3,11 @@
     <div class="meta-footer__chat">
       <a href="mailto: zhongqiang1839@163.com" target="_blank" class="meta-footer__chat-item iconfont icon-email"></a>
       <a href="https://github.com/zhongqiang1839" target="_blank" class="meta-footer__chat-item iconfont icon-github-fill"></a>
-      <a target="_blank" class="meta-footer__chat-item iconfont icon-QQ" href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" title="联系我"></a>
+      <a href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank" class="meta-footer__chat-item iconfont icon-QQ"  title="联系我"></a>
     </div>
     <div class="meta-footer__info">
       <span>@</span>"2019" <span style="color: red;">❤</span>
-      <a href="/">Jason Feng</a>
+      <nuxt-link to="/">Jason Feng</nuxt-link>
     </div>
     <div class="meta-footer__word">
       <span>Power by <a href="https://zh.nuxtjs.org/" target="_blank">Nuxt</a></span>
