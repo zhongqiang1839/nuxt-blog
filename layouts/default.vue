@@ -18,30 +18,29 @@
               </a>
             </h1>
             <p class="fe-sidebar__comments">
-              原名：冯忠强 <sup><nuxt-link to="/about">[more]</nuxt-link></sup>；现居上海, 就职于康成投资(中国); 喜欢听歌，玩游戏，喜欢接触新鲜事物。
-              座右铭：活到老，学到老，生命在于运动！
+              The whole problem with the world is that fools and fanatics are always so certain of themselves, but wiser people so full of doubts.
             </p>
           </header>
           <div class="fe-sidebar__count">
             <nuxt-link to="/categorys" class="fe-sidebar__item">
               <span>4</span>
-              <span>分类</span>
+              <span>cate</span>
             </nuxt-link>
             <nuxt-link to="/tags" class="fe-sidebar__item">
               <span>{{tagsLength}}</span>
-              <span>标签</span>
+              <span>tags</span>
             </nuxt-link>
-            <a href="https://github.com/zhongqiang1839" target="_blank" class="fe-sidebar__item">
-              <span>27</span>
+            <a href="https://gitee.com/zhongqiang1839/nuxt-blog" target="_blank" class="fe-sidebar__item fe-sidebar__gitee">
+              <span>2</span>
               <!--<CountTo :start-val="0" :end-val="233" :duration='2000' separator="," class="count"></CountTo>-->
               <span>Star</span>
             </a>
           </div>
           <nav class="fe-sidebar__nav">
-            <nuxt-link to="/" class="fe-sidebar__nav-item">
+            <nuxt-link to="/" class="fe-sidebar__nav-item fe-sidebar__index">
               首页
             </nuxt-link>
-            <nuxt-link to="/about" class="fe-sidebar__nav-item">
+            <nuxt-link to="/about" class="fe-sidebar__nav-item fe-sidebar__about">
               关于
             </nuxt-link>
           </nav>
@@ -75,6 +74,7 @@
     <div class="fe-container__layout">
       <div style="height: 100vh;">
         <div class="fe-container__feed">
+          <eevee></eevee>
           <main class="fe-container__article-list">
             <nuxt/>
           </main>
@@ -97,6 +97,7 @@
   import myAside from '~/components/myAside'
   import userInfo from '~/components/user'
   import myBackground from '~/components/backgrond'
+  import eevee from '~/components/eevee'
   import myMenuGroup from '~/components/menu-group'
   
   export default {
@@ -137,6 +138,7 @@
       myAside,
       myBackground,
       userInfo,
+      eevee,
       myMenuGroup
     },
   }
@@ -277,8 +279,8 @@
     &__comments {
       line-height: 1.5;
       opacity: .618;
-      text-align: justify;
-      font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;;
+      /*text-align: justify;*/
+      /*font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;;*/
       sup {
         color: var(--theme-color)
       }
@@ -433,6 +435,11 @@
         margin-right: 0;
         padding-right: 1.6rem;
       }
+      &__comments {
+        sup {
+          color: #fff;
+        }
+      }
       &__item {
         &:after {
           top: .5rem;
@@ -488,7 +495,7 @@
       }
     }
   }
-
+  
   @keyframes btnGroups {
     0% {
       transform: scale(1.2, 0.8);
@@ -641,6 +648,6 @@
       transform: scale(1, 1);
     }
   }
-  
-  
+
+
 </style>

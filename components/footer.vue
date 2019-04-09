@@ -2,11 +2,11 @@
   <footer class="meta-footer">
     <div class="meta-footer__chat">
       <a href="mailto: zhongqiang1839@163.com" target="_blank" class="meta-footer__chat-item iconfont icon-email"></a>
-      <a href="https://github.com/zhongqiang1839" target="_blank" class="meta-footer__chat-item iconfont icon-github-fill"></a>
       <a href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank" class="meta-footer__chat-item iconfont icon-QQ"  title="联系我"></a>
+      <a href="https://github.com/zhongqiang1839" target="_blank" class="meta-footer__chat-item iconfont icon-github-fill"></a>
     </div>
     <div class="meta-footer__info">
-      <span>@</span>"2019" <span style="color: red;">❤</span>
+      <span class="iconfont icon-at"></span>"2019" <span style="color: red;">❤</span>
       <nuxt-link to="/">Jason Feng</nuxt-link>
     </div>
     <div class="meta-footer__word">
@@ -16,26 +16,23 @@
 </template>
 
 <script>
-
-import eevee from '~/components/eevee';
-
-export default {
-  name: 'fn-header',
-  data () {
-    return {
+  
+  export default {
+    name: 'fn-header',
+    data () {
+      return {
+      }
+    },
+    
+    methods: {
+    },
+    
+    mounted () {
+    
+    },
+    components: {
     }
-  },
-
-  methods: {
-  },
-
-  mounted () {
-
-  },
-  components: {
-      eevee
   }
-}
 </script>
 
 <style lang="less" scoped>
@@ -62,9 +59,9 @@ export default {
       word-wrap: break-word;
       line-height: 1.8;
       span {
-        font-family: Josefin Sans;
         margin-right: 2px;
         vertical-align: -1px;
+        font-size: .6rem;
       }
       a {
         border-bottom: 1px dotted #85889b;
@@ -80,7 +77,7 @@ export default {
     }
     
   }
-  
-  
+
+
 
 </style>

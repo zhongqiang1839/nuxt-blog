@@ -25,93 +25,83 @@
           </div>
         </div>
         <div class="editor">
-            <div class="will-reply" v-if="!!pid" key="1">
-              <div class="reply-user">
+          <div class="will-reply" v-if="!!pid" key="1">
+            <div class="reply-user">
                 <span>
                   <span>回复: @{{ replyCommentSelf.name }}</span>
                 </span>
-                <a href="" class="cancel iconfont icon-undo" @click.stop.prevent="cancelCommentReply">取消</a>
-              </div>
-              <div class="reply-preview"
-                   v-html="marked(replyCommentSelf.content).length > 100
+              <a href="" class="cancel iconfont icon-undo" @click.stop.prevent="cancelCommentReply">取消</a>
+            </div>
+            <div class="reply-preview"
+                 v-html="marked(replyCommentSelf.content).length > 100
                     ? marked(replyCommentSelf.content).slice(0, 100) + '...'
                     : marked(replyCommentSelf.content)"></div>
+          </div>
+          <div class="markdown" key="2">
+            <div class="markdown-editor"
+                 ref="markdown"
+                 contenteditable="true"
+                 placeholder="你就不想说点什么,或者占个板凳..."
+                 @keyup="commentContentChange($event)">
             </div>
-            <div class="markdown" key="2">
-              <div class="markdown-editor"
-                   ref="markdown"
-                   contenteditable="true"
-                   placeholder="你就不想说点什么,或者占个板凳..."
-                   @keyup="commentContentChange($event)">
-              </div>
+          </div>
+          <div class="editor-tools" key="3">
+            <a href="" class="emoji" title="emoji" @click.stop.prevent="emojiShow = !emojiShow">
+              <i class="iconfont icon-smile"></i>
+            </a>
+            <a href="https://segmentfault.com/markdown" target="_blank" class="emoji" title="emoji">
+              <i class="iconfont icon-markdown-copy"></i>
+            </a>
+            <div class="emoji-box" :style="{opacity: emojiShow ? 1 : 0}">
+              <ul class="emoji-list">
+                <li class="item" @click="insertEmoji('😃')">😃</li>
+                <li class="item" @click="insertEmoji('😂')">😂</li>
+                <li class="item" @click="insertEmoji('😅')">😅</li>
+                <li class="item" @click="insertEmoji('😉')">😉</li>
+                <li class="item" @click="insertEmoji('😌')">😌</li>
+                <li class="item" @click="insertEmoji('😔')">😔</li>
+                <li class="item" @click="insertEmoji('😓')">😓</li>
+                <li class="item" @click="insertEmoji('😘')">😘</li>
+                <li class="item" @click="insertEmoji('😡')">😡</li>
+                <li class="item" @click="insertEmoji('😭')">😭</li>
+                <li class="item" @click="insertEmoji('😱')">😱</li>
+                <li class="item" @click="insertEmoji('😳')">😳</li>
+                <li class="item" @click="insertEmoji('😵')">😵</li>
+                <li class="item" @click="insertEmoji('🌚')">🌚</li>
+                <li class="item" @click="insertEmoji('👍')">👍</li>
+                <li class="item" @click="insertEmoji('👎')">👎</li>
+                <li class="item" @click="insertEmoji('💪')">💪</li>
+                <li class="item" @click="insertEmoji('🌹')">🌹</li>
+                <li class="item" @click="insertEmoji('💊')">💊</li>
+                <li class="item" @click="insertEmoji('🇨🇳')">🇨🇳</li>
+                <li class="item" @click="insertEmoji('🇺🇸')">🇺🇸</li>
+              </ul>
             </div>
-            <div class="editor-tools" key="3">
-              <a href="" class="emoji" title="emoji" @click.stop.prevent="emojiShow = !emojiShow">
-                <i class="iconfont icon-smile"></i>
-              </a>
-              <a href="" class="image" title="image" @click.stop.prevent="insertContent('image')">
-                <i class="iconfont icon-image"></i>
-              </a>
-              <a href="" class="link" title="link" @click.stop.prevent="insertContent('link')">
-                <i class="iconfont icon-link"></i>
-              </a>
-              <a href="" alt="Markdown is support" class="code" title="code" @click.stop.prevent="insertContent('code')">
-                <i class="iconfont icon-code"></i>
-              </a>
-              <a href="https://segmentfault.com/markdown" target="_blank" class="emoji" title="emoji">
-                <i class="iconfont icon-markdown"></i>
-              </a>
-              <div class="emoji-box" v-show="emojiShow">
-                <ul class="emoji-list">
-                  <li class="item" @click="insertEmoji('😃')">😃</li>
-                  <li class="item" @click="insertEmoji('😂')">😂</li>
-                  <li class="item" @click="insertEmoji('😅')">😅</li>
-                  <li class="item" @click="insertEmoji('😉')">😉</li>
-                  <li class="item" @click="insertEmoji('😌')">😌</li>
-                  <li class="item" @click="insertEmoji('😔')">😔</li>
-                  <li class="item" @click="insertEmoji('😓')">😓</li>
-                  <li class="item" @click="insertEmoji('😘')">😘</li>
-                  <li class="item" @click="insertEmoji('😡')">😡</li>
-                  <li class="item" @click="insertEmoji('😭')">😭</li>
-                  <li class="item" @click="insertEmoji('😱')">😱</li>
-                  <li class="item" @click="insertEmoji('😳')">😳</li>
-                  <li class="item" @click="insertEmoji('😵')">😵</li>
-                  <li class="item" @click="insertEmoji('🌚')">🌚</li>
-                  <li class="item" @click="insertEmoji('👍')">👍</li>
-                  <li class="item" @click="insertEmoji('👎')">👎</li>
-                  <li class="item" @click="insertEmoji('💪')">💪</li>
-                  <li class="item" @click="insertEmoji('🌹')">🌹</li>
-                  <li class="item" @click="insertEmoji('💊')">💊</li>
-                  <li class="item" @click="insertEmoji('🇨🇳')">🇨🇳</li>
-                  <li class="item" @click="insertEmoji('🇺🇸')">🇺🇸</li>
-                </ul>
-              </div>
-              <button type="submit"
-                      class="submit"
-                      @click="submitComment($event)">
-                <span>回复</span>
-              </button>
-            </div>
+            <button type="submit"
+                    class="submit"
+                    @click="submitComment($event)">
+              <span>回复</span>
+            </button>
+          </div>
         </div>
       </div>
     </form>
-    <transition-group name="list" tag="span">
-      <div class="list-box" v-if="comment.list.length && comment.list.length !== 0" key="1">
-        <transition-group name="list" tag="ul" class="comment-list">
-          <li class="comment-item"
-              v-for="commentItem in comment.list"
-              :id="`comment-item-${commentItem.id}`"
-              :key="commentItem.id">
-            <div class="cm-avatar">
-              <a target="_blank"
-                 rel="external nofollow"
-                 :href="commentItem.site"
-                 @click.stop="clickUser($event, commentItem.site)">
-                <img :alt="commentItem.name || '匿名用户'"
-                     :src="gravatar(commentItem.email) || '/images/anonymous.jpg'">
-              </a>
-            </div>
-            <div class="cm-body">
+    <div class="list-box" v-if="comment.list.length && comment.list.length !== 0" key="1">
+      <ul class="comment-list">
+        <li class="comment-item"
+            v-for="commentItem in comment.list"
+            :id="`comment-item-${commentItem.id}`"
+            :key="commentItem.id">
+          <div class="cm-avatar">
+            <a target="_blank"
+               rel="external nofollow"
+               :href="commentItem.site"
+               @click.stop="clickUser($event, commentItem.site)">
+              <img :alt="commentItem.name || '匿名用户'"
+                   :src="gravatar(commentItem.email) || '/images/avatar/444.jpg'">
+            </a>
+          </div>
+          <div class="cm-body">
               <div class="cm-header">
                 <a class="user-name"
                    target="_blank"
@@ -120,42 +110,45 @@
                    @click.stop="($event, commentItem.site)">
                   <span>{{ commentItem.name }}</span>
                   <span class="user-label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
+                  <!--<span class="time">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>-->
                 </a>
                 <div class="meta">
-                  <span class="os" v-html="OSParse(commentItem.agent)"></span>
-                  <span class="ua" v-html="UAParse(commentItem.agent)"></span>
+                  <span class="time">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
+                  <!--<span class="os" v-html="OSParse(commentItem.agent)"></span>-->
+                  <!--<span class="ua" v-html="UAParse(commentItem.agent)"></span>-->
+                  <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
+                    <label>回复</label>
+                  </a>
                 </div>
               </div>
               <div class="cm-content">
-                <div class="reply-box" v-if="!!commentItem.pid">
+                <div v-html="marked(commentItem.content)"></div>
+              </div>
+              <div class="cm-footer" v-if="!!commentItem.pid">
+                <div class="reply-avatar">
+                  <img :alt="commentItem.name || '匿名用户'"
+                       :src="foundReplyAvatarParent(commentItem.pid) || '/images/avatar/444.jpg'">
+                </div>
+      
+                <div class="reply-box" >
                   <p class="reply-name">
                     <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${commentItem.pid}`)">
                       <span></span>
-                      <strong v-if="fondReplyParent(commentItem.pid)">@{{ fondReplyParent(commentItem.pid) }}</strong>
+                      <strong v-if="foundReplyParent(commentItem.pid)">@{{ foundReplyParent(commentItem.pid) }}</strong>
                     </a>
+                    <span class="user-label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
                   </p>
                   <div
-                    class="reply-content"
-                    v-html="fondReplyParentContent(commentItem.pid).length > 150
-                  ? fondReplyParentContent(commentItem.pid).slice(0, 150) + '...'
-                  : fondReplyParentContent(commentItem.pid)" ></div>
+                      class="reply-content"
+                      v-html="foundReplyParentContent(commentItem.pid).length > 150
+                ? foundReplyParentContent(commentItem.pid).slice(0, 150) + '...'
+                : foundReplyParentContent(commentItem.pid)" ></div>
                 </div>
-                <div v-html="marked(commentItem.content)"></div>
-              </div>
-              <div class="cm-footer">
-                <div class="operate-box">
-                  <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
-                    <i class="iconfont icon-reply"></i>
-                    <span>回复</span>
-                  </a>
-                </div>
-                <span class="floor">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
               </div>
             </div>
-          </li>
-        </transition-group>
-      </div>
-    </transition-group>
+        </li>
+      </ul>
+    </div>
     <div class="loading" v-show="comment.fetching" key="2">
       <loadingCom></loadingCom>
     </div>
@@ -165,11 +158,10 @@
 <script>
   import markdown from '~/plugins/marked'
   import gravatar from '~/plugins/gravatar'
-  // import { scrollTo } from '~/utils/scroll'
   import loadingCom from '~/components/pageLoading/pageLoading'
   import _ from '~/utils/underscore'
   import { UAParse, OSParse } from '~/utils/meta-parse'
-
+  
   export default {
     name: 'fn-comment',
     data () {
@@ -206,33 +198,33 @@
         required: true
       }
     },
-
+    
     fetch() {
     },
-
+    
     components: { loadingCom },
-
+    
     computed: {
-
+      
       userAgent() {
         return this.$store.state.options.userAgent
       },
       comment() {
         return this.$store.state.article.comments
       },
-
+      
       replyCommentSelf() {
         return this.comment.list.find(comment => Object.is(comment.id, this.pid))
       },
-
+      
     },
-
+    
     mounted () {
-
+      
       this.initUser();
-
+      
       this.loadCommentList()
-
+      
       // window.onscroll = _.throttle(() => {
       //
       //   // 总高度
@@ -340,16 +332,16 @@
         };
         this.updateCommentContent(contents[type])
       },
-
+      
       insertEmoji(emoji) {
         this.updateCommentContent({ end: emoji })
       },
-
+      
       // 点击用户
       clickUser(event, site) {
         if (!site) event.preventDefault()
       },
-
+      
       // 跳转到某条指定的id位置
       toSomeAnchorById(id) {
         const targetDom = document.getElementById(id);
@@ -369,7 +361,7 @@
           }
         }
       },
-
+      
       // 回复评论
       replyComment(comment) {
         this.pid = comment.id;
@@ -379,36 +371,42 @@
       cancelCommentReply() {
         this.pid = 0;
       },
+      // 找到回复头像
+      foundReplyAvatarParent(pid) {
+        const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
+        return this.gravatar(parent ? parent.email : null)
+      },
+      
       // 找到回复来源
-      fondReplyParent(pid) {
+      foundReplyParent(pid) {
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
         return parent ? parent.name : null;
       },
-
+      
       // 回复来源内容
-      fondReplyParentContent (pid) {
+      foundReplyParentContent (pid) {
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
         const content = parent ? parent.content : null;
         return this.marked(content);
       },
-
+      
       // 点赞某条评论
       likeComment(comment) {
         if (this.commentLiked(comment._id)) return false;
         this.$store.dispatch('likeComment', { _id: comment._id })
-          .then(data => {
-            this.likeComments.push(comment._id);
-            localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
-          })
-          .catch(err => {
-            console.warn('评论点赞失败', err)
-          })
+        .then(data => {
+          this.likeComments.push(comment._id);
+          localStorage.setItem('LIKE_COMMENTS', JSON.stringify(this.likeComments))
+        })
+        .catch(err => {
+          console.warn('评论点赞失败', err)
+        })
       },
       // 获取某条评论是否被点赞
       commentLiked(comment_id) {
         return this.likeComments.includes(comment_id);
       },
-
+      
       // 获取评论列表
       async loadCommentList(params = {}) {
         params.sort = this.sortMode;
@@ -417,7 +415,7 @@
           post_id: this.postId
         })
       },
-
+      
       // 提交评论
       async submitComment(event) {
         // 为了使用原生表单拦截，不使用事件修饰符
@@ -426,7 +424,7 @@
         if (this.user.email === '') return alert('邮箱？');
         if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法');
         if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法');
-  
+        
         if(!this.commentContentText || !this.commentContentText.replace(/\s/g, '')) return alert('内容？');
         
         const lineOverflow = this.commentContentText.split('\n').length > 36;
@@ -462,21 +460,21 @@
     font-size: 1em;
     line-height: 2em;
     word-wrap: break-word;
-
+    
     a {
       text-decoration: underline;
     }
-
+    
     img {
       margin: .5rem 0;
       max-width: 100%;
       border-radius: 2px;
     }
-
+    
     p {
       margin: 0;
     }
-
+    
     code {
       color: #bd4147;
       padding: .3em .5em;
@@ -484,7 +482,7 @@
       border-radius: 4px;
       background-color: rgba(36,41,46,.12);
     }
-
+    
     pre {
       overflow: auto;
       font-size: 85%;
@@ -492,7 +490,7 @@
       background-color: #f7f7f7;
       border-radius: 3px;
       width: 100%;
-
+      
       > code {
         margin: 0;
         padding: 1em;
@@ -505,7 +503,7 @@
       }
     }
   }
-
+  
   #comment-box {
     position: relative;
     padding: 1rem 0;
@@ -519,14 +517,11 @@
     .list-box {
       margin-top: 1rem;
       padding: 1rem;
-      /*background-color: rgba(255, 255, 255, 0.8);*/
-      /*box-shadow: 0 0 14px 2px #ebebeb;*/
-      border-radius: 2px;
       > .comment-list {
         padding: 0;
         margin: 0;
         list-style-type: none;
-
+        
         > .comment-item {
           position: relative;
           padding: .6em 0 .6em 3.6em;
@@ -534,18 +529,22 @@
           &:last-child {
             border: 0;
           }
-
-          > .cm-avatar {
+          &:hover {
+            .reply {
+              /*opacity: 1;*/
+            }
+          }
+          .cm-avatar {
             display: block;
             position: absolute;
             left: 0;
             top: 1.2rem;
-
+            
             > a {
               display: block;
               width: 36px;
               height: 36px;
-
+              
               > img {
                 width: 100%;
                 height: 100%;
@@ -554,149 +553,133 @@
               }
             }
           }
-
-          > .cm-body {
+  
+          .user-label {
+            color: #a6a8b1;
+            background-color: #3a3f51;
+            display: inline;
+            padding: .1em .4em .1em;
+            font-size: 75%;
+            font-weight: 300;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+          }
+          
+          .cm-body {
             display: block;
             width: 100%;
             height: 100%;
             padding: .5rem 0;
-
+  
             > .cm-header {
-              display: flex;
-              justify-content: space-between;
               position: relative;
-
+              
               > .meta {
                 color: #a6a6a6;
                 font-size: 10px;
-                display: inline-block;
+                padding: .6rem 0;
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
                 .iconfont {
                   margin-right: 2px;
-                  &.icon-chrome-fill {
-                    /*font-size: 12px;*/
-                  }
                 }
                 span {
+                  &:first-child {
+                    margin-left: 0;
+                  }
                   margin-left: 4px;
                 }
+                .reply {
+                  margin-left: 1rem;
+                  text-decoration: none;
+                  color: #888;
+                  font-size: 12px;
+                  padding: 2px 6px;
+                  /*background-color: #666;*/
+                  border-radius: 2px;
+                }
               }
-
+  
               > .user-name {
+                display: block;
                 color: #666;
                 font-weight: bold;
                 font-size: 14px;
+                .time {
+                  color: #a6a6a6;
+                  font-size: 10px;
+                  margin-left: 2rem;
+                }
                 img {
                   border-radius: 4px;
                   margin-right: .2rem;
-                }
-                .user-label {
-                  color: #a6a8b1;
-                  background-color: #3a3f51;
-                  display: inline;
-                  padding: .1em .4em .1em;
-                  font-size: 75%;
-                  font-weight: 300;
-                  line-height: 1;
-                  text-align: center;
-                  white-space: nowrap;
-                  vertical-align: baseline;
-                  border-radius: .25em;
                 }
                 &:hover {
                   text-decoration: underline;
                 }
               }
             }
-
+            
             > .cm-content {
-              font-size: 12px;
               color: #666;
+              font-size: 14px;
+              padding: .4rem 0;
+            }
+            
+            > .cm-footer {
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+              > .reply-avatar {
+                width: 36px;
+                height: 36px;
+                display: block;
+                > img {
+                  width: 100%;
+                  height: 100%;
+                  transition: transform .5s ease-out;
+                  border-radius: 50%;
+                }
+              }
+  
               > .reply-box {
                 padding: .8rem;
                 >.reply-name {
                   color: #666;
                   font-weight: bold;
-                  font-size: .85rem;
+                  font-size: 14px;
                   a {
                     text-decoration: none;
-
                     &:hover {
                       text-decoration: underline;
                     }
                   }
                 }
-              }
-            }
-
-            > .cm-footer {
-              display: flex;
-              align-items: center;
-              position: relative;
-              justify-content: space-between;
-              > .floor {
-                color: #a6a6a6;
-                font-size: .85rem;
-                font-family: Arial;
-                display: inline-block;
-              }
-              .operate-box {
-                flex: 1;
-                > .reply,
-                > .like {
-                  font-size: .8em;
-                  margin-right: 1em;
+                .reply-content {
+                  color: #666;
+                  font-size: 14px;
+                  margin-top: 10px;
                 }
-                > .reply,
-                > .like {
-                  opacity: .8;
-
-                  &:hover {
-                    color: #EA6F5A;
-                  }
-
-                  &.liked {
-                    color: #EA6F5A;
-                    font-weight: bold;
-                  }
-
-                }
-
-                >.reply {
-                  display: block;
-                  font-size: 75%;
-                  width: 36px;
-                  height: 20px;
-                  line-height: 20px;
-                  text-align: center;
-                  white-space: nowrap;
-                  vertical-align: baseline;
-                  border-radius: .25em;
-                  text-shadow: 0 1px 0 rgba(0,0,0,.2);
-                  color: #dcf2f8;
-                  background-color: #23b7e5;
-                  &:hover {
-                    color: #5ab95c;
-                  }
-                }
+                
               }
-            }
-          }
-          &:hover {
-            .cm-body > .cm-footer > .operate-box > .reply {
-              display: inline-block;
+              
             }
           }
         }
       }
     }
-
+    
     > .post-box {
       display: block;
       padding: 1rem;
       background-color: hsla(0, 0%, 100%, 0.8);
       box-shadow: 0 0 14px 2px #ebebeb;
       border-radius: 2px;
-
+      
       > .editor-box {
         width: 100%;
         border-radius: 4px;
@@ -706,7 +689,7 @@
           width: 100%;
           height: 2em;
           line-height: 2em;
-
+          
           > .name,
           > .email,
           > .site {
@@ -721,11 +704,11 @@
               max-width: 100%;
               font-size: .775rem;
               border-bottom: 1px dashed #dedede;
-
+              
               &:hover {
                 border-color: #999;
               }
-
+              
               &:focus {
                 border-color: #999;
               }
@@ -761,7 +744,7 @@
             position: relative;
             overflow: hidden;
             > .markdown-editor {
-              min-height: 8em;
+              min-height: 14em;
               max-height: 30em;
               overflow: auto;
               outline: none;
@@ -769,6 +752,7 @@
               cursor: auto;
               font-size: .85em;
               line-height: 2em;
+              background: url("/images/plun.png") no-repeat 100% 100%;
               border-bottom: 1px dashed rgba(36,41,46,.12);
               &:empty:before{
                 content: attr(placeholder);
@@ -784,13 +768,18 @@
             line-height: 2rem;
             position: relative;
             color: #666;
+            .iconfont {
+              font-size: 1.2rem;
+            }
             > .emoji-box {
-              padding: .5rem;
+              opacity: 0;
               z-index: 999;
               border: 1px solid #eee;
-              background-color: #fff;
+              background-color: var(--theme-color);
               position: absolute;
-
+              transition: opacity .3s ease;
+              border-radius: 0 0 8px 8px;
+              
               > .emoji-list {
                 list-style: none;
                 font-size: 1.0em;
@@ -802,7 +791,7 @@
                 }
               }
             }
-
+            
             > .emoji,
             > .image,
             > .link,
@@ -812,13 +801,12 @@
               height: auto;
               text-align: center;
               display: inline-block;
-
               &:hover {
                 color: #fff;
                 background: var(--theme-color);
               }
             }
-
+            
             > .submit {
               float: right;
               color: #999;

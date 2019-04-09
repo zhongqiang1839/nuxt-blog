@@ -241,7 +241,6 @@ export default {
   opacity: .5;
   transition: opacity .3s ease;
   font-size: .8rem;
-  margin-right: .5rem;
   &.original {
     color: #302e31;
     background-color: rgba(48,46,49,0.2)

@@ -63,20 +63,20 @@ export const FN_MESSAGE = {
         "selector": ".post-body img",
         "text": ["文章特色配图好看嘛？"]
     }, {
-        "selector": ".post-body .post-button .btn",
-        "text": ["想要了解更多，那就再深入点吧~~"]
+        "selector": ".fe-sidebar__gitee",
+        "text": ["想要给主人个star,就去吧~~"]
     }, {
         "selector": "fancybox.image img",
         "text": ["点击图片可以放大了噢~~"]
     }, {
-        "selector": ".custom-logo-site-title",
+        "selector": ".fe-sidebar__index",
         "text": ["<span style=\"color:red;\">要返回主页嘛？</span>"]
     }, {
-        "selector": ".lower #show-nav",
-        "text": ["<span style=\"color:red;\">那是菜单按钮噢~~</span>"]
+        "selector": ".fe-sidebar__about",
+        "text": ["想要了解更多，那就再深入点吧~~"]
     }, {
-        "selector": ".site-author-image",
-        "text": ["<span style=\"color:red;\">那不要乱玩噢~~</span>"]
+        "selector": ".fe-sidebar__item-list",
+        "text": ["无敌换色 来玩玩~~"]
     }, {
         "selector": ".motion-element",
         "text": ["<span style=\"color:red;\">主人的社交ID，不关注下嘛？</span>"]

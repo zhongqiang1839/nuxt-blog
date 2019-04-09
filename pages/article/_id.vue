@@ -42,15 +42,15 @@
 					<div class="copyright">
 						<div class="wrapper">
 							<p>
-								<span>文本标题:</span>
+								<span>文本标题：</span>
 								<a href="">{{artItem.title}}</a>
 							</p>
 							<p>
-								<span>文章链接:</span>
-								<a href="">http://jason.me/</a>
+								<span>文章链接：</span>
+								<a href="">{{artLink}}</a>
 							</p>
 							<p>
-								<span>版权信息:</span>
+								<span>版权信息：</span>
 								<a href="">"署名-非商用-自由转载" 转载请保留原文链接。</a>
 							</p>
 						</div>
@@ -92,7 +92,8 @@
 		data() {
 			return {
 				source: ARTICLE_SOURCE,
-				isActive: false
+				isActive: false,
+				artLink: ''
 			}
 		},
 
@@ -121,6 +122,7 @@
 		},
 
 		mounted() {
+			this.artLink = location.href;
 		},
 
 		components: {
@@ -157,7 +159,7 @@
 		.article-source {
 			color: #FFF;
 			background: var(--theme-color);
-			transition: .4s ease-in background-color;
+			transition: .2s ease-in background-color;
 		}
 	}
 	
@@ -275,7 +277,7 @@
 			background-color: var(--copyright-color);
 			transition: border-left-color,background-color .4s ease-in;
 			span {
-				margin-right: 1em;
+				margin-right: .2em;
 				color: #5d686f;
 			}
 			a {
