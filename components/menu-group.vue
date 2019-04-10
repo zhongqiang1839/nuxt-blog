@@ -147,9 +147,6 @@ export default {
         this.$store.commit('options/SET_SIDE_BAR', false);
       }
     };
-    window.onscroll = () => {
-    
-    }
   }
 }
 </script>

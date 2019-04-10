@@ -281,6 +281,9 @@ export default {
   .fe-article__item {
     margin: 1rem;
   }
+  .fe-pagination {
+    margin: 0 1rem 1rem 1rem;
+  }
 }
 
 .my-swiper {

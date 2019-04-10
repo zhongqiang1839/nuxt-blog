@@ -114,8 +114,6 @@
                 </a>
                 <div class="meta">
                   <span class="time">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
-                  <!--<span class="os" v-html="OSParse(commentItem.agent)"></span>-->
-                  <!--<span class="ua" v-html="UAParse(commentItem.agent)"></span>-->
                   <a href="" class="reply" @click.stop.prevent="replyComment(commentItem)">
                     <label>回复</label>
                   </a>
@@ -555,8 +553,8 @@
           }
   
           .user-label {
-            color: #a6a8b1;
-            background-color: #3a3f51;
+            color: #b3b1b1;
+            background-color: #e2e2e2;
             display: inline;
             padding: .1em .4em .1em;
             font-size: 75%;
@@ -577,7 +575,7 @@
             > .cm-header {
               position: relative;
               
-              > .meta {
+              .meta {
                 color: #a6a6a6;
                 font-size: 10px;
                 padding: .6rem 0;
@@ -596,18 +594,19 @@
                 .reply {
                   margin-left: 1rem;
                   text-decoration: none;
-                  color: #888;
                   font-size: 12px;
                   padding: 2px 6px;
                   /*background-color: #666;*/
                   border-radius: 2px;
+                  color: #ef2f11;
+                  cursor: pointer;
                 }
               }
   
               > .user-name {
                 display: block;
-                color: #666;
-                font-weight: bold;
+                color: #2c2020;
+                font-weight: 700;
                 font-size: 14px;
                 .time {
                   color: #a6a6a6;
@@ -625,7 +624,7 @@
             }
             
             > .cm-content {
-              color: #666;
+              color: #4a4a4a;
               font-size: 14px;
               padding: .4rem 0;
             }
@@ -649,7 +648,7 @@
               > .reply-box {
                 padding: .8rem;
                 >.reply-name {
-                  color: #666;
+                  color: #2c2020;
                   font-weight: bold;
                   font-size: 14px;
                   a {
@@ -660,7 +659,7 @@
                   }
                 }
                 .reply-content {
-                  color: #666;
+                  color: #4a4a4a;
                   font-size: 14px;
                   margin-top: 10px;
                 }
@@ -809,7 +808,7 @@
             
             > .submit {
               float: right;
-              color: #999;
+              color: #888;
               height: 100%;
               position: relative;
               display: inline-block;
