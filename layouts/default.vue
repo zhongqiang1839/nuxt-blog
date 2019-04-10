@@ -22,11 +22,11 @@
             </p>
           </header>
           <div class="fe-sidebar__count">
-            <nuxt-link to="/categorys" class="fe-sidebar__item">
+            <nuxt-link to="/category" class="fe-sidebar__item">
               <span>4</span>
               <span>cate</span>
             </nuxt-link>
-            <nuxt-link to="/tags" class="fe-sidebar__item">
+            <nuxt-link to="/tag" class="fe-sidebar__item">
               <span>{{tagsLength}}</span>
               <span>tags</span>
             </nuxt-link>
@@ -46,6 +46,8 @@
           </nav>
           <div class="fe-sidebar__theme">
             <div class="fe-sidebar__item-list">
+              <a style="background:#ff76ab linear-gradient(to bottom,#ff76ab 0%,#ff5640 100%);width: 6rem;" title="#f44336" data-a="#f44336" data-b="#f44336" @click="changeTheme(19)"></a>
+              <a style="background:#607d8b linear-gradient(to bottom,#607d8b 0%,#26323b 100%);width: 6rem;" title="#f44336" data-a="#f44336" data-b="#f44336" @click="changeTheme(0)"></a>
               <a style="background:#f44336" title="#f44336" data-a="#f44336" data-b="#f44336" @click="changeTheme(1)"></a>
               <a style="background:#e91e63" title="#e91e63" data-a="#e91e63" data-b="#e91e63" @click="changeTheme(2)"></a>
               <a style="background:#9c27b0" title="#9c27b0" data-a="#9c27b0" data-b="#9c27b0" @click="changeTheme(3)"></a>
@@ -279,8 +281,6 @@
     &__comments {
       line-height: 1.5;
       opacity: .618;
-      /*text-align: justify;*/
-      /*font-family: Helvetica, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;;*/
       sup {
         color: var(--theme-color)
       }
@@ -309,9 +309,8 @@
         text-align: left;
         height: 3rem;
         text-transform: capitalize;
-        /*font-family: Baloo Bhaijaan,PingFang SC,Microsoft JhengHei,sans-serif;*/
         line-height: 3rem;
-        &:hover,&:focus {
+        &:hover,&:focus,&:active {
           font-size: 1.2rem;
         }
         &:active:before, &:hover:before,&:focus:before{
@@ -389,13 +388,13 @@
         &:nth-child(1) {
           border-radius: 6px 0 0 0
         }
-        &:nth-child(6) {
+        &:nth-child(2) {
           border-radius: 0 6px 0 0
         }
-        &:nth-child(13) {
+        &:nth-child(15) {
           border-radius: 0 0 0 6px
         }
-        &:nth-child(18) {
+        &:nth-child(20) {
           border-radius: 0 0 6px 0
         }
         &.current, &:hover {
@@ -471,7 +470,7 @@
     }
     
     .fe-container {
-      background: var(--theme-color);
+      background: var(--sidebar-bg);
       height: auto;
       &__layout {
         &:before {

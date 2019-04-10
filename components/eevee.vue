@@ -1,6 +1,5 @@
 <template>
-  <div class="eevee">
-  </div>
+  <div class="eevee" v-if="showEevee"></div>
 </template>
 <script>
   
@@ -9,7 +8,7 @@
   export default {
     name: 'fn-message', data() {
       return {
-        isshow: false, message: ''
+        showEevee: true
       }
     }, methods: {
       showMessage(text, timeout) {
@@ -88,17 +87,20 @@
             text = '嗨~ 快来逗我玩吧！';
           }
         } else {
-          text = '嗨！朋友你好！ 欢迎来到 小强哥的博客！';
+          text = '嗨！朋友你好！ 欢迎来到 小强哥的个人博客！';
         }
         this.showMessage(text, 12000);
       }
     },
     mounted() {
+      this.showEevee = (window.innerWidth > 1200);
+      window.onresize = () => {
+        this.showEevee = !(window.innerWidth > 1200);
+      };
       this.initTips();
       this.init();
       window.setInterval(this.showHitokoto, 20000);
     }
-    
   }
 </script>
 

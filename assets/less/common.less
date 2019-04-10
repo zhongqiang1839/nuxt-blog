@@ -76,19 +76,22 @@ body {
     transition: transform .3s cubic-bezier(.2,0,.2,1);
     transform-origin: 0 0;
   }
+}
 
+::selection {
+  background: var(--theme-color);
+  color: #fff;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  height: 4px
+  height: 4px;
 }
 
 @media (max-width: 656px) {
   ::-webkit-scrollbar {
     width:0;
     height: 0;
-    background: none
   }
 }
 
