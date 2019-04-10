@@ -53,7 +53,7 @@
           </div>
         </span>
         <nuxt-link to="/">
-          <img src="images/user.jpeg" alt="">
+          <img src="/images/avatar/555.jpg" alt="">
         </nuxt-link>
       </div>
     </header>
@@ -234,8 +234,8 @@ export default {
         padding: 0 1rem;
       }
       img {
-        width: 2.667rem;
-        height: 2.667rem;
+        width: 3.6rem;
+        height: 3.6rem;
         border-radius: 50%;
         background-color: #eee;
         background-position: 50%;
@@ -243,6 +243,7 @@ export default {
         background-repeat: no-repeat;
         cursor: pointer;
         margin-left: 10px;
+        border: 2px solid #000;
       }
       > .thumbnail {
         position: relative;
@@ -302,13 +303,14 @@ export default {
         cursor: default;
         user-select: none;
         z-index: 9999;
+        transition: all .4s ease-in;
         i {
           display: block;
           font-style: normal;
           font-size: 18px;
           border-left: 2px solid #999;
           padding-left: 8px;
-          margin: 10px 0;
+          margin: 20px 0;
         }
       }
     }
