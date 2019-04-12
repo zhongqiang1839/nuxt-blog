@@ -3,12 +3,12 @@
     <div class="fe-tags">
       <h1 class="fe-tags__title">9 tags in total</h1>
       <div class="fe-tags__container">
-        <a :class="['fe-tags__item', {'fe-tags__item--active': id === item._id}]" v-for="(item, index) in tagslist" :href="'/tag/' + item._id" :key="item._id">
+        <div :class="['fe-tags__item', {'fe-tags__item--active': current_name === item.name }]" v-for="(item, index) in tagslist" @click="searchByTags(item._id, item.name)" :key="item._id">
           #{{item.name}}
-        </a>
+        </div>
       </div>
     </div>
-    <ul class="fe-article__container">
+    <ul class="fe-article__container" v-if="artlist.length">
       <li class="fe-article__item" v-for="(item, index) in artlist" :key="index">
         <a class="fe-article__item-link" :href="`/article/${item._id}`">
           <span class="fe-article__item-time">{{item.create_at}}</span>
@@ -16,6 +16,7 @@
         </a>
       </li>
     </ul>
+    <div class="fe-article__empty" v-else> 暂无更多文章</div>
   </section>
 </template>
 
@@ -25,7 +26,9 @@ export default {
   name: 'my-articles',
 
   fetch ({ store, params }) {
-    return store.dispatch('getArticleList', params)
+    if( store.state.article.tags.find(item => item.name === params.name)) {
+      return store.dispatch('getArticleList', { id:  store.state.article.tags.find(item => item.name === params.name)._id })
+    }
   },
 
   head () {
@@ -34,7 +37,8 @@ export default {
   data () {
     return {
       current_page: 1,
-      source: ARTICLE_SOURCE
+      source: ARTICLE_SOURCE,
+      current_name: ''
     }
   },
   computed: {
@@ -44,15 +48,20 @@ export default {
     artlist () {
       return this.$store.state.article.art.list;
     },
-    id() {
-      return this.$route.params.id;
+    name() {
+      return this.$route.params.name;
     }
   },
   methods: {
-    hide () {
+    searchByTags (id, name) {
+      this.current_name = name;
+      window.history.pushState(null, null, `/tag/${name}`);
+      this.$store.dispatch('getArticleList', { id: id })
     },
   },
-  mounted () {}
+  mounted () {
+    this.current_name = this.name
+  }
 }
 </script>
 
@@ -66,11 +75,16 @@ export default {
       padding: 2.15rem;
       background-color: #fff;
     }
+    &__empty {
+      background-color: #fff;
+      padding: 6px 32px;
+      text-align: center;
+    }
     &__item {
       list-style-type: none;
       &-link {
         position: relative;
-        display: flex;
+        display: block;
         margin-left: 1.5rem;
         padding: .5rem 0;
         line-height: 2rem;
@@ -81,6 +95,8 @@ export default {
           left: -1rem;
           content: "-";
           opacity: .5;
+          -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
           transform: translateY(-50%);
         }
         &:hover {
@@ -100,9 +116,6 @@ export default {
         display: table-cell;
         padding-top: .1rem;
         font-size: 1.15rem;
-        @media (max-width: 656px) {
-          font-size: 1rem;
-        }
       }
     }
   }
@@ -112,6 +125,7 @@ export default {
     border-radius: 6px;
     padding: 2.15rem;
     background-color: #fff;
+    margin-bottom: 1.3rem;
     &__title {
       margin: 0 0 1.5rem;
       font-size: 1.8rem;
@@ -127,8 +141,7 @@ export default {
       border-radius: 3px;
       line-height: 2;
       background-color: var(--copyright-color);
-      -webkit-transition: background-color .15s;
-      transition: background-color .15s;
+      /*transition: background-color .15s;*/
       &:hover {
         color: #fff;
         background-color: var(--theme-color);

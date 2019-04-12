@@ -3,12 +3,12 @@
     <div class="fe-tags">
       <h1 class="fe-tags__title">4 Categories in total</h1>
       <div class="fe-tags__container">
-        <a :class="['fe-tags__item', {'fe-tags__item--active': type == index}]" v-for="(item, index) in categorys" :href="'/category/' + item.value" :key="item.value">
+        <div :class="['fe-tags__item', {'fe-tags__item--active': current_name === item.label}]" v-for="(item) in categorys" @click="searchByCate(item.value, item.label)" :key="item.value">
           #{{item.label}}
-        </a>
+        </div>
       </div>
     </div>
-    <ul class="fe-article__container">
+    <ul class="fe-article__container" v-if="artlist.length">
       <li class="fe-article__item" v-for="(item, index) in artlist" :key="index">
         <a class="fe-article__item-link" :href="`/article/${item._id}`">
           <span class="fe-article__item-time">{{item.create_at}}</span>
@@ -16,26 +16,32 @@
         </a>
       </li>
     </ul>
+	  <div class="fe-article__empty" v-else> 暂无更多文章</div>
   </section>
 </template>
 
 <script>
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
 export default {
-  name: 'my-articles',
+  name: 'my-category',
 
   fetch ({ store, params }) {
-    return store.dispatch('getArticleList', params)
+		if(FN_CATEGORYS.find(item => item.label === params.type)) {
+			return store.dispatch('getArticleList', { type:  FN_CATEGORYS.find(item => item.label === params.type).value })
+		}
   },
 
   head () {
     return { title: `标签 | 分类` }
   },
+	
   data () {
     return {
-      categorys: FN_CATEGORYS
+      categorys: FN_CATEGORYS,
+			current_name: ''
     }
   },
+	
   computed: {
     tagslist () {
       return this.$store.state.article.tags;
@@ -43,16 +49,19 @@ export default {
     artlist () {
       return this.$store.state.article.art.list;
     },
-    type() {
-      return this.$route.params.type;
-    }
+		type() {
+			return this.$route.params.type;
+		}
   },
   methods: {
-    hide () {
-      this.showDialog = false
+		searchByCate (type, name) {
+			this.current_name = name;
+			window.history.pushState(null, null, `/category/${name}`);
+			this.$store.dispatch('getArticleList', { type: type })
     },
   },
   mounted () {
+    this.current_name = this.type
   }
 }
 </script>
@@ -66,6 +75,11 @@ export default {
       padding: 2.15rem;
       background-color: #fff;
     }
+	  &__empty {
+		  background-color: #fff;
+		  padding: 6px 32px;
+		  text-align: center;
+	  }
     &__item {
       list-style-type: none;
       &-link {

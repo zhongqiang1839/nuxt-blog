@@ -79,6 +79,8 @@ export default {
       }
     }
   },
+  
+  
 
   computed: {
     artlist () {
@@ -157,6 +159,7 @@ export default {
     margin-bottom: .5rem;
     font-weight: 700;
     color: #2a2b33;
+    font-family: "PingFang SC", "Microsoft Yahei", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
     transition: all .3s ease;
   }
   &__thumb {
@@ -165,7 +168,6 @@ export default {
     width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
-    height: 240px;
     &-img {
       width: 100%;
       height: 100%;
@@ -179,6 +181,7 @@ export default {
       color: #fff;
       line-height: 4rem;
       padding-left: 1.2rem;
+      font-family: "PingFang SC", "Microsoft Yahei", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
       background-color: rgba(0,0,0, .1);
       h3 {
         transition: all .3s ease;
