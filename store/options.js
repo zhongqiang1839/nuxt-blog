@@ -37,7 +37,6 @@ export const mutations = {
       state.authenticated.shift();
     }
     state.authenticated = [...state.authenticated, action];
-    console.log(state.authenticated);
   },
   // 设置UA
   SET_LOADING (state, action = false) {
