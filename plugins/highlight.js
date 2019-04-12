@@ -16,6 +16,7 @@ Hljs.registerLanguage('nginx', require('highlight.js/lib/languages/nginx'))
 Hljs.registerLanguage('php', require('highlight.js/lib/languages/php'))
 Hljs.registerLanguage('python', require('highlight.js/lib/languages/python'))
 Hljs.registerLanguage('scss', require('highlight.js/lib/languages/scss'))
+Hljs.registerLanguage('sass', require('highlight.js/lib/languages/scss'))
 Hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
 Hljs.registerLanguage('stylus', require('highlight.js/lib/languages/stylus'))
 

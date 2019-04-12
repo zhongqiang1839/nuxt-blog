@@ -29,7 +29,7 @@
                     reset: true,
                 }
               }"
-					     v-html="marked(artItem.content)">
+					     v-html="articleContent">
 					</div>
 					<div class="reference">
 						<div :class="['like', isActive ? 'active' : '']" @click="postLikeArticle">
@@ -63,6 +63,8 @@
 			<div class="comment">
 				<my-comments :post-id="artItem.id" v-if="artItem.title"></my-comments>
 			</div>
+			
+			<!--<loading-com></loading-com>-->
 		</section>
 	</div>
 </template>
@@ -73,6 +75,8 @@
 	import myShare from '~/components/bdshare'
 	import myComments from '~/components/comments'
 	import {ARTICLE_SOURCE} from '~/utils/constant'
+
+	import loadingCom from '~/components/pageLoading/pageLoading'
 
 	export default {
 		name: 'fn-article',
@@ -101,13 +105,13 @@
 			artItem() {
 				return this.$store.state.article.details
 			},
+			// markdown解析服务
+			articleContent() {
+				return markdown(this.artItem.content, false, true).html
+			},
 		},
 
 		methods: {
-			// markdown解析服务
-			marked(content) {
-				return markdown(content, null, false).html
-			},
 			async postLikeArticle() {
 				if(this.isActive) return;
 				this.isActive = true;
@@ -127,6 +131,7 @@
 
 		components: {
 			myShare,
+			loadingCom,
 			myComments
 		}
 	}

@@ -7,12 +7,15 @@
 <script>
   export default {
     data() {
-      return {
-
-      }
+      return {}
     },
     components: {
     },
+    mounted() {
+      let body = document.getElementsByTagName("body")[0];
+      let theme = localStorage.getItem('theme');
+      body.setAttribute("class", theme || `theme0`)
+    }
   }
 </script>
 

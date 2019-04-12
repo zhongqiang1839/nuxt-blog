@@ -77,10 +77,16 @@ body {
     transform-origin: 0 0;
   }
 }
-
 ::selection {
   background: var(--theme-color);
-  color: #fff;
+}
+
+::webkit-selection {
+  background: var(--theme-color)
+}
+
+::moz-selection {
+  background: var(--theme-color)
 }
 
 ::-webkit-scrollbar {
