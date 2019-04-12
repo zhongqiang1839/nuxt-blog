@@ -162,6 +162,7 @@
     display: block;
     height: 100%;
     transition: .4s ease-in background-color;
+    font-size: inherit;
     &--open {
       height: 100vh!important;
       .fe-sidebar {
