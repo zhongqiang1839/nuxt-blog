@@ -6,7 +6,7 @@
       <span class="iconfont icon-sidebar" v-if="showSidebar" @click.stop="showTab"></span>
       <span class="iconfont icon-toc" v-if="false" @click=""></span>
     </div>
-    <div class="control" @click.stop='showMenu = !showMenu'>
+    <div :class="['control', {'rotate': isloading}]" @click.stop='showMenu = !showMenu'>
       <svg class="control-svg">
         <defs>
           <filter id="dp">
@@ -14,8 +14,8 @@
           </filter>
         </defs>
         <circle filter="url(#dp)" fill="rgba(0,0,0,.3)" cx="50%" cy="52%" r="44%"></circle>
-        <circle :class="['control-cover']" cx="50%" cy="50%" r="44%"></circle>
-        <circle class="control-stroke theme-stroke" :stroke-dasharray="3.1415926 * (progress || 0) + '% 314.15926%'" cx="50%" cy="50%"
+        <circle class="control-cover" cx="50%" cy="50%" r="44%"></circle>
+        <circle class="control-stroke theme-stroke" :stroke-dasharray="3.1415926 * (progress || 0) + '%'" cx="50%" cy="50%"
                 r="48%"></circle>
         <text class="control-progress" v-if="progress" x="50%" y="0" dy="50%">{{progress || ''}}<tspan dx="1">%</tspan></text>
         <g class="control-dot" v-if="!progress">
@@ -43,8 +43,8 @@ export default {
     }
   },
   computed: {
-    theme() {
-      return this.$store.state.options.theme
+    isloading() {
+      return this.$store.state.options.isloading
     },
   },
   methods: {
@@ -58,7 +58,8 @@ export default {
       this.scroll(2);
     },
     scroll(type = 1) {
-      let duration = 500;
+      var self = this;
+      let duration = 1000;
       let options = { offset: 0 };
       options.easing = easings['ease'];
       let page = __.$('html, body');
@@ -84,7 +85,6 @@ export default {
       } else {
         diff = initialY;
       }
-      
       let easing = BezierEasing.apply(BezierEasing, options.easing);
       let start;
       let done = function () {
@@ -98,11 +98,13 @@ export default {
         if (!start) start = timestamp;
         let time = timestamp - start;
         let progress = Math.min(time / duration, 1);
+        // self.progress = progress.toFixed(2) * 100;
+  
         progress = easing(progress);
+  
         if(type === 1) {
           document.getElementsByClassName('fe-container__feed')[0].scrollTo(0, initialY + diff * progress);
         } else {
-          // self.progress = progress.toFixed(2) * 100;
           document.getElementsByClassName('fe-container__feed')[0].scrollTo(0, diff * progress);
         }
         if (time < duration) {
@@ -183,6 +185,9 @@ export default {
     width: @fab-size;
     height: @fab-size;
     cursor: pointer;
+    &.rotate {
+      -webkit-animation: rotateLoading 2s infinite linear ;
+    }
   }
   // g
   .control-dot {
@@ -268,4 +273,14 @@ export default {
       .sub-transform(90deg, 2);
     }
   }
+
+  @keyframes rotateLoading {
+    0%{
+      transform: rotateY(0deg);
+    }
+    100%{
+      transform: rotateY(360deg);
+    }
+  }
+  
 </style>

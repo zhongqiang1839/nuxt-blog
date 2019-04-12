@@ -78,7 +78,7 @@
         <div class="fe-container__feed">
           <eevee></eevee>
           <main class="fe-container__article-list">
-            <nuxt/>
+            <nuxt />
           </main>
           <div class="fe-container__mask" v-if="showSidebar" @click="closeTab"></div>
         </div>
@@ -101,6 +101,8 @@
   import myBackground from '~/components/backgrond'
   import eevee from '~/components/eevee'
   import myMenuGroup from '~/components/menu-group'
+  import {simpleWord } from '~/utils/config'
+
   
   export default {
     data() {
@@ -118,6 +120,9 @@
       tagsLength () {
         return this.$store.state.article.tags.length;
       },
+      auth () {
+        return this.$store.state.options.authenticated.join('');
+      },
     },
     methods: {
       closeTab() {
@@ -127,6 +132,10 @@
         let body = document.getElementsByTagName("body")[0];
         localStorage.setItem('theme', `theme${type}`);
         body.setAttribute("class", `theme${type}`);
+        this.$store.commit('options/SET_USER_AUTH', type);
+        if(this.auth === simpleWord) {
+          this.$router.push("/write")
+        }
       }
     },
     mounted() {

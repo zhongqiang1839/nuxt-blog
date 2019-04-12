@@ -119,7 +119,6 @@ export default {
     &__container {
       width: 100%;
       background-color: #fff;
-      font-size: 1.2rem;
     }
     &__item {
       display: inline-block;

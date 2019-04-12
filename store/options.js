@@ -11,10 +11,11 @@ export const state = () => {
 
     showSidebar: false,
 
+    authenticated: [],
+
+    isloading: false,
     // 博主信息
     adminInfo: {},
-    // 网站信息
-    option: {},
   }
 };
 
@@ -29,6 +30,18 @@ export const mutations = {
   // 设置UA
   SET_USER_AGENT (state, action) {
     state.userAgent = action
+  },
+  //
+  SET_USER_AUTH (state, action) {
+    if(state.authenticated.length === 4) {
+      state.authenticated.shift();
+    }
+    state.authenticated = [...state.authenticated, action];
+    console.log(state.authenticated);
+  },
+  // 设置UA
+  SET_LOADING (state, action = false) {
+    state.isloading = action
   },
   // 设置sidebar 是否显示
   SET_SIDE_BAR(state, action = true) {

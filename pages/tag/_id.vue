@@ -2,7 +2,7 @@
   <section class="container">
     <div class="fe-tags">
       <h1 class="fe-tags__title">9 tags in total</h1>
-      <div class="fe-tags__container" style="font-size: 1.2rem;">
+      <div class="fe-tags__container">
         <a :class="['fe-tags__item', {'fe-tags__item--active': id === item._id}]" v-for="(item, index) in tagslist" :href="'/tag/' + item._id" :key="item._id">
           #{{item.name}}
         </a>
@@ -70,7 +70,7 @@ export default {
       list-style-type: none;
       &-link {
         position: relative;
-        display: block;
+        display: flex;
         margin-left: 1.5rem;
         padding: .5rem 0;
         line-height: 2rem;
@@ -81,8 +81,6 @@ export default {
           left: -1rem;
           content: "-";
           opacity: .5;
-          -webkit-transform: translateY(-50%);
-          -ms-transform: translateY(-50%);
           transform: translateY(-50%);
         }
         &:hover {
@@ -102,6 +100,9 @@ export default {
         display: table-cell;
         padding-top: .1rem;
         font-size: 1.15rem;
+        @media (max-width: 656px) {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -118,7 +119,6 @@ export default {
     &__container {
       width: 100%;
       background-color: #fff;
-      font-size: 1.2rem;
     }
     &__item {
       display: inline-block;

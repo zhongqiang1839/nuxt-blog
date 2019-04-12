@@ -64,7 +64,7 @@ module.exports = {
     'viewerjs/dist/viewer.css',
     'swiper/dist/css/swiper.css',
     'mavon-editor/dist/css/index.css',
-    'highlight.js/styles/github.css',
+    'highlight.js/styles/atom-one-dark.css',
   ],
 
   /*
@@ -79,6 +79,7 @@ module.exports = {
     { src: "~/plugins/vue-map.js", ssr: false },
     { src: "~/plugins/viewer.js", ssr: false },
     { src: '~/plugins/swiper.js', ssr: false },
+    { src: '~/plugins/router.js', ssr: false },
     { src: '~/plugins/count-to', ssr: false },
     { src: '~/plugins/copy.js', ssr: false },
     { src: '~/utils/meta-parse.js', ssr: false },

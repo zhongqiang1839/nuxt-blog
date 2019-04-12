@@ -110,7 +110,7 @@
       align-items: center;
       margin-bottom: .5rem;
       font-weight: 700;
-      color: #666;
+      color: #2a2b33;
     }
     &__desc {
       line-height: 1.8rem;
