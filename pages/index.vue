@@ -174,7 +174,7 @@ export default {
     }
     &-title {
       position: absolute;
-      bottom: 0;
+      bottom: 0.3rem;
       left: 0;
       height: 4rem;
       width: 100%;
