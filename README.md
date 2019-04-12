@@ -17,6 +17,6 @@ nuxt koa2 博客
 ![移动端](https://gitee.com/uploads/images/2019/0410/093217_421d7ef5_1412496.png "40ABAE8F-6FBF-489D-AB1A-99C633B3BAA0.png")
 
 
-#### 博客展示
+#### 博客展示地址
 
 http://119.27.163.168/
