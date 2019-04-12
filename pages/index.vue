@@ -7,15 +7,17 @@
             <div class="fe-article__info">
               <div class="fe-article__thumb" v-if="item.thumb">
                 <img class="fe-article__thumb-img" :data-title="item.title" :src="item.thumb" alt="">
-                <h3 class="fe-article__thumb-title">
-                  {{item.title}}
-                </h3>
+                <div class="fe-article__thumb-title">
+                  <h3 class="">
+                    {{item.title}}
+                  </h3>
+                </div>
               </div>
               <div class="fe-article__wrapper">
                 <h3 class="fe-article__title" v-if="!item.thumb">
                   {{item.title}}
                 </h3>
-                <div class="fe-article__desc markdown-body" v-html="marked(item.description)"></div>
+                <div v-if="item.description" class="fe-article__desc markdown-body" v-html="marked(item.description)"></div>
                 <p class="fe-article__tag">
                   <!--<span :class="['iconfont', item.typeClass]"></span>&nbsp;{{item.typeName}}-->
                 </p>
@@ -117,7 +119,7 @@ export default {
       .fe-article__title {
         margin-left: 10px;
       }
-      .fe-article__thumb-title{
+      .fe-article__thumb-title h3{
         margin-left: 10px;
       }
     }
@@ -154,7 +156,7 @@ export default {
     align-items: center;
     margin-bottom: .5rem;
     font-weight: 700;
-    color: #666;
+    color: #2a2b33;
     transition: all .3s ease;
   }
   &__thumb {
@@ -163,23 +165,28 @@ export default {
     width: 100%;
     -o-object-fit: cover;
     object-fit: cover;
-    transition: -webkit-transform .3s cubic-bezier(.215,.61,.355,1);
-    transition: transform .3s cubic-bezier(.215,.61,.355,1);
-    transition: transform .3s cubic-bezier(.215,.61,.355,1),-webkit-transform .3s cubic-bezier(.215,.61,.355,1);
+    height: 240px;
     &-img {
       width: 100%;
       height: 100%;
     }
     &-title {
       position: absolute;
-      bottom: 1rem;
-      left: 1.2rem;
-      transition: all .3s ease;
+      bottom: 0;
+      left: 0;
+      height: 4rem;
+      width: 100%;
+      color: #fff;
+      line-height: 4rem;
+      padding-left: 1.2rem;
+      background-color: rgba(0,0,0, .1);
+      h3 {
+        transition: all .3s ease;
+      }
     }
   }
   &__desc {
     line-height: 1.8rem;
-    color: #999;
     margin-top: 20px!important;
   }
   &__tag {
