@@ -11,7 +11,7 @@
 						<div class="meta-item">{{artItem.views}} 次阅读</div>
 						<div class="meta-item">{{artItem.comments}} 条评论</div>
 					</div>
-					<div class="content markdown-body"
+					<div class="content markdown-body hljs"
 					     v-copyright
 					     v-viewer.static="{
                 movable: false,
@@ -279,7 +279,7 @@
 			border-radius: 3px;
 			word-break: break-word;
 			line-height: 1.8;
-			background-color: var(--copyright-color);
+			background-color: var(--box-back-color);
 			transition: border-left-color,background-color .4s ease-in;
 			span {
 				margin-right: .2em;

@@ -64,7 +64,7 @@ module.exports = {
     'viewerjs/dist/viewer.css',
     'swiper/dist/css/swiper.css',
     'mavon-editor/dist/css/index.css',
-    'highlight.js/styles/atom-one-dark.css',
+    'highlight.js/styles/github.css',
   ],
 
   /*

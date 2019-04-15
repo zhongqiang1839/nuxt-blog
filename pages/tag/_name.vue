@@ -140,7 +140,7 @@ export default {
       padding: .2em 1em .1em;
       border-radius: 3px;
       line-height: 2;
-      background-color: var(--copyright-color);
+      background-color: var(--box-back-color);
       /*transition: background-color .15s;*/
       &:hover {
         color: #fff;

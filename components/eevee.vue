@@ -116,7 +116,7 @@
     border-radius: 6px;
     width: 200px;
     color: #888;
-    background-color: var(--copyright-color);
+    background-color: var(--box-back-color);
     text-align: left;
     transition: all .4s ease;
   }
