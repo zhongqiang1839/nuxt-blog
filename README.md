@@ -1,11 +1,13 @@
 # nuxt-blog
 
 ## 前言
-   一直想做一个包含前后端的博客，之前也有过Hexo的博客，特点就是使用方便，零基础搭建博客。写文章就是写Markdown。平时也有接触很多博客，也看过一些开源的博客源码，总是莫名的佩服。 于是乎参考了几个开源项目的技术架构，前端Vue + Nuxt 技术栈。后端采用Koa2 + mongodb + mongoose 技术栈。 
+> 一直想做一个包含前后端的博客,将nodejs mongodb复习一下，之前也有过Hexo的博客，特点就是使用方便，零基础搭建博客。写文章就是写Markdown，不方便扩展。平时也有接触很多博客，也看过一些开源的博客源码，总是由衷的佩服。 于是乎参考了几个开源项目的技术架构，前端Vue + Nuxt，后端采用Koa2 + mongodb + mongoose 技术栈。 
 
 ## 介绍
 - 前后端技术分离开发
-- 博客样式 交互比较乱，借鉴过很多博主的设计。(设计太low，请原谅)
+- 移动端交互比较赞
+- 桌面端目前比较简洁
+- 博客样式创意，借鉴过很多博主的设计,特别感谢Elmore,Jooger,jkchao。(本人设计太low，请原谅)
 
 - [博客地址](http://119.27.163.168/) - 联系我可以 email zhongqiang1839@163.com | QQ 289860723
 - [前端项目地址](https://gitee.com/zhongqiang1839/nuxt-blog)
@@ -15,12 +17,12 @@
 ### 技术栈
 
 - 前端 Nuxt(整套技术Nuxt的架构 包括router axios vuex 等等)
-  - less 预编译
-  - 插件
-  - gravatar(评论头像服务)
+  - less scss 预编译
+  - BEM  
+  - gravatar(头像服务)
   - marked highlight.js markdown的高亮方案
   - v-viewer 图片预览功能
-  - mavon-editor markdown编辑器很帅
+  - mavon-editor markdown编辑器(很帅哦)
   - vue-count-to vue-awesome-swiper vue-amap(计数器，轮播图，高德地图)
   
 - 后端 
