@@ -10,17 +10,16 @@
 - 博客样式创意，借鉴过很多博主的设计,特别感谢 Elmore,Jooger,jkchao 几位博主的开源项目让我学到了很多。(本人设计太low，请理解)
 - 联系我 email zhongqiang1839@163.com | QQ 289860723
 
-- [博客地址](http://119.27.163.168/) 
-- [前端项目地址](https://gitee.com/zhongqiang1839/nuxt-blog)
-- [后端项目地址](https://gitee.com/zhongqiang1839/api-server)
-- [预览地址](http://119.27.163.168/)
+- [博客地址](http://119.27.163.168/),[预览地址](http://119.27.163.168/) 
+- [Github前端项目地址](https://github.com/zhongqiang1839/nuxt-blog),[Gitee前端项目地址](https://gitee.com/zhongqiang1839/nuxt-blog)
+- [Github后端项目地址](https://github.com/zhongqiang1839/api-server),[Gitee后端项目地址](https://gitee.com/zhongqiang1839/api-server)
 
 ### 技术栈
 
 - 前端 Nuxt(整套技术Nuxt的架构 包括router axios vuex 等等)
-  - less
+  - LESS
   - BEM  
-  - gravatar(头像服务)
+  - Gravatar(头像服务)
   - marked highlight.js markdown的高亮方案
   - v-viewer 图片预览功能
   - mavon-editor markdown编辑器(很帅哦)
@@ -70,5 +69,5 @@
 #### 编写文章
 ![写文章](http://119.27.163.168:1839/images/demo3.gif)
 
-PS : 各位小伙伴觉得不错的话可以给个 star ~~~ 或者 fork 下来看看哦。如果有什么建议，也可以提 issue 哦
+**PS : 各位小伙伴觉得不错的话可以给个 star ~~~ 或者 fork 下来看看哦。如果有什么建议，也可以提 issue 哦**
 
