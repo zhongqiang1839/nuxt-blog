@@ -66,7 +66,7 @@
 <script>
 import axios from 'axios'
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
-import config from './../utils/config';
+import config from '~/utils/config';
 import { text } from "~/filters";
 
 export default {
@@ -140,7 +140,7 @@ export default {
         data: formdata,
         headers: { 'Content-Type': 'multipart/form-data' },
       }).then(({data}) => {
-        console.log(data.filename);
+        console.log(data);
         this.$refs.md.$img2Url(pos, `${config.serverIp}/uploads/${data.filename}`);
       })
     },

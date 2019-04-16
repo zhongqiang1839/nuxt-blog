@@ -1,5 +1,4 @@
 import axios from 'axios'
-import config from './../utils/config'
 
 function checkStatus(response) {
   if (response.status === 200 || response.status === 304) {
