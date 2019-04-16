@@ -61,7 +61,7 @@ export const FN_MESSAGE = {
         "text": ["文章特色配图好看嘛？"]
     }, {
         "selector": ".fe-sidebar__gitee",
-        "text": ["博主的star少的可怜，想要给个star,就去吧~~"]
+        "text": ["我命令你给主人个star，哦不是...求求你了~~"]
     }, {
         "selector": "fancybox.image img",
         "text": ["点击图片可以放大了噢~~"]
@@ -70,13 +70,13 @@ export const FN_MESSAGE = {
         "text": ["要返回主页嘛？"]
     }, {
         "selector": ".fe-sidebar__about",
-        "text": ["想要了解更多关于博主，那就再深入点吧~~"]
+        "text": ["想要了解更多关于主人，那就再深入点吧~~"]
     }, {
         "selector": ".fe-sidebar__item-list",
         "text": ["无敌换色 赤橙黄绿青蓝紫 来玩玩~~"]
     }, {
-        "selector": ".motion-element",
-        "text": ["<span style=\"color:red;\">博主的社交ID，不关注下嘛？</span>"]
+        "selector": ".meta-footer__chat-item",
+        "text": ["主人的社交ID，不关注下嘛？"]
     }, {
         "selector": ".reward-content",
         "text": ["客官大人，是要准备给主人打赏吗？谢谢啦~~"]
@@ -110,14 +110,8 @@ export const FN_MESSAGE = {
     }, {
         "selector": ".post-nav .post-nav-prev",
         "text": ["点击看下一篇文章~~"]
-    }, {
-        "selector": ".eevee",
-        "text": ["干嘛呢你，快把手拿开~~", "鼠…鼠标放错地方了！"]
     }],
     "click": [{
-        "selector": ".eevee",
-        "text": ["不要动手动脚的！快把手拿开~~", "真…真的是不知羞耻！", "Hentai！", "再摸的话我可要报警了！⌇●﹏●⌇", "110吗，这里有个变态一直在摸我(ó﹏ò｡)"]
-    },{
         "selector": ".reference .like",
         "text": ["客官点一次就可以了...", "客官要是还没过瘾的话..！", "先刷新页面再点！"]
     }]
