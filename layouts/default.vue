@@ -101,7 +101,7 @@
   import myBackground from '~/components/backgrond'
   import eevee from '~/components/eevee'
   import myMenuGroup from '~/components/menu-group'
-  import config from '~/utils/config'
+  import * as config from '~/utils/config'
 
   
   export default {
@@ -133,7 +133,7 @@
         localStorage.setItem('theme', `theme${type}`);
         body.setAttribute("class", `theme${type}`);
         this.$store.commit('options/SET_USER_AUTH', type);
-        if(this.auth === config.simpleWord) {
+        if(this.auth === config.OPT_PASSWORD) {
           this.$router.push("/write")
         }
       }

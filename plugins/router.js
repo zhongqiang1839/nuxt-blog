@@ -1,4 +1,4 @@
-import config from '~/utils/config'
+import * as config from '~/utils/config'
 export default ({ app, store }) => {
   app.router.beforeEach((to, from, next) => {
     store.commit('options/SET_LOADING', true);
@@ -9,7 +9,7 @@ export default ({ app, store }) => {
   })
 
   app.router.afterEach((to, from) => {
-    if (to.fullPath === '/write' && store.state.options.authenticated.join("") !== config.simpleWord) {
+    if (to.fullPath === '/write' && store.state.options.authenticated.join("") !== config.OPT_PASSWORD) {
       app.router.go(-1)
     }
   })
