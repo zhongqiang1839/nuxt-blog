@@ -60,11 +60,12 @@
         border: 1px solid rgba(224, 186, 140, 0.62);
         border-radius: 12px;
         color: var(--theme-color);
-        background-color: var(--box-back-color);
+        background-color: #fff;
         box-shadow: 0 3px 15px 2px rgba(191, 158, 118, 0.2);
         text-overflow: ellipsis;
         overflow: hidden;
         position: absolute;
+        z-index: 9999;
         animation-delay: 5s;
         animation-duration: 50s;
         animation-iteration-count: infinite;

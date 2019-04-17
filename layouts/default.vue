@@ -1,7 +1,6 @@
 <template>
   <div :class="['fe-container', {'fe-container--open': showSidebar}]">
     <!--<my-background></my-background>-->
-    <!--<my-header></my-header>-->
     <nav class="fe-sidebar">
       <div class="fe-sidebar__con">
         <section>
@@ -30,10 +29,10 @@
               <span>{{tagsLength}}</span>
               <span>tags</span>
             </nuxt-link>
-            <a href="https://gitee.com/zhongqiang1839/nuxt-blog" target="_blank" class="fe-sidebar__item fe-sidebar__gitee">
-              <span>2</span>
+            <a href="https://github.com/zhongqiang1839/nuxt-blog" target="_blank" class="fe-sidebar__item fe-sidebar__gitee">
+              <span>3</span>
               <!--<CountTo :start-val="0" :end-val="233" :duration='2000' separator="," class="count"></CountTo>-->
-              <span>Star</span>
+              <span>star</span>
             </a>
           </div>
           <nav class="fe-sidebar__nav">
