@@ -17,7 +17,7 @@
                 <h3 class="fe-article__title" v-if="!item.thumb">
                   {{item.title}}
                 </h3>
-                <div v-if="item.description" class="fe-article__desc markdown-body" v-html="marked(item.description)"></div>
+                <div v-if="item.description" class="fe-article__desc markdown-body hljs" v-html="marked(item.description)"></div>
                 <p class="fe-article__tag">
                   <!--<span :class="['iconfont', item.typeClass]"></span>&nbsp;{{item.typeName}}-->
                 </p>
@@ -79,8 +79,8 @@ export default {
       }
     }
   },
-  
-  
+
+
 
   computed: {
     artlist () {
@@ -238,7 +238,7 @@ export default {
         border-radius: 1px;
       }
     }
-  
+
   }
 }
 
