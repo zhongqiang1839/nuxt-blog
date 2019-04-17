@@ -76,7 +76,6 @@
     <div class="fe-container__layout">
       <div style="height: 100vh;">
         <div class="fe-container__feed">
-          <eevee></eevee>
           <main class="fe-container__article-list">
             <nuxt />
           </main>
@@ -87,9 +86,10 @@
       <!--<my-aside></my-aside>-->
       <!--</aside>-->
     </div>
-    <div class="fe-menu-group">
+    <div class="fe-menu-group" v-if="mobileLayout">
       <my-menu-group></my-menu-group>
     </div>
+    <eevee v-else></eevee>
   </div>
 </template>
 
