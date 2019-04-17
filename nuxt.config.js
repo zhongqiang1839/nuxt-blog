@@ -35,13 +35,8 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', type: 'text/css', href: '/js/live2d/waifu.css' }
     ],
-    script: [
-      // { src: '/js/live2d/waifu-tips.js' },
-      // { src: '/js/live2d/live2d.js' },
-      // { src: 'https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js' },
-    ],
+    script: [],
     noscript: [
       { innerHTML: 'This website requires JavaScript.' }
     ]
@@ -64,7 +59,6 @@ module.exports = {
   */
   css: [
     { src: '~/assets/less/common.less', lang: 'less' },
-    '~/plugins/live2d/waifu.css',
     'viewerjs/dist/viewer.css',
     'swiper/dist/css/swiper.css',
     'mavon-editor/dist/css/index.css',
