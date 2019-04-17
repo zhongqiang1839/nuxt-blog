@@ -74,8 +74,9 @@
       </div>
     </nav>
     <div class="fe-container__layout">
-      <div style="height: 100vh;">
+      <div style="height: 100vh; position: relative;">
         <div class="fe-container__feed">
+          <eevee v-if="!mobileLayout"></eevee>
           <main class="fe-container__article-list">
             <nuxt />
           </main>
@@ -86,10 +87,9 @@
       <!--<my-aside></my-aside>-->
       <!--</aside>-->
     </div>
-    <div class="fe-menu-group" v-if="mobileLayout">
+    <div class="fe-menu-group">
       <my-menu-group></my-menu-group>
     </div>
-    <eevee v-else></eevee>
   </div>
 </template>
 
@@ -103,11 +103,11 @@
   import myMenuGroup from '~/components/menu-group'
   import * as config from '~/utils/config'
 
-  
+
   export default {
     data() {
       return {
-      
+
       }
     },
     computed: {
@@ -156,7 +156,7 @@
 </script>
 
 <style lang="less" scoped>
-  
+
   .fe-container {
     position: relative;
     display: block;
@@ -185,7 +185,7 @@
         transition: border-radius .4s;
       }
     }
-    
+
     &__layout {
       transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1);
       padding-left: 20rem;
@@ -200,7 +200,7 @@
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
     }
-    
+
     &__mask {
       position: absolute;
       top: 0;
@@ -208,7 +208,7 @@
       left: 0;
       height: 100%;
     }
-    
+
     &__article-list {
       position: relative;
       display: block;
@@ -217,9 +217,9 @@
       max-width: 660px;
       border-radius: 6px;
     }
-    
+
   }
-  
+
   .fe-menu-group {
     position: fixed;
     right: 1rem;
@@ -228,7 +228,7 @@
     color: #fff;
     text-align: center;
   }
-  
+
   .fe-sidebar {
     position: fixed;
     top: 0;
@@ -295,7 +295,7 @@
         color: var(--theme-color)
       }
     }
-    
+
     &__count {
       display: flex;
       overflow: hidden;
@@ -418,9 +418,9 @@
     &__theme {
       position: relative;
     }
-    
+
   }
-  
+
   @media (max-width: 975px) {
     .fe-sidebar {
       opacity: 0;
@@ -429,7 +429,7 @@
     .fe-container__layout {
       padding: 0;
     }
-    
+
   }
   @media (max-width: 656px) {
     .fe-sidebar {
@@ -478,7 +478,7 @@
         background: none;
       }
     }
-    
+
     .fe-container {
       background: var(--sidebar-bg);
       height: auto;
@@ -504,7 +504,7 @@
       }
     }
   }
-  
+
   @keyframes btnGroups {
     0% {
       transform: scale(1.2, 0.8);

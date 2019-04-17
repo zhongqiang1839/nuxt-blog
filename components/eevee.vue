@@ -42,7 +42,7 @@
 <style lang="less" scoped>
 
     .waifu {
-        position: fixed;
+        position: absolute;
         bottom: 0;
         z-index: 1;
         font-size: 0;
@@ -55,11 +55,12 @@
     }
     .waifu-tips {
         opacity: 0;
-        margin: -20px 0 -20px -10px;
+        margin: -20px -20px 0 2px;
         padding: 5px 10px;
         border: 1px solid rgba(224, 186, 140, 0.62);
         border-radius: 12px;
-        background-color: rgba(236, 217, 188, 0.5);
+        color: var(--theme-color);
+        background-color: var(--box-back-color);
         box-shadow: 0 3px 15px 2px rgba(191, 158, 118, 0.2);
         text-overflow: ellipsis;
         overflow: hidden;
