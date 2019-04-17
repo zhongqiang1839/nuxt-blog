@@ -8,149 +8,94 @@
         </div>
       </div>
     </div>
-    <ul class="fe-article__container" v-if="artlist.length">
-      <li class="fe-article__item" v-for="(item, index) in artlist" :key="index">
-        <a class="fe-article__item-link" :href="`/article/${item._id}`">
-          <span class="fe-article__item-time">{{item.create_at}}</span>
-          <span class="fe-article__item-title"> {{item.title}}</span>
-        </a>
-      </li>
-    </ul>
-	  <div class="fe-article__empty" v-else> 暂无更多文章</div>
+    <article-list :art-list="artlist"></article-list>
   </section>
 </template>
 
 <script>
-import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
+import { ARTICLE_SOURCE, FN_CATEGORYS } from "~/utils/constant";
+import articleList from "~/components/article-list";
 export default {
-  name: 'my-category',
+  name: "my-category",
 
-  fetch ({ store, params }) {
-		if(FN_CATEGORYS.find(item => item.label === params.type)) {
-			return store.dispatch('getArticleList', { type:  FN_CATEGORYS.find(item => item.label === params.type).value })
-		}
-  },
-
-  head () {
-    return { title: `标签 | 分类` }
-  },
-	
-  data () {
-    return {
-      categorys: FN_CATEGORYS,
-			current_name: ''
+  fetch({ store, params }) {
+    if (FN_CATEGORYS.find(item => item.label === params.type)) {
+      return store.dispatch("getArticleList", {
+        type: FN_CATEGORYS.find(item => item.label === params.type).value
+      });
     }
   },
-	
+
+  head() {
+    return { title: `标签 | 分类` };
+  },
+
+  data() {
+    return {
+      categorys: FN_CATEGORYS,
+      current_name: ""
+    };
+  },
+
   computed: {
-    tagslist () {
+    tagslist() {
       return this.$store.state.article.tags;
     },
-    artlist () {
+    artlist() {
       return this.$store.state.article.art.list;
     },
-		type() {
-			return this.$route.params.type;
-		}
+    type() {
+      return this.$route.params.type;
+    }
   },
   methods: {
-		searchByCate (type, name) {
-			this.current_name = name;
-			window.history.pushState(null, null, `/category/${name}`);
-			this.$store.dispatch('getArticleList', { type: type })
-    },
+    searchByCate(type, name) {
+      this.current_name = name;
+      window.history.pushState(null, null, `/category/${name}`);
+      this.$store.dispatch("getArticleList", { type: type });
+    }
   },
-  mounted () {
-    this.current_name = this.type
+  mounted() {
+    this.current_name = this.type;
+  },
+  components: {
+    articleList
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-  .fe-article {
-    &__container {
-      margin-top: 1rem;
-      display: block;
-      border-radius: 6px;
-      padding: 2.15rem;
-      background-color: #fff;
-    }
-	  &__empty {
-		  background-color: #fff;
-		  padding: 6px 32px;
-		  text-align: center;
-	  }
-    &__item {
-      list-style-type: none;
-      &-link {
-        position: relative;
-        display: block;
-        margin-left: 1.5rem;
-        padding: .5rem 0;
-        line-height: 2rem;
-        transition: margin-left .4s;
-        &:before {
-          position: absolute;
-          top: 1.5rem;
-          left: -1rem;
-          content: "-";
-          opacity: .5;
-          -webkit-transform: translateY(-50%);
-          -ms-transform: translateY(-50%);
-          transform: translateY(-50%);
-        }
-        &:hover {
-          margin-left: 1rem;
-        }
-      }
-      &-time {
-        float: left;
-        padding-right: .5rem;
-        white-space: nowrap;
-        letter-spacing: 1px;
-        font-size: .85rem;
-        font-family: Montserrat,PingFang SC,Microsoft JhengHei,sans-serif;
-        opacity: .5;
-      }
-      &-title {
-        display: table-cell;
-        padding-top: .1rem;
-        font-size: 1.15rem;
-      }
-    }
+
+.fe-tags {
+  display: block;
+  border-radius: 6px;
+  padding: 2.15rem;
+  background-color: #fff;
+  margin-bottom: 1.3rem;
+  &__title {
+    margin: 0 0 1.5rem;
+    font-size: 1.8rem;
   }
-  
-  .fe-tags {
-    display: block;
-    border-radius: 6px;
-    padding: 2.15rem;
+  &__container {
+    width: 100%;
     background-color: #fff;
-    margin-bottom: 1.3rem;
-    &__title {
-      margin: 0 0 1.5rem;
-      font-size: 1.8rem;
+  }
+  &__item {
+    display: inline-block;
+    margin: 0 1rem 1rem 0;
+    padding: 0.2em 1em 0.1em;
+    border-radius: 3px;
+    line-height: 2;
+    background-color: var(--box-back-color);
+    transition: background-color 0.1s ease-in;
+    &:hover {
+      color: #fff;
+      background-color: var(--theme-color);
     }
-    &__container {
-      width: 100%;
-      background-color: #fff;
-    }
-    &__item {
-      display: inline-block;
-      margin: 0 1rem 1rem 0;
-      padding: .2em 1em .1em;
-      border-radius: 3px;
-      line-height: 2;
-      background-color: var(--box-back-color);
-      transition: background-color .1s ease-in;
-      &:hover {
-        color: #fff;
-        background-color: var(--theme-color);
-      }
-      &--active {
-        color: #fff;
-        background-color: var(--theme-color);
-      }
+    &--active {
+      color: #fff;
+      background-color: var(--theme-color);
     }
   }
-  
+}
 </style>

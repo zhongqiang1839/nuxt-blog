@@ -95,7 +95,6 @@
 <script>
   import myHeader from '~/components/header'
   import myFooter from '~/components/footer'
-  import myAside from '~/components/myAside'
   import userInfo from '~/components/user'
   import myBackground from '~/components/backgrond'
   import eevee from '~/components/eevee'
@@ -145,7 +144,6 @@
     components: {
       myHeader,
       myFooter,
-      myAside,
       myBackground,
       userInfo,
       eevee,
