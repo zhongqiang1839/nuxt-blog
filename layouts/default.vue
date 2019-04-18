@@ -231,6 +231,7 @@
     top: 0;
     bottom: 0;
     left: 0;
+    font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;
     border-right: 1px solid rgba(0,0,0,.1);
     z-index: 1;
     transition: .4s opacity;
