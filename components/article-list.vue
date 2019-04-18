@@ -2,10 +2,10 @@
   <div>
     <ul class="fe-article__container" v-if="artList.length">
       <li class="fe-article__item" v-for="(item, index) in artList" :key="index">
-        <a class="fe-article__item-link" :href="`/article/${item._id}`">
+        <nuxt-link class="fe-article__item-link" :to="`/article/${item._id}`">
           <span class="fe-article__item-time">{{item.create_at}}</span>
           <span class="fe-article__item-title"> {{item.title}}</span>
-        </a>
+        </nuxt-link>
       </li>
     </ul>
     <div class="fe-article__empty" v-else> 暂无更多文章</div>

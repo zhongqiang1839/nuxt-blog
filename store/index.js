@@ -1,6 +1,5 @@
 import service from '../api/service';
 import {
-  text,
   typeStyle,
   typeFormat,
   sourceFormat,
