@@ -66,7 +66,7 @@
 <script>
 import axios from 'axios'
 import { ARTICLE_SOURCE, FN_CATEGORYS } from '~/utils/constant'
-import config from '~/utils/config';
+import * as config from './../utils/config';
 import { text } from "~/filters";
 
 export default {
@@ -135,13 +135,13 @@ export default {
       let formdata = new FormData();
       formdata.append('image', $file);
       axios({
-        url: config.serverIp + '/api/upload',
+        url: config.SERVER_ROOT + '/api/upload',
         method: 'post',
         data: formdata,
         headers: { 'Content-Type': 'multipart/form-data' },
       }).then(({data}) => {
         console.log(data);
-        this.$refs.md.$img2Url(pos, `${config.serverIp}/uploads/${data.filename}`);
+        this.$refs.md.$img2Url(pos, `${config.SERVER_ROOT}/uploads/${data.filename}`);
       })
     },
     //切换标签
@@ -167,7 +167,7 @@ export default {
       let sourceItem = this.source.filter(item => item.isActive)[0];
       let categoryItem = this.categorys.filter(item => item.isActive)[0];
       let [description, content] = this.handbook.split('————————————————');
-  
+
       let res = await this.$store.dispatch('postArticle', {
         title: this.articleTitle,
         content: content.toString(),
@@ -195,14 +195,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  
+
   .own-container {
     .v-note-wrapper {
       min-height: 100vh!important;
       margin-top: 0!important;
     }
   }
-  
+
   .editor-header {
     display: flex;
     align-items: center;
@@ -444,5 +444,5 @@ export default {
     opacity: 0.5;
     font-weight: bolder;
   }
-  
+
 </style>
