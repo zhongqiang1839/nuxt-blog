@@ -159,7 +159,6 @@
     display: block;
     height: 100%;
     transition: .4s ease-in background-color;
-    font-size: inherit;
     &--open {
       height: 100vh!important;
       .fe-sidebar {
@@ -213,8 +212,24 @@
       margin: 2rem auto;
       max-width: 660px;
       border-radius: 6px;
-    }
 
+      @media (min-width: 1366px) {
+        max-width: 750px!important;
+      }
+
+      @media (min-width: 1920px) {
+        max-width: 800px!important;
+      }
+
+      @media (min-width: 2560px) {
+        max-width: 1200px!important;
+      }
+
+      @media (min-width: 3840px) {
+        max-width: 1600px!important;
+      }
+
+    }
   }
 
   .fe-menu-group {
@@ -427,8 +442,8 @@
     .fe-container__layout {
       padding: 0;
     }
-
   }
+
   @media (max-width: 656px) {
     .fe-sidebar {
       border: none;

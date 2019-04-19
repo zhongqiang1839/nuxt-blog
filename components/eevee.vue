@@ -31,7 +31,7 @@
     },
     mounted() {
       /* 可直接修改部分参数 */
-      live2d_settings['waifuFontSize'] = '1rem';       // 提示框字体
+      live2d_settings['waifuFontSize'] = '14px';       // 提示框字体
       live2d_settings['waifuToolFont'] = '1rem';       // 工具栏字体
       /* 在 initModel 前添加 */
       initModel()

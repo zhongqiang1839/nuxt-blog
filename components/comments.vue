@@ -127,7 +127,7 @@
                   <img :alt="commentItem.name || '匿名用户'"
                        :src="foundReplyAvatarParent(commentItem.pid) || '/images/avatar/444.jpg'">
                 </div>
-      
+
                 <div class="reply-box" >
                   <p class="reply-name">
                     <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${commentItem.pid}`)">
@@ -159,7 +159,7 @@
   import loadingCom from '~/components/pageLoading/pageLoading'
   import _ from '~/utils/underscore'
   import { UAParse, OSParse } from '~/utils/meta-parse'
-  
+
   export default {
     name: 'fn-comment',
     data () {
@@ -196,33 +196,33 @@
         required: true
       }
     },
-    
+
     fetch() {
     },
-    
+
     components: { loadingCom },
-    
+
     computed: {
-      
+
       userAgent() {
         return this.$store.state.options.userAgent
       },
       comment() {
         return this.$store.state.article.comments
       },
-      
+
       replyCommentSelf() {
         return this.comment.list.find(comment => Object.is(comment.id, this.pid))
       },
-      
+
     },
-    
+
     mounted () {
-      
+
       this.initUser();
-      
+
       this.loadCommentList()
-      
+
       // window.onscroll = _.throttle(() => {
       //
       //   // 总高度
@@ -330,16 +330,16 @@
         };
         this.updateCommentContent(contents[type])
       },
-      
+
       insertEmoji(emoji) {
         this.updateCommentContent({ end: emoji })
       },
-      
+
       // 点击用户
       clickUser(event, site) {
         if (!site) event.preventDefault()
       },
-      
+
       // 跳转到某条指定的id位置
       toSomeAnchorById(id) {
         const targetDom = document.getElementById(id);
@@ -359,7 +359,7 @@
           }
         }
       },
-      
+
       // 回复评论
       replyComment(comment) {
         this.pid = comment.id;
@@ -374,20 +374,20 @@
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
         return this.gravatar(parent ? parent.email : null)
       },
-      
+
       // 找到回复来源
       foundReplyParent(pid) {
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
         return parent ? parent.name : null;
       },
-      
+
       // 回复来源内容
       foundReplyParentContent (pid) {
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
         const content = parent ? parent.content : null;
         return this.marked(content);
       },
-      
+
       // 点赞某条评论
       likeComment(comment) {
         if (this.commentLiked(comment._id)) return false;
@@ -404,7 +404,7 @@
       commentLiked(comment_id) {
         return this.likeComments.includes(comment_id);
       },
-      
+
       // 获取评论列表
       async loadCommentList(params = {}) {
         params.sort = this.sortMode;
@@ -413,7 +413,7 @@
           post_id: this.postId
         })
       },
-      
+
       // 提交评论
       async submitComment(event) {
         // 为了使用原生表单拦截，不使用事件修饰符
@@ -422,9 +422,9 @@
         if (this.user.email === '') return alert('邮箱？');
         if (!this.regexs.email.test(this.user.email)) return alert('邮箱不合法');
         if (this.user.site && !this.regexs.url.test(this.user.site)) return alert('链接不合法');
-        
+
         if(!this.commentContentText || !this.commentContentText.replace(/\s/g, '')) return alert('内容？');
-        
+
         const lineOverflow = this.commentContentText.split('\n').length > 36;
         const lengthOverflow = this.commentContentText.length > 1000;
         if(lineOverflow || lengthOverflow) return alert('内容需要在1000字/36行以内');
@@ -458,21 +458,21 @@
     font-size: 1em;
     line-height: 2em;
     word-wrap: break-word;
-    
+
     a {
       text-decoration: underline;
     }
-    
+
     img {
       margin: .5rem 0;
       max-width: 100%;
       border-radius: 2px;
     }
-    
+
     p {
       margin: 0;
     }
-    
+
     code {
       color: #bd4147;
       padding: .3em .5em;
@@ -480,7 +480,7 @@
       border-radius: 4px;
       background-color: rgba(36,41,46,.12);
     }
-    
+
     pre {
       overflow: auto;
       font-size: 85%;
@@ -488,7 +488,7 @@
       background-color: #f7f7f7;
       border-radius: 3px;
       width: 100%;
-      
+
       > code {
         margin: 0;
         padding: 1em;
@@ -501,7 +501,7 @@
       }
     }
   }
-  
+
   #comment-box {
     position: relative;
     padding: 1rem 0;
@@ -519,7 +519,7 @@
         padding: 0;
         margin: 0;
         list-style-type: none;
-        
+
         > .comment-item {
           position: relative;
           padding: .6em 0 .6em 3.6em;
@@ -537,12 +537,12 @@
             position: absolute;
             left: 0;
             top: 1.2rem;
-            
+
             > a {
               display: block;
               width: 36px;
               height: 36px;
-              
+
               > img {
                 width: 100%;
                 height: 100%;
@@ -551,7 +551,7 @@
               }
             }
           }
-  
+
           .user-label {
             color: #b3b1b1;
             background-color: #e2e2e2;
@@ -565,16 +565,16 @@
             vertical-align: baseline;
             border-radius: .25em;
           }
-          
+
           .cm-body {
             display: block;
             width: 100%;
             height: 100%;
             padding: .5rem 0;
-  
+
             > .cm-header {
               position: relative;
-              
+
               .meta {
                 color: #a6a6a6;
                 font-size: 10px;
@@ -602,7 +602,7 @@
                   cursor: pointer;
                 }
               }
-  
+
               > .user-name {
                 display: block;
                 color: #2c2020;
@@ -622,13 +622,13 @@
                 }
               }
             }
-            
+
             > .cm-content {
               color: #4a4a4a;
               font-size: 14px;
               padding: .4rem 0;
             }
-            
+
             > .cm-footer {
               display: flex;
               justify-content: flex-start;
@@ -644,7 +644,7 @@
                   border-radius: 50%;
                 }
               }
-  
+
               > .reply-box {
                 padding: .8rem;
                 >.reply-name {
@@ -663,22 +663,22 @@
                   font-size: 14px;
                   margin-top: 10px;
                 }
-                
+
               }
-              
+
             }
           }
         }
       }
     }
-    
+
     > .post-box {
       display: block;
       padding: 1rem;
       background-color: hsla(0, 0%, 100%, 0.8);
       box-shadow: 0 0 14px 2px #ebebeb;
       border-radius: 2px;
-      
+
       > .editor-box {
         width: 100%;
         border-radius: 4px;
@@ -688,7 +688,7 @@
           width: 100%;
           height: 2em;
           line-height: 2em;
-          
+
           > .name,
           > .email,
           > .site {
@@ -703,11 +703,11 @@
               max-width: 100%;
               font-size: .775rem;
               border-bottom: 1px dashed #dedede;
-              
+
               &:hover {
                 border-color: #999;
               }
-              
+
               &:focus {
                 border-color: #999;
               }
@@ -778,7 +778,7 @@
               position: absolute;
               transition: opacity .3s ease;
               border-radius: 0 0 8px 8px;
-              
+
               > .emoji-list {
                 list-style: none;
                 font-size: 1.0em;
@@ -790,7 +790,7 @@
                 }
               }
             }
-            
+
             > .emoji,
             > .image,
             > .link,
@@ -805,14 +805,14 @@
                 background: var(--theme-color);
               }
             }
-            
+
             > .submit {
               float: right;
               color: #888;
               height: 100%;
               position: relative;
               display: inline-block;
-              font-size: 14px;
+              font-size: 1rem;
               font-weight: 500;
               line-height: 20px;
               cursor: pointer;

@@ -63,7 +63,7 @@
 			<div class="comment">
 				<my-comments :post-id="artItem.id" v-if="artItem.title"></my-comments>
 			</div>
-			
+
 			<!--<loading-com></loading-com>-->
 		</section>
 	</div>
@@ -138,15 +138,15 @@
 </script>
 
 <style lang="less" scoped>
-	
+
 	.article-page {
 		position: relative;
 		width: 100%;
 	}
-	
+
 	.article-widget {
 		width: 100%;
-		
+
 		.source {
 			position: absolute;
 			top: -8px;
@@ -160,14 +160,14 @@
 			text-align: center;
 			font-size: 12px;
 		}
-		
+
 		.article-source {
 			color: #FFF;
 			background: var(--theme-color);
 			transition: .2s ease-in background-color;
 		}
 	}
-	
+
 	.card {
 		position: relative;
 		margin-bottom: 16px;
@@ -176,28 +176,28 @@
 		box-shadow: 0 0 14px 2px #ebebeb;
 		border-radius: 2px;
 	}
-	
+
 	.article-detail {
-		padding: 16px;
+		padding: 1.2rem;
 		overflow: hidden;
-		
+
 		.title {
-			margin: 16px 0;
-			font-size: 20px;
+			margin: 1.2rem 0;
+			font-size: 1.6rem;
 			text-align: center;
 			color: rgba(0, 0, 0, 0.65);
 		}
-		
+
 		.meta {
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
 			flex-wrap: nowrap;
-			margin: 12px 0 16px;
+			margin: 0.8rem 0 1.2rem;
 			color: rgba(0, 0, 0, 0.43);
-			font-size: 12px;
-			
+			font-size: 0.8rem;
+
 			.meta-item {
 				display: flex;
 				flex-direction: row;
@@ -205,7 +205,7 @@
 				align-items: center;
 				flex-wrap: nowrap;
 				position: relative;
-				
+
 				&:before {
 					content: "";
 					width: 2px;
@@ -217,7 +217,7 @@
 			}
 		}
 	}
-	
+
 	.reference {
 		margin: 20px;
 		.like {
@@ -251,7 +251,7 @@
 					transition: background .6s steps(19);
 				}
 			}
-			
+
 			section {
 				&:first-child {
 					display: flex;
@@ -259,7 +259,7 @@
 					align-items: center;
 					flex: 2;
 				}
-				
+
 				&:last-child {
 					flex: 1;
 					border-left: 1px solid #e6e6e6;
@@ -268,7 +268,7 @@
 			}
 		}
 	}
-	
+
 	.copyright {
 		.wrapper {
 			padding: 0.5em 1.8em;
@@ -291,19 +291,19 @@
 			}
 		}
 	}
-	
-	
+
+
 	.read-tool {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
 		flex-wrap: nowrap;
-		
+
 		.tool-meta {
 			margin-bottom: 8px;
 			padding-bottom: 8px;
-			
+
 			.tool-item {
 				background-color: #fff;
 				border-radius: 50%;
@@ -316,24 +316,24 @@
 				text-align: center;
 				margin-bottom: 20px;
 				position: relative;
-				
+
 				.iconfont {
 					font-size: 22px;
 					font-weight: 300;
 				}
-				
+
 				&.like {
 					&.liked {
 						.iconfont {
 							color: #74ca46;
 						}
-						
+
 						&:after {
 							color: #fff;
 							background-color: #74ca46;
 						}
 					}
-					
+
 					&:after {
 						content: attr(badge);
 						position: absolute;
@@ -351,7 +351,7 @@
 						transform: scale(.75);
 					}
 				}
-				
+
 				&.comment {
 					&:after {
 						content: attr(comment);
