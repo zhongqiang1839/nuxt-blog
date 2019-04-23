@@ -98,7 +98,7 @@
                :href="commentItem.site"
                @click.stop="clickUser($event, commentItem.site)">
               <img :alt="commentItem.name || '匿名用户'"
-                   :src="gravatar(commentItem.email) || '/images/avatar/444.jpg'">
+                   :src="gravatar(commentItem.email) || '/avatar/444.jpg'">
             </a>
           </div>
           <div class="cm-body">
@@ -125,7 +125,7 @@
               <div class="cm-footer" v-if="!!commentItem.pid">
                 <div class="reply-avatar">
                   <img :alt="commentItem.name || '匿名用户'"
-                       :src="foundReplyAvatarParent(commentItem.pid) || '/images/avatar/444.jpg'">
+                       :src="foundReplyAvatarParent(commentItem.pid) || '/avatar/444.jpg'">
                 </div>
 
                 <div class="reply-box" >
@@ -751,7 +751,7 @@
               cursor: auto;
               font-size: .85em;
               line-height: 2em;
-              background: url("/images/plun.png") no-repeat 100% 100%;
+              background: url("/sys/plun.png") no-repeat 100% 100%;
               border-bottom: 1px dashed rgba(36,41,46,.12);
               &:empty:before{
                 content: attr(placeholder);

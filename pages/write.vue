@@ -53,7 +53,7 @@
           </div>
         </span>
         <nuxt-link to="/">
-          <img src="/images/avatar/555.jpg" alt="">
+          <img src="/avatar/555.jpg" alt="">
         </nuxt-link>
       </div>
     </header>

@@ -7,7 +7,7 @@
           <header class="fe-sidebar__header">
             <div class="fe-sidebar__avatar">
               <nuxt-link to="/" class="fe-sidebar__link">
-                <img src="/images/avatar/555.jpg"
+                <img src="/avatar/555.jpg"
                      class="fe-sidebar__avatar-img fe-sidebar__avatar-img--black"  alt="">
               </nuxt-link>
             </div>

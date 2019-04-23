@@ -242,7 +242,7 @@
 				height: 2.5rem;
 				display: inline;
 				border-radius: 50%;
-				background: url(/images/zan.png) no-repeat;
+				background: url(/sys/zan.png) no-repeat;
 				background-position: left;
 				background-size: auto 100%;
 				&.active {
