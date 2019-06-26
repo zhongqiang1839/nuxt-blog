@@ -94,7 +94,7 @@
     }
   }
 </script>
-<style scoped lang="scss">
+<style scoped lang="less">
   .loading-page {
     background: transparent;
     z-index: 10;

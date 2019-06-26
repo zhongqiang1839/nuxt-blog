@@ -452,7 +452,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="less">
   .cm-content,
   .reply-preview {
     font-size: 1em;
