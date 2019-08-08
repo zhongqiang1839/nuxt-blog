@@ -41,6 +41,9 @@
             <nuxt-link to="/about" class="fe-sidebar__nav-item fe-sidebar__about">
               关于
             </nuxt-link>
+            <nuxt-link to="/service" class="fe-sidebar__nav-item fe-sidebar__about">
+              接单了
+            </nuxt-link>
           </nav>
           <div class="fe-sidebar__theme">
             <div class="fe-sidebar__item-list">

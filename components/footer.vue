@@ -1,7 +1,7 @@
 <template>
   <footer class="meta-footer">
     <div class="meta-footer__chat">
-      <a href="mailto: zhongqiang1839@163.com" target="_blank" class="meta-footer__chat-item iconfont icon-email"></a>
+      <a href="mailto:zhongqiang1839@163.com?subject=Hi！小强哥, 久仰大名！" target="_blank" class="meta-footer__chat-item iconfont icon-email"></a>
       <a href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank" class="meta-footer__chat-item iconfont icon-QQ"  title="联系我"></a>
       <a href="https://github.com/zhongqiang1839" target="_blank" class="meta-footer__chat-item iconfont icon-github-fill"></a>
     </div>
@@ -16,19 +16,19 @@
 </template>
 
 <script>
-  
+
   export default {
     name: 'fn-header',
     data () {
       return {
       }
     },
-    
+
     methods: {
     },
-    
+
     mounted () {
-    
+
     },
     components: {
     }
@@ -52,7 +52,7 @@
       display: inline-block;
       transition: color .15s;
     }
-    
+
     &__info {
       margin: .25rem 0;
       font-size: .85rem;
@@ -68,14 +68,14 @@
         transition: color .15s,border-color .15s,opacity .15s;
       }
     }
-    
+
     &__word {
       a {
         border-bottom: 1px dotted #85889b;
         transition: color .15s,border-color .15s,opacity .15s;
       }
     }
-    
+
   }
 
 

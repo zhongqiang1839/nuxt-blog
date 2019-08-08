@@ -30,7 +30,7 @@ module.exports = {
       { name: 'apple-mobile-web-app-title', content: '' },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
       { name: 'author', content: '小强哥' },
-      { hid: 'keywords', name: 'keywords', content: 'vue, nodejs, react,前端，FE, 全栈开发' },
+      { hid: 'keywords', name: 'keywords', content: '小强哥， vue, nodejs, react,前端，FE, 全栈开发' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
