@@ -73,7 +73,7 @@
         white-space: nowrap;
         letter-spacing: 1px;
         font-size: .85rem;
-        font-family: Montserrat,PingFang SC,Microsoft JhengHei,sans-serif;
+        font-family: 'Hannotate SC', "PingFang SC", "Microsoft YaHei", sans-serif;
         opacity: .5;
         width: 6rem;
       }

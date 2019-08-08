@@ -109,8 +109,9 @@
                    :href="commentItem.site"
                    @click.stop="($event, commentItem.site)">
                   <span>{{ commentItem.name }}</span>
-                  <span class="user-label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
-                  <!--<span class="time">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>-->
+                  <span class="label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
+                  <span class="os" v-if="commentItem.agent !== ''" v-html="OSParse(commentItem.agent)"></span>
+                  <span class="ua" v-if="commentItem.agent !== ''" v-html="UAParse(commentItem.agent)"></span>
                 </a>
                 <div class="meta">
                   <span class="time">{{ commentItem.create_at | dateFormat('yyyy.MM.dd hh:mm')}}</span>
@@ -133,8 +134,8 @@
                     <a href="" @click.stop.prevent="toSomeAnchorById(`comment-item-${commentItem.pid}`)">
                       <span></span>
                       <strong v-if="foundReplyParent(commentItem.pid)">@{{ foundReplyParent(commentItem.pid) }}</strong>
+                      <span class="label" v-if="foundReplyEmail(commentItem.pid) === 'zhongqiang1839@163.com'">博主</span>
                     </a>
-                    <span class="user-label" v-if="commentItem.email === 'zhongqiang1839@163.com'">博主</span>
                   </p>
                   <div
                       class="reply-content"
@@ -369,6 +370,13 @@
       cancelCommentReply() {
         this.pid = 0;
       },
+
+      // 找到回复邮箱
+      foundReplyEmail(pid) {
+        const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
+        return parent ? parent.email : null;
+      },
+
       // 找到回复头像
       foundReplyAvatarParent(pid) {
         const parent = this.comment.list.find(comment => Object.is(comment.id, pid));
@@ -505,7 +513,7 @@
   #comment-box {
     position: relative;
     padding: 1rem 0;
-    font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;
+    /*font-family: Microsoft YaHei,Arial,Helvetica,sans-serif;*/
     .loading {
       font-weight: bold;
       text-align: center;
@@ -540,30 +548,36 @@
 
             > a {
               display: block;
-              width: 36px;
-              height: 36px;
+              width: 40px;
+              height: 40px;
+
+              &:hover {
+                > img {
+                  animation: btnGroups 1s linear;
+                }
+              }
 
               > img {
                 width: 100%;
                 height: 100%;
-                transition: transform .5s ease-out;
                 border-radius: 50%;
               }
+
             }
           }
 
-          .user-label {
+          .os, .ua, .label {
+            display: inline-block;
+            padding: .2rem .5rem;
+            background: #ededed;
             color: #b3b1b1;
-            background-color: #e2e2e2;
-            display: inline;
-            padding: .1em .4em .1em;
-            font-size: 75%;
-            font-weight: 300;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: .25em;
+            font-size: .75rem;
+            border-radius: .2rem;
+            margin-right: .3rem;
+            .iconfont {
+              color: var(--theme-color);
+              margin-right: .4em;
+            }
           }
 
           .cm-body {
@@ -574,7 +588,6 @@
 
             > .cm-header {
               position: relative;
-
               .meta {
                 color: #a6a6a6;
                 font-size: 10px;
@@ -596,7 +609,6 @@
                   text-decoration: none;
                   font-size: 12px;
                   padding: 2px 6px;
-                  /*background-color: #666;*/
                   border-radius: 2px;
                   color: #ef2f11;
                   cursor: pointer;
@@ -604,22 +616,10 @@
               }
 
               > .user-name {
-                display: block;
+                display: inline-block;
                 color: #2c2020;
                 font-weight: 700;
                 font-size: 14px;
-                .time {
-                  color: #a6a6a6;
-                  font-size: 10px;
-                  margin-left: 2rem;
-                }
-                img {
-                  border-radius: 4px;
-                  margin-right: .2rem;
-                }
-                &:hover {
-                  text-decoration: underline;
-                }
               }
             }
 
@@ -688,7 +688,6 @@
           width: 100%;
           height: 2em;
           line-height: 2em;
-
           > .name,
           > .email,
           > .site {
@@ -703,7 +702,10 @@
               max-width: 100%;
               font-size: .775rem;
               border-bottom: 1px dashed #dedede;
-
+              font-family: inherit;
+              &::placeholder{
+                font-family: inherit;
+              }
               &:hover {
                 border-color: #999;
               }
@@ -820,6 +822,7 @@
               border: none;
               appearance: none;
               background: transparent;
+              font-family: inherit;
               span {
                 margin-right: .1rem;
               }
@@ -833,4 +836,158 @@
       }
     }
   }
+
+  @keyframes btnGroups {
+    0% {
+      transform: scale(1.2, 0.8);
+    }
+    1% {
+      transform: scale(1.18, 0.82);
+    }
+    2% {
+      transform: scale(1.16, 0.84);
+    }
+    3% {
+      transform: scale(1.13, 0.87);
+    }
+    4% {
+      transform: scale(1.1, 0.9);
+    }
+    5% {
+      transform: scale(1.07, 0.93);
+    }
+    6% {
+      transform: scale(1.04, 0.96);
+    }
+    7% {
+      transform: scale(1.01, 0.99);
+    }
+    8% {
+      transform: scale(0.99, 1.01);
+    }
+    9% {
+      transform: scale(0.97, 1.03);
+    }
+    10% {
+      transform: scale(0.95, 1.05);
+    }
+    11% {
+      transform: scale(0.94, 1.06);
+    }
+    12% {
+      transform: scale(0.93, 1.07);
+    }
+    13% {
+      transform: scale(0.93, 1.07);
+    }
+    14% {
+      transform: scale(0.93, 1.07);
+    }
+    15% {
+      transform: scale(0.93, 1.07);
+    }
+    16% {
+      transform: scale(0.94, 1.06);
+    }
+    17% {
+      transform: scale(0.94, 1.06);
+    }
+    18% {
+      transform: scale(0.95, 1.05);
+    }
+    19% {
+      transform: scale(0.96, 1.04);
+    }
+    20% {
+      transform: scale(0.98, 1.02);
+    }
+    21% {
+      transform: scale(0.99, 1.01);
+    }
+    22% {
+      transform: scale(1, 1);
+    }
+    23% {
+      transform: scale(1, 1);
+    }
+    24% {
+      transform: scale(1.01, 0.99);
+    }
+    25% {
+      transform: scale(1.02, 0.98);
+    }
+    26% {
+      transform: scale(1.02, 0.98);
+    }
+    27% {
+      transform: scale(1.02, 0.98);
+    }
+    28% {
+      transform: scale(1.03, 0.97);
+    }
+    29% {
+      transform: scale(1.03, 0.97);
+    }
+    30% {
+      transform: scale(1.02, 0.98);
+    }
+    31% {
+      transform: scale(1.02, 0.98);
+    }
+    32% {
+      transform: scale(1.02, 0.98);
+    }
+    33% {
+      transform: scale(1.02, 0.98);
+    }
+    34% {
+      transform: scale(1.01, 0.99);
+    }
+    35% {
+      transform: scale(1.01, 0.99);
+    }
+    36% {
+      transform: scale(1.01, 0.99);
+    }
+    37% {
+      transform: scale(1, 1);
+    }
+    38% {
+      transform: scale(1, 1);
+    }
+    39% {
+      transform: scale(1, 1);
+    }
+    40% {
+      transform: scale(0.99, 1.01);
+    }
+    41% {
+      transform: scale(0.99, 1.01);
+    }
+    42% {
+      transform: scale(0.99, 1.01);
+    }
+    43% {
+      transform: scale(0.99, 1.01);
+    }
+    44% {
+      transform: scale(0.99, 1.01);
+    }
+    45% {
+      transform: scale(0.99, 1.01);
+    }
+    46% {
+      transform: scale(0.99, 1.01);
+    }
+    47% {
+      transform: scale(0.99, 1.01);
+    }
+    48% {
+      transform: scale(0.99, 1.01);
+    }
+    49% {
+      transform: scale(1, 1);
+    }
+  }
+
 </style>

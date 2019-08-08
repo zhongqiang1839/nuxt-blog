@@ -1,6 +1,5 @@
 <template>
   <div :class="['fe-container', {'fe-container--open': showSidebar}]">
-    <!--<my-background></my-background>-->
     <nav class="fe-sidebar">
       <div class="fe-sidebar__con">
         <section>
@@ -30,7 +29,7 @@
               <span>tags</span>
             </nuxt-link>
             <a href="https://github.com/zhongqiang1839/nuxt-blog" target="_blank" class="fe-sidebar__item fe-sidebar__gitee">
-              <span>3</span>
+              <span>6</span>
               <!--<CountTo :start-val="0" :end-val="233" :duration='2000' separator="," class="count"></CountTo>-->
               <span>star</span>
             </a>
@@ -246,7 +245,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;
+    /*font-family: Josefin Sans,PingFang SC,Microsoft JhengHei,sans-serif;*/
     border-right: 1px solid rgba(0,0,0,.1);
     z-index: 1;
     transition: .4s opacity;
