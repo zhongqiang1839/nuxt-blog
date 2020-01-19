@@ -18,25 +18,27 @@
         <li class="fe-service__item">
           <span class="iconfont icon-wechat-fill"></span>
           <h3>WeChat</h3>
-          <p>H5开发</p>
           <p>公众号开发</p>
           <p>小程序开发</p>
         </li>
         <li class="fe-service__item">
           <span class="iconfont icon-qianduan"></span>
           <h3>Web Client</h3>
+          <p>H5开发</p>
           <p>Vue 开发</p>
           <p>React 开发</p>
         </li>
         <li class="fe-service__item">
           <span class="iconfont icon-app"></span>
           <h3>Application</h3>
-          <p>敬请期待...</p>
+          <p>uniapp</p>
+          <p>ios android</p>
         </li>
         <li class="fe-service__item">
           <span class="iconfont icon-zixun"></span>
           <h3>技术咨询</h3>
-          <p>敬请期待...</p>
+          <p>小程序相关</p>
+          <p>uniapp相关</p>
         </li>
       </ul>
     </div>
