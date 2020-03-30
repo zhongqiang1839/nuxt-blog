@@ -38,9 +38,9 @@
             <nuxt-link to="/" class="fe-sidebar__nav-item fe-sidebar__index">
               首页
             </nuxt-link>
-            <nuxt-link to="/about" class="fe-sidebar__nav-item fe-sidebar__about">
-              关于
-            </nuxt-link>
+            <!--<nuxt-link to="/about" class="fe-sidebar__nav-item fe-sidebar__about">-->
+              <!--关于-->
+            <!--</nuxt-link>-->
             <nuxt-link to="/service" class="fe-sidebar__nav-item fe-sidebar__about">
               接单了
             </nuxt-link>

@@ -48,7 +48,6 @@
 <script>
 
 export default {
-
   head () {
     return {
       title: this.title,
@@ -59,19 +58,8 @@ export default {
 
   data () {
     return {
-      current_page: 1,
       title: '接单了'
     }
-  },
-
-  computed: {},
-  methods: {
-    loadMore() {
-    }
-  },
-  mounted() {
-  },
-  components: {
   }
 }
 </script>

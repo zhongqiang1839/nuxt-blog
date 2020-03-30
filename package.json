@@ -1,7 +1,7 @@
 {
   "name": "Jason",
   "version": "1.0.0",
-  "description": "Jason's blog, 分享 vue, nodejs, react,前端，FE, 全栈开发， 生活感悟。",
+  "description": "Jason's blog, 分享 vue, nodejs, react, 小程序， 前端，FE, 全栈开发， 生活感悟。",
   "author": "zhongqiang.feng",
   "private": true,
   "scripts": {

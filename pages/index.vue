@@ -80,8 +80,6 @@ export default {
     }
   },
 
-
-
   computed: {
     artlist () {
       return this.$store.state.article.art.list
@@ -90,6 +88,7 @@ export default {
       return this.$store.state.article.art.pagination
     },
   },
+
   methods: {
     marked(content) {
       return markdown(content, null, false).html
@@ -100,13 +99,8 @@ export default {
           page: this.current_page +=1
       })
     }
-  },
-
-  mounted() {
-  },
-
-  components: {
   }
+
 }
 </script>
 
